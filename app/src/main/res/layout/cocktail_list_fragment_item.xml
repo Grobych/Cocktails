@@ -8,9 +8,9 @@
     android:layout_marginBottom="10dp">
 
     <ImageView
-        android:id="@+id/itemImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:id="@+id/itemImageView"
         android:padding="10dp"
         android:contentDescription="@string/fragment_item_image_content_decription"
         android:src="@mipmap/ic_launcher"/>
@@ -24,17 +24,17 @@
 
 
         <TextView
-            android:id="@+id/itemNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/itemNameTextView"
             android:textSize="10pt"
             android:text=""/>
 
 
         <co.lujun.androidtagview.TagContainerLayout
-            android:id="@+id/itemTagContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/itemTagContainer"
             app:container_enable_drag="false"
             app:horizontal_interval="10dp"
             app:vertical_interval="10dp"

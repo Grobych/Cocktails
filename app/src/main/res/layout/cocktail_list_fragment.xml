@@ -3,4 +3,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CocktailListFragment"/>
+    tools:context=".fragments.CocktailListFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/searchEditText"
+                android:autofillHints="Search..."
+                android:inputType="textFilter"
+                tools:ignore="LabelFor" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/filterButton"
+                android:layout_marginStart="5dp"
+                android:text="@string/filter_button_text"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/addRecipesButton"
+                android:layout_marginStart="5dp"
+                android:text="@string/add_recipes_button_text"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/filtersLayout"
+            android:visibility="visible">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hasAlcoholRadioButton"
+                android:text="@string/has_alcohol_radiobutton_text"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/type"
+                android:layout_marginStart="20dp"/>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/typeOfCocktailSpinner"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cocktailListRecyclerView"
+            tools:listitem="@layout/cocktail_list_fragment_item"/>
+    </LinearLayout>
+
+</FrameLayout>
