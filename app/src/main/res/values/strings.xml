@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Cocktails</string>
     <string name="fragment_item_image_content_decription">image</string>
-    <string name="filter_button_text">Filters...</string>
+    <string name="filter_button_text">Filters…</string>
     <string name="add_recipes_button_text">Add</string>
     <string name="has_alcohol_radiobutton_text">Has alcohol</string>
     <string name="type">Type</string>
+    <string name="cocktail_fragment_glass_template">Serve on @{cocktail.}</string>
 
 
     <!--    CocktailModel-->

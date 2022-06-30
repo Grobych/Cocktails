@@ -2,6 +2,7 @@ package com.globa.cocktails.models
 
 data class Cocktail(val id : Int,
                     val drinkNumber : Int,
+                    val drinkName : String,
                     val alcohol : Boolean,
                     val drinkCategory : String,
                     val imageURL : String,
