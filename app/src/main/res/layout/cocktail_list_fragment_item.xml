@@ -8,11 +8,13 @@
     android:layout_marginBottom="10dp">
 
     <ImageView
+        android:id="@+id/itemImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:padding="10dp"
         android:contentDescription="@string/fragment_item_image_content_decription"
         android:src="@mipmap/ic_launcher"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,13 +22,17 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+
         <TextView
+            android:id="@+id/itemNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/itemNameTextView"
             android:textSize="10pt"
             android:text=""/>
+
+
         <co.lujun.androidtagview.TagContainerLayout
+            android:id="@+id/itemTagContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:container_enable_drag="false"
@@ -34,12 +40,5 @@
             app:vertical_interval="10dp"
             app:tag_clickable="true"
             app:tag_theme="pure_teal"/>
-
-
     </LinearLayout>
-
-
-
-
-
 </LinearLayout>
