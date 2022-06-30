@@ -50,4 +50,9 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.9.0'
 
+
+//    TagView
+    implementation 'co.lujun:androidtagview:1.1.7'
+//    TagView
+
 }
