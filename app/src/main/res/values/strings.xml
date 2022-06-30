@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Cocktails</string>
+
+
+<!--    CocktailModel-->
+    <string-array name="drinkCategory">
+        <item>Beer</item>
+        <item>Cocktail</item>
+        <item>Cocoa</item>
+        <item>Homemade Liqueur</item>
+        <item>Milk / Float / Shake</item>
+        <item>Ordinary Drink</item>
+        <item>Other/Unknown</item>
+        <item>Punch / Party Drink</item>
+        <item>Shot</item>
+        <item>Soft Drink / Soda</item>
+        <item>Coffee / Tea</item>
+    </string-array>
+    <!--    CocktailModel-->
+
+
 </resources>
