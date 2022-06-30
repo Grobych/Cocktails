@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Cocktails</string>
+    <string name="fragment_item_image_content_decription">image</string>
 
 
-<!--    CocktailModel-->
+    <!--    CocktailModel-->
     <string-array name="drinkCategory">
         <item>Beer</item>
         <item>Cocktail</item>
