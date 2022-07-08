@@ -1,6 +1,12 @@
 package com.globa.cocktails.models
 
-data class Cocktail(val id : Int,
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "cocktails")
+data class Cocktail(
+                    @PrimaryKey
+                    val id : Int,
                     val drinkNumber : Int,
                     val drinkName : String,
                     val alcohol : Boolean,
