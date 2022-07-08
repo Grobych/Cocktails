@@ -2,18 +2,20 @@ package com.globa.cocktails.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+
 
 @Entity(tableName = "cocktails")
 data class Cocktail(
-                    @PrimaryKey
-                    val id : Int,
-                    val drinkNumber : Int,
-                    val drinkName : String,
-                    val alcohol : Boolean,
-                    val drinkCategory : String,
-                    val imageURL : String,
-                    val drinkGlass : String,
-                    val ingredients : List<String>,
-                    val measures : List<String>,
-                    val instructions : String)
+    @PrimaryKey
+    @SerializedName("_id")              val id : Int,
+    @SerializedName("drinkNumber")      val drinkNumber : Int,
+    @SerializedName("drinkName")        val drinkName : String,
+    @SerializedName("alcohol")          val alcohol : Boolean,
+    @SerializedName("drinkCategory")    val drinkCategory : String,
+    @SerializedName("drinkThumb")       val imageURL : String,
+    @SerializedName("drinkGlass")       val drinkGlass : String,
+    @SerializedName("drinkIngredients") val ingredients : List<String>,
+    @SerializedName("drinkMeasures")    val measures : List<String>,
+    @SerializedName("drinkInstructions")val instructions : String)
 
