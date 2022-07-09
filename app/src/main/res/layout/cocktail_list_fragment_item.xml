@@ -21,7 +21,8 @@
             android:id="@+id/itemImageView"
             android:padding="10dp"
             android:contentDescription="@string/fragment_item_image_content_decription"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_launcher"
+            app:imageUrl="@{cocktail.imageURL}"/>
 
 
         <LinearLayout
