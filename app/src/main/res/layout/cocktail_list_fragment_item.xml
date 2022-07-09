@@ -1,44 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/itemImageView"
-        android:padding="10dp"
-        android:contentDescription="@string/fragment_item_image_content_decription"
-        android:src="@mipmap/ic_launcher"/>
-
+    <data>
+        <variable
+            name="cocktail"
+            type="com.globa.cocktails.models.Cocktail" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/itemImageView"
+            android:padding="10dp"
+            android:contentDescription="@string/fragment_item_image_content_decription"
+            android:src="@mipmap/ic_launcher"/>
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/itemNameTextView"
-            android:textSize="10pt"
-            android:text=""/>
-
-
-        <co.lujun.androidtagview.TagContainerLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/itemTagContainer"
-            app:container_enable_drag="false"
-            app:horizontal_interval="10dp"
-            app:vertical_interval="10dp"
-            app:tag_clickable="true"
-            app:tag_theme="pure_teal"/>
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemNameTextView"
+                android:textSize="10pt"
+                android:text="@{cocktail.drinkName}"/>
+
+
+            <co.lujun.androidtagview.TagContainerLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/itemTagContainer"
+                app:container_enable_drag="false"
+                app:horizontal_interval="10dp"
+                app:vertical_interval="10dp"
+                app:tag_clickable="true"
+                app:tag_theme="pure_teal"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>

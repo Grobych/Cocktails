@@ -7,36 +7,36 @@ import androidx.room.Database
 import com.globa.cocktails.models.Cocktail
 import com.google.gson.Gson
 
-import com.google.gson.reflect.TypeToken
 
 
-
-
-class Database {
-
-    private lateinit var instance : CocktailDatabase
-
-    @Dao
-    interface CocktailDao{
-        @Query("select * from cocktails")
-        fun getCocktails() : LiveData<List<Cocktail>>
-    }
-
-    @Database(entities = [Cocktail::class], version = 1)
+    @Database(entities = [Cocktail::class], version = 2)
     @TypeConverters (Converters::class)
     abstract class CocktailDatabase : RoomDatabase() {
         abstract val cocktailDao: CocktailDao
     }
 
+    @Dao
+    interface CocktailDao{
+        @Query("select * from cocktails")
+        fun getCocktails() : LiveData<List<Cocktail>>
+
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        fun insertAll(cocktails : List<Cocktail>)
+    }
+
+    private lateinit var instance : CocktailDatabase
+
     fun getDatabase(context: Context) : CocktailDatabase{
         if (!::instance.isInitialized){
             instance = Room.databaseBuilder(context.applicationContext,
-            CocktailDatabase::class.java,
-            "cocktails").build()
+                CocktailDatabase::class.java,
+                "cocktails")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build()
         }
         return instance
     }
-
 
     class Converters {
 
@@ -46,4 +46,3 @@ class Database {
         @TypeConverter
         fun jsonToList(value: String) = Gson().fromJson(value, Array<String>::class.java).toList()
     }
-}
