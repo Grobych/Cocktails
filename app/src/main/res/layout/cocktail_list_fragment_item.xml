@@ -16,8 +16,8 @@
         android:layout_marginBottom="10dp">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
             android:id="@+id/itemImageView"
             android:padding="10dp"
             android:contentDescription="@string/fragment_item_image_content_decription"
@@ -43,9 +43,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/itemTagContainer"
+                app:tag_text_size="5pt"
                 app:container_enable_drag="false"
-                app:horizontal_interval="10dp"
-                app:vertical_interval="10dp"
+                app:horizontal_interval="5dp"
+                app:vertical_interval="2dp"
                 app:tag_clickable="true"
                 app:tag_theme="pure_teal"/>
         </LinearLayout>
