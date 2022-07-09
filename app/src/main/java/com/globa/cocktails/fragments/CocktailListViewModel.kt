@@ -1,6 +1,5 @@
 package com.globa.cocktails.fragments
 
-import android.accounts.NetworkErrorException
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -11,7 +10,7 @@ import com.globa.cocktails.repository.Repository
 import kotlinx.coroutines.launch
 
 class CocktailListViewModel(application: Application) : ViewModel() {
-    private val tag = this.javaClass.name
+    private val tag = this.javaClass.simpleName
 
     private val repository = Repository(getDatabase(application.applicationContext))
     val cocktails = repository.cocktails
@@ -23,8 +22,8 @@ class CocktailListViewModel(application: Application) : ViewModel() {
     private fun refreshDataFromRepository(){
         viewModelScope.launch {
             try {
-                repository.refreshCocktails()
-            } catch (error : NetworkErrorException){
+                repository.refreshCocktailsFromNet()
+            } catch (error : Exception){
                 Log.e(tag, "${error.message}")
             }
         }

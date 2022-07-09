@@ -1,6 +1,5 @@
 package com.globa.cocktails.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.globa.cocktails.database.CocktailDatabase
 import com.globa.cocktails.models.Cocktail
@@ -12,11 +11,9 @@ class Repository (private val database: CocktailDatabase) {
 
     val cocktails : LiveData<List<Cocktail>> = database.cocktailDao.getCocktails()
 
-    suspend fun refreshCocktails(){
+    suspend fun refreshCocktailsFromNet(){
         withContext(Dispatchers.IO){
-            Log.d("coroutine", "1")
             database.cocktailDao.insertAll(Network.instance.getDrinks())
-            Log.d("coroutine", "2")
         }
     }
 }
