@@ -5,7 +5,7 @@
     <string name="add_recipes_button_text">Add</string>
     <string name="has_alcohol_radiobutton_text">Has alcohol</string>
     <string name="type">Type</string>
-    <string name="cocktail_fragment_glass_template">Serve on @{cocktail.}</string>
+    <string name="cocktail_fragment_glass_template">Serve on %1$s</string>
 
 
     <!--    CocktailModel-->

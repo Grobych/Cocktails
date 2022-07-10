@@ -41,15 +41,17 @@
 
 
             <co.lujun.androidtagview.TagContainerLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/itemTagContainer"
                 app:tag_text_size="5pt"
                 app:container_enable_drag="false"
                 app:horizontal_interval="5dp"
                 app:vertical_interval="2dp"
                 app:tag_clickable="true"
-                app:tag_theme="pure_teal"/>
+                app:tag_theme="pure_teal"
+                app:container_background_color="#FFFFFF"
+                app:container_border_color="#FFFFFF"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

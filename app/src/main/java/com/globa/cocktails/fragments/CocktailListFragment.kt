@@ -2,6 +2,7 @@ package com.globa.cocktails.fragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +14,11 @@ import com.globa.cocktails.R
 import com.globa.cocktails.adapters.CocktailsAdapter
 import com.globa.cocktails.models.Cocktail
 
-class CocktailListFragment : Fragment() {
+class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {
 
     private lateinit var cocktailListRecyclerView : RecyclerView
     private var adapter : CocktailsAdapter? = null
+    var openFragment : OpenFragment? = null
 
     companion object {
         fun newInstance() = CocktailListFragment()
@@ -39,12 +41,22 @@ class CocktailListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = CocktailsAdapter()
+        adapter?.clickInterface = this
         cocktailListRecyclerView = view.findViewById(R.id.cocktailListRecyclerView)
         cocktailListRecyclerView.layoutManager = LinearLayoutManager(context)
         cocktailListRecyclerView.adapter = adapter
         viewModel.cocktails.observe(viewLifecycleOwner) { cocktails ->
             cocktails?.apply { adapter?.list = cocktails }
+
         }
+    }
+
+    override fun clicked(cocktail: Cocktail) {
+        openFragment?.open(cocktail)
+    }
+
+    interface OpenFragment{
+        fun open(cocktail: Cocktail)
     }
 
 

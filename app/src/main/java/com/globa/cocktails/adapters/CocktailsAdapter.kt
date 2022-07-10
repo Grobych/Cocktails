@@ -1,6 +1,7 @@
 package com.globa.cocktails.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,8 @@ import com.globa.cocktails.models.Cocktail
 
 class CocktailsAdapter() : RecyclerView.Adapter<CocktailsAdapter.ViewHolder>() {
 
+    var clickInterface : ItemClicked? = null
+
     var list : List<Cocktail> = emptyList()
     @SuppressLint("NotifyDataSetChanged")
     set(value){
@@ -19,14 +22,20 @@ class CocktailsAdapter() : RecyclerView.Adapter<CocktailsAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(private val binding: CocktailListFragmentItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    inner class ViewHolder(private val binding: CocktailListFragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                val pos = adapterPosition
+                if (clickInterface != null && pos != RecyclerView.NO_POSITION) {
+                    val cocktail = list[pos]
+                    clickInterface?.clicked(cocktail)
+                }
+            }
+        }
         fun bind(cocktail: Cocktail){
             binding.cocktail = cocktail
             binding.itemTagContainer.tags = cocktail.ingredients
-        }
-
-        override fun onClick(v: View?) {
-            TODO("Not yet implemented")
         }
 
     }
@@ -44,4 +53,8 @@ class CocktailsAdapter() : RecyclerView.Adapter<CocktailsAdapter.ViewHolder>() {
     }
 
     override fun getItemCount() = list.size
+
+    interface ItemClicked{
+        fun clicked(cocktail: Cocktail)
+    }
 }
