@@ -19,6 +19,8 @@ import com.google.gson.Gson
     interface CocktailDao{
         @Query("select * from cocktails")
         fun getCocktails() : LiveData<List<Cocktail>>
+        @Query("select * from cocktails where drinkName like :name")
+        fun getCocktailByName(name : String) : LiveData<List<Cocktail>>
 
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insertAll(cocktails : List<Cocktail>)

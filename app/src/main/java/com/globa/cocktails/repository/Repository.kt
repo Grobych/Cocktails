@@ -9,11 +9,15 @@ import kotlinx.coroutines.withContext
 
 class Repository (private val database: CocktailDatabase) {
 
-    val cocktails : LiveData<List<Cocktail>> = database.cocktailDao.getCocktails()
+    var cocktails : LiveData<List<Cocktail>> = database.cocktailDao.getCocktails()
 
     suspend fun refreshCocktailsFromNet(){
         withContext(Dispatchers.IO){
             database.cocktailDao.insertAll(Network.instance.getDrinks())
         }
+    }
+
+    fun refreshCocktailsWithFilter(filter : String) : LiveData<List<Cocktail>>{
+        return database.cocktailDao.getCocktailByName(filter)
     }
 }
