@@ -4,15 +4,15 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.datalayer.models.CocktailDBModel
 
 @Dao
 interface CocktailDao{
     @Query("select * from cocktails")
-    fun getCocktails() : List<Cocktail>
+    fun getCocktails() : List<CocktailDBModel>
     @Query("select * from cocktails where drinkName like :name")
-    fun getCocktailByName(name : String) : List<Cocktail>
+    fun getCocktailByName(name : String) : List<CocktailDBModel>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(cocktails : List<Cocktail>)
+    fun insertAll(cocktails : List<CocktailDBModel>)
 }

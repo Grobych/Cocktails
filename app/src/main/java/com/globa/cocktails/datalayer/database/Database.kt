@@ -3,11 +3,11 @@ package com.globa.cocktails.datalayer.database
 import android.content.Context
 import androidx.room.*
 import androidx.room.Database
-import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.datalayer.models.CocktailDBModel
 import com.google.gson.Gson
 
 
-@Database(entities = [Cocktail::class], version = 2)
+@Database(entities = [CocktailDBModel::class], version = 3)
     @TypeConverters (Converters::class)
     abstract class CocktailDatabase : RoomDatabase() {
         abstract val cocktailDao: CocktailDao

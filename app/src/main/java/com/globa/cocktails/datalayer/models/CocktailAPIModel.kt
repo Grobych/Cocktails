@@ -28,3 +28,18 @@ data class CocktailAPIModel(
             instructions = it.instructions
         )
     }
+
+    fun List<CocktailAPIModel>.asDBModel() = map {
+        CocktailDBModel(
+            id = it.id,
+            drinkNumber = it.drinkNumber,
+            drinkName = it.drinkName,
+            alcohol = it.alcohol,
+            drinkCategory = it.drinkCategory,
+            imageURL = it.imageURL,
+            drinkGlass = it.drinkGlass,
+            ingredients = it.ingredients,
+            measures = it.measures,
+            instructions = it.instructions
+        )
+    }
