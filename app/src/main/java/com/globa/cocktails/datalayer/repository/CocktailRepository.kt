@@ -13,7 +13,10 @@ class CocktailRepository (
 
     suspend fun getCocktails() : List<Cocktail> {
         if (cocktails.isEmpty()){
-            cocktails = cocktailLocalDataSource.getCocktails().ifEmpty { cocktailNetworkDataSource.getCocktails() }
+            cocktails = cocktailLocalDataSource.getCocktails().ifEmpty {
+                val cocktailFromNet = cocktailNetworkDataSource.getCocktails()
+                cocktailLocalDataSource.putCocktails(cocktailFromNet)
+                cocktailFromNet }
         }
         return cocktails
     }
