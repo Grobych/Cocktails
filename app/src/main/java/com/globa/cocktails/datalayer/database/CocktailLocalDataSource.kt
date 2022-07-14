@@ -1,4 +1,4 @@
-package com.globa.cocktails.database
+package com.globa.cocktails.datalayer.database
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

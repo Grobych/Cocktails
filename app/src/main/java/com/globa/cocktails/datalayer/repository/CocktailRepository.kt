@@ -1,8 +1,8 @@
-package com.globa.cocktails.repository
+package com.globa.cocktails.datalayer.repository
 
-import com.globa.cocktails.database.CocktailLocalDataSource
-import com.globa.cocktails.models.Cocktail
-import com.globa.cocktails.network.CocktailNetworkDataSource
+import com.globa.cocktails.datalayer.database.CocktailLocalDataSource
+import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.datalayer.network.CocktailNetworkDataSource
 
 class CocktailRepository (
     private val cocktailLocalDataSource: CocktailLocalDataSource,

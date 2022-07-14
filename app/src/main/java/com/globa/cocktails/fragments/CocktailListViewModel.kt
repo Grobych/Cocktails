@@ -1,13 +1,8 @@
 package com.globa.cocktails.fragments
 
-import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
-import com.globa.cocktails.database.getDatabase
-import com.globa.cocktails.models.Cocktail
-import com.globa.cocktails.repository.CocktailRepository
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
+import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.datalayer.repository.CocktailRepository
 import kotlinx.coroutines.launch
 
 class CocktailListViewModel(

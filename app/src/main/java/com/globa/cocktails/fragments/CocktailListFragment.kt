@@ -2,24 +2,20 @@ package com.globa.cocktails.fragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.globa.cocktails.R
 import com.globa.cocktails.adapters.CocktailsAdapter
-import com.globa.cocktails.database.CocktailLocalDataSource
-import com.globa.cocktails.database.getDatabase
-import com.globa.cocktails.models.Cocktail
-import com.globa.cocktails.network.CocktailNetworkDataSource
-import com.globa.cocktails.network.CocktailNetworkService
-import com.globa.cocktails.repository.CocktailRepository
+import com.globa.cocktails.datalayer.database.CocktailLocalDataSource
+import com.globa.cocktails.datalayer.database.getDatabase
+import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.datalayer.network.CocktailNetworkDataSource
+import com.globa.cocktails.datalayer.network.CocktailNetworkService
+import com.globa.cocktails.datalayer.repository.CocktailRepository
 import kotlinx.coroutines.Dispatchers
 
 class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {

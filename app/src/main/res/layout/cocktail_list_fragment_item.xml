@@ -4,7 +4,7 @@
     <data>
         <variable
             name="cocktail"
-            type="com.globa.cocktails.models.Cocktail" />
+            type="com.globa.cocktails.datalayer.models.Cocktail" />
     </data>
 
     <LinearLayout

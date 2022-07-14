@@ -1,7 +1,7 @@
 package com.globa.cocktails.utils
 
 import android.content.Context
-import com.globa.cocktails.models.Cocktail
+import com.globa.cocktails.datalayer.models.Cocktail
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.IOException

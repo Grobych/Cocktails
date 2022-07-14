@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.globa.cocktails.R
 import com.globa.cocktails.fragments.CocktailFragment
 import com.globa.cocktails.fragments.CocktailListFragment
-import com.globa.cocktails.models.Cocktail
+import com.globa.cocktails.datalayer.models.Cocktail
 
 class MainActivity : AppCompatActivity(), CocktailListFragment.OpenFragment {
 

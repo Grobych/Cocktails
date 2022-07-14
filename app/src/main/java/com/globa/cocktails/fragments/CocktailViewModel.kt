@@ -3,7 +3,7 @@ package com.globa.cocktails.fragments
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.globa.cocktails.models.Cocktail
+import com.globa.cocktails.datalayer.models.Cocktail
 
 class CocktailViewModel(cocktail: Cocktail) : ViewModel() {
 

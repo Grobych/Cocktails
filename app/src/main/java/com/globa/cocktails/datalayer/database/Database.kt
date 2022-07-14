@@ -1,9 +1,9 @@
-package com.globa.cocktails.database
+package com.globa.cocktails.datalayer.database
 
 import android.content.Context
 import androidx.room.*
 import androidx.room.Database
-import com.globa.cocktails.models.Cocktail
+import com.globa.cocktails.datalayer.models.Cocktail
 import com.google.gson.Gson
 
 

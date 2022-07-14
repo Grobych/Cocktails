@@ -1,15 +1,13 @@
 package com.globa.cocktails.adapters
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.globa.cocktails.R
 import com.globa.cocktails.databinding.CocktailListFragmentItemBinding
-import com.globa.cocktails.models.Cocktail
+import com.globa.cocktails.datalayer.models.Cocktail
 
 class CocktailsAdapter() : RecyclerView.Adapter<CocktailsAdapter.ViewHolder>() {
 

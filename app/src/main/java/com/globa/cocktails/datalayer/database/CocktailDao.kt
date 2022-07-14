@@ -1,10 +1,10 @@
-package com.globa.cocktails.database
+package com.globa.cocktails.datalayer.database
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.globa.cocktails.models.Cocktail
+import com.globa.cocktails.datalayer.models.Cocktail
 
 @Dao
 interface CocktailDao{

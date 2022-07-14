@@ -12,8 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.globa.cocktails.R
 import com.globa.cocktails.adapters.IngredientsAdapter
 import com.globa.cocktails.databinding.CocktailFragmentBinding
-import com.globa.cocktails.databinding.CocktailIngredientsItemBinding
-import com.globa.cocktails.models.Cocktail
+import com.globa.cocktails.datalayer.models.Cocktail
 
 class CocktailFragment(val cocktail: Cocktail) : Fragment() {
 

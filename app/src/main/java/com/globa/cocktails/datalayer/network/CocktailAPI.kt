@@ -1,6 +1,6 @@
-package com.globa.cocktails.network
+package com.globa.cocktails.datalayer.network
 
-import com.globa.cocktails.models.Cocktail
+import com.globa.cocktails.datalayer.models.Cocktail
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
