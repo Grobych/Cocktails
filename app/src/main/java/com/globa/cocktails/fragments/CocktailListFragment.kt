@@ -14,7 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.globa.cocktails.R
 import com.globa.cocktails.adapters.CocktailsAdapter
+import com.globa.cocktails.database.CocktailLocalDataSource
+import com.globa.cocktails.database.getDatabase
 import com.globa.cocktails.models.Cocktail
+import com.globa.cocktails.network.CocktailNetworkDataSource
+import com.globa.cocktails.network.CocktailNetworkService
+import com.globa.cocktails.repository.CocktailRepository
+import kotlinx.coroutines.Dispatchers
 
 class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {
 
@@ -27,10 +33,10 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {
     }
 
     private val viewModel by lazy {
-        val activity = requireNotNull(this.activity) {
-            "You can only access the viewModel after onActivityCreated()"
-        }
-        ViewModelProvider(this, CocktailListViewModel.Factory(activity.application))[CocktailListViewModel::class.java]
+        val cocktailNetworkDataSource = CocktailNetworkDataSource(Dispatchers.IO,CocktailNetworkService)
+        val cocktailLocalDataSource = CocktailLocalDataSource(getDatabase(requireContext()),Dispatchers.IO)
+        val repository = CocktailRepository(cocktailLocalDataSource,cocktailNetworkDataSource)
+        ViewModelProvider(this, CocktailListViewModel.Factory(repository))[CocktailListViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -42,6 +48,7 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.loadCocktails()
         adapter = CocktailsAdapter()
         adapter?.clickInterface = this
         cocktailListRecyclerView = view.findViewById(R.id.cocktailListRecyclerView)
@@ -49,9 +56,6 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {
         cocktailListRecyclerView.adapter = adapter
         viewModel.cocktails.observe(viewLifecycleOwner) { cocktails ->
             cocktails?.apply { adapter?.list = cocktails }
-        }
-        view.findViewById<EditText>(R.id.searchEditText).addTextChangedListener {
-            viewModel.setFilter(it.toString())
         }
     }
 

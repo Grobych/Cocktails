@@ -1,29 +1,16 @@
 package com.globa.cocktails.database
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.Database
 import com.globa.cocktails.models.Cocktail
 import com.google.gson.Gson
 
 
-
-    @Database(entities = [Cocktail::class], version = 2)
+@Database(entities = [Cocktail::class], version = 2)
     @TypeConverters (Converters::class)
     abstract class CocktailDatabase : RoomDatabase() {
         abstract val cocktailDao: CocktailDao
-    }
-
-    @Dao
-    interface CocktailDao{
-        @Query("select * from cocktails")
-        fun getCocktails() : LiveData<List<Cocktail>>
-        @Query("select * from cocktails where drinkName like :name")
-        fun getCocktailByName(name : String) : LiveData<List<Cocktail>>
-
-        @Insert(onConflict = OnConflictStrategy.IGNORE)
-        fun insertAll(cocktails : List<Cocktail>)
     }
 
     private lateinit var instance : CocktailDatabase

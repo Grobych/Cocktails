@@ -4,45 +4,33 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.globa.cocktails.database.getDatabase
-import com.globa.cocktails.repository.Repository
+import com.globa.cocktails.models.Cocktail
+import com.globa.cocktails.repository.CocktailRepository
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.launch
 
-class CocktailListViewModel(application: Application) : ViewModel() {
+class CocktailListViewModel(
+    private val cocktailRepository: CocktailRepository
+) : ViewModel() {
     private val tag = this.javaClass.simpleName
 
-    private val repository = Repository(getDatabase(application.applicationContext))
-    var cocktails = repository.cocktails
-    var filter = MutableLiveData("%")
-    fun setFilter(newFilter: String) {
-        val f = when {
-            newFilter.isEmpty() -> "%"
-            else -> "%$newFilter%"
-        }
-        filter.postValue(f)
-    }
+    var cocktails = MutableLiveData<List<Cocktail>>()
 
-    init {
-        refreshDataFromRepository()
-        cocktails = Transformations.switchMap(filter) { filter ->
-            repository.refreshCocktailsWithFilter(filter)
-        }
-    }
 
-    private fun refreshDataFromRepository(){
+    fun loadCocktails(){
         viewModelScope.launch {
-            try {
-                repository.refreshCocktailsFromNet()
-            } catch (error : Exception){
-                Log.e(tag, "${error.message}")
-            }
+            cocktails.postValue(cocktailRepository.getCocktails())
         }
     }
 
-    class Factory(private val app: Application) : ViewModelProvider.Factory {
+
+
+    class Factory(private val repository: CocktailRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(CocktailListViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return CocktailListViewModel(app) as T
+                return CocktailListViewModel(repository) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

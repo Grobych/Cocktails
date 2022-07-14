@@ -5,17 +5,17 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-interface NetworkService {
+interface CocktailAPI {
     @GET("/drinks")
     suspend fun getDrinks() : List<Cocktail>
 }
 
-object Network {
+object CocktailNetworkService {
 
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://cocktail-recipes-tully4school.herokuapp.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val instance: NetworkService = retrofit.create(NetworkService::class.java)
+    val instance: CocktailAPI = retrofit.create(CocktailAPI::class.java)
 }
