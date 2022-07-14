@@ -2,6 +2,7 @@ package com.globa.cocktails.datalayer.repository
 
 import com.globa.cocktails.datalayer.database.CocktailLocalDataSource
 import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.datalayer.models.asDomainModel
 import com.globa.cocktails.datalayer.network.CocktailNetworkDataSource
 
 class CocktailRepository (
@@ -15,8 +16,9 @@ class CocktailRepository (
         if (cocktails.isEmpty()){
             cocktails = cocktailLocalDataSource.getCocktails().ifEmpty {
                 val cocktailFromNet = cocktailNetworkDataSource.getCocktails()
-                cocktailLocalDataSource.putCocktails(cocktailFromNet)
-                cocktailFromNet }
+                cocktailLocalDataSource.putCocktails(cocktailFromNet.asDomainModel())
+                cocktailFromNet.asDomainModel()
+            }
         }
         return cocktails
     }

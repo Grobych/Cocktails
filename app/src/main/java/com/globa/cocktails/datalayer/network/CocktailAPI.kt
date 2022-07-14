@@ -1,13 +1,13 @@
 package com.globa.cocktails.datalayer.network
 
-import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.datalayer.models.CocktailAPIModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 interface CocktailAPI {
     @GET("/drinks")
-    suspend fun getDrinks() : List<Cocktail>
+    suspend fun getDrinks() : List<CocktailAPIModel>
 }
 
 object CocktailNetworkService {

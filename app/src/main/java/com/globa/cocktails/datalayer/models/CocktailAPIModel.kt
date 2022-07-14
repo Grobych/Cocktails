@@ -1,13 +1,8 @@
 package com.globa.cocktails.datalayer.models
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-
-@Entity(tableName = "cocktails")
-data class Cocktail(
-    @PrimaryKey
+data class CocktailAPIModel(
     @SerializedName("_id")              val id : String,
     @SerializedName("drinkNumber")      val drinkNumber : Int,
     @SerializedName("drinkName")        val drinkName : String,
@@ -19,3 +14,17 @@ data class Cocktail(
     @SerializedName("drinkMeasures")    val measures : List<String>,
     @SerializedName("drinkInstructions")val instructions : String)
 
+    fun List<CocktailAPIModel>.asDomainModel() = map {
+        Cocktail(
+            id = it.id,
+            drinkNumber = it.drinkNumber,
+            drinkName = it.drinkName,
+            alcohol = it.alcohol,
+            drinkCategory = it.drinkCategory,
+            imageURL = it.imageURL,
+            drinkGlass = it.drinkGlass,
+            ingredients = it.ingredients,
+            measures = it.measures,
+            instructions = it.instructions
+        )
+    }
