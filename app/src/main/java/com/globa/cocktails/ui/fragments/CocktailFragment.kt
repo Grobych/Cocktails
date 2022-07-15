@@ -1,4 +1,4 @@
-package com.globa.cocktails.fragments
+package com.globa.cocktails.ui.fragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -13,6 +13,7 @@ import com.globa.cocktails.R
 import com.globa.cocktails.adapters.IngredientsAdapter
 import com.globa.cocktails.databinding.CocktailFragmentBinding
 import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.ui.viewmodels.CocktailViewModel
 
 class CocktailFragment(val cocktail: Cocktail) : Fragment() {
 

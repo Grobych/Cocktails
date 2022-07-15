@@ -3,8 +3,8 @@ package com.globa.cocktails.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.globa.cocktails.R
-import com.globa.cocktails.fragments.CocktailFragment
-import com.globa.cocktails.fragments.CocktailListFragment
+import com.globa.cocktails.ui.fragments.CocktailFragment
+import com.globa.cocktails.ui.fragments.CocktailListFragment
 import com.globa.cocktails.datalayer.models.Cocktail
 
 class MainActivity : AppCompatActivity(), CocktailListFragment.OpenFragment {

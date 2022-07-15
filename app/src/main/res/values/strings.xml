@@ -6,6 +6,7 @@
     <string name="has_alcohol_radiobutton_text">Has alcohol</string>
     <string name="type">Type</string>
     <string name="cocktail_fragment_glass_template">Serve on %1$s</string>
+    <string name="loading_data">Loading data</string>
 
 
     <!--    CocktailModel-->

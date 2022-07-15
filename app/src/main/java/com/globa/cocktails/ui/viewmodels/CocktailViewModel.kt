@@ -1,4 +1,4 @@
-package com.globa.cocktails.fragments
+package com.globa.cocktails.ui.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
