@@ -7,21 +7,20 @@
     <string name="type">Type</string>
     <string name="cocktail_fragment_glass_template">Serve on %1$s</string>
     <string name="loading_data">Loading data</string>
+    <string name="has_alcohol">Has alcohol</string>
 
 
     <!--    CocktailModel-->
     <string-array name="drinkCategory">
+        <item>All</item>
+        <item>Cocktails</item>
         <item>Beer</item>
-        <item>Cocktail</item>
         <item>Cocoa</item>
         <item>Homemade Liqueur</item>
-        <item>Milk / Float / Shake</item>
-        <item>Ordinary Drink</item>
-        <item>Other/Unknown</item>
-        <item>Punch / Party Drink</item>
-        <item>Shot</item>
-        <item>Soft Drink / Soda</item>
-        <item>Coffee / Tea</item>
+        <item>Milk</item>
+        <item>Ordinary Drinks</item>
+        <item>Other</item>
+        <item>Shots</item>
     </string-array>
     <!--    CocktailModel-->
 

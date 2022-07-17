@@ -9,6 +9,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
@@ -32,12 +33,13 @@ import com.globa.cocktails.ui.viewmodels.CocktailListViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {
+class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterView.OnItemSelectedListener {
 
     private lateinit var cocktailListRecyclerView : RecyclerView
     private var adapter : CocktailsAdapter? = null
     private lateinit var binding : CocktailListFragmentBinding
     var openFragment : OpenFragment? = null
+    private val filter = CocktailFilter()
 
     companion object {
         fun newInstance() = CocktailListFragment()
@@ -56,6 +58,12 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {
         savedInstanceState: Bundle?
     ): View {
         binding = CocktailListFragmentBinding.inflate(inflater,container,false)
+        binding.filterButton.setOnClickListener {
+            if (binding.filtersLayout.visibility == GONE)
+                binding.filtersLayout.visibility = VISIBLE
+            else binding.filtersLayout.visibility = GONE
+        }
+
         return binding.root
     }
 
@@ -77,8 +85,10 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {
         }
 
         binding.searchEditText.addTextChangedListener {
-            viewModel.loadCocktails(CocktailFilter(it.toString()))
+            filter.name = it.toString()
+            viewModel.loadCocktails(filter)
         }
+        binding.typeOfCocktailSpinner.onItemSelectedListener = this
     }
 
     override fun clicked(cocktail: Cocktail) {
@@ -87,6 +97,14 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {
 
     interface OpenFragment{
         fun open(cocktail: Cocktail)
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        filter.type = parent?.selectedItem.toString()
+        viewModel.loadCocktails(filter)
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
     }
 
 

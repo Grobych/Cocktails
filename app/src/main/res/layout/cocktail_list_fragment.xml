@@ -47,10 +47,14 @@
             android:id="@+id/filtersLayout"
             android:visibility="gone">
 
-            <androidx.appcompat.widget.SwitchCompat
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/hasAlcoholSwitch"
+                android:text="@string/has_alcohol"/>
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hasAlcoholSpinner"
                 android:checked="true"
                 android:text="@string/has_alcohol_radiobutton_text"/>
             <TextView
@@ -62,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/typeOfCocktailSpinner"
-
+                android:entries="@array/drinkCategory"
                 android:layout_marginStart="10dp"/>
         </LinearLayout>
 

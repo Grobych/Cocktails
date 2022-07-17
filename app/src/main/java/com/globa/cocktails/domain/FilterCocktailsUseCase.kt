@@ -12,9 +12,12 @@ class FilterCocktailsUseCase(
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.Default) {
 
     suspend operator fun invoke(filter: CocktailFilter) : List<Cocktail> = withContext(coroutineDispatcher){
-        return@withContext cocktailRepository.getCocktails().filter {
+        return@withContext cocktailRepository.getCocktails()
+            .filter {
             filter.name.ifEmpty { true }
             it.drinkName.contains(filter.name, ignoreCase = true) }
+            .filter { if (filter.type == "All") true
+            else it.drinkCategory == filter.type}
     }
 
 }
