@@ -52,8 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/hasAlcoholSpinner"
-            android:checked="true"
-            android:text="@string/has_alcohol_radiobutton_text"/>
+            android:entries="@array/drinkIsAlcohol"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

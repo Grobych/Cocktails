@@ -15,9 +15,19 @@ class FilterCocktailsUseCase(
         return@withContext cocktailRepository.getCocktails()
             .filter {
             filter.name.ifEmpty { true }
-            it.drinkName.contains(filter.name, ignoreCase = true) }
-            .filter { if (filter.type == "All") true
-            else it.drinkCategory == filter.type}
+            it.drinkName.contains(filter.name, ignoreCase = true)
+            }
+            .filter {
+                if (filter.type == "All") true
+                else it.drinkCategory == filter.type
+            }
+            .filter{
+                if (filter.hasAlcohol == "All") true
+                else it.alcohol == when (filter.hasAlcohol){
+                    "Alcoholic" -> true
+                    else -> false
+                }
+            }
     }
 
 }

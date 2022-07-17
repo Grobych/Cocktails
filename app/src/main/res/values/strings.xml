@@ -10,7 +10,7 @@
     <string name="has_alcohol">Has alcohol</string>
 
 
-    <!--    CocktailModel-->
+    <!--    Filters-->
     <string-array name="drinkCategory">
         <item>All</item>
         <item>Cocktails</item>
@@ -22,7 +22,12 @@
         <item>Other</item>
         <item>Shots</item>
     </string-array>
-    <!--    CocktailModel-->
+    <string-array name="drinkIsAlcohol">
+        <item>All</item>
+        <item>Alcoholic</item>
+        <item>Non-alcoholic</item>
+    </string-array>
+    <!--    Filters-->
 
 
 </resources>

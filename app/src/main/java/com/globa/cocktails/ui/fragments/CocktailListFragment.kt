@@ -1,8 +1,8 @@
 package com.globa.cocktails.ui.fragments
 
-import android.opengl.Visibility
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -89,6 +88,7 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterVi
             viewModel.loadCocktails(filter)
         }
         binding.typeOfCocktailSpinner.onItemSelectedListener = this
+        binding.hasAlcoholSpinner.onItemSelectedListener = this
     }
 
     override fun clicked(cocktail: Cocktail) {
@@ -100,7 +100,10 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterVi
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        filter.type = parent?.selectedItem.toString()
+        when(parent?.id){
+            R.id.typeOfCocktailSpinner -> filter.type = parent.selectedItem.toString()
+            R.id.hasAlcoholSpinner -> filter.hasAlcohol = parent.selectedItem.toString()
+        }
         viewModel.loadCocktails(filter)
     }
 
