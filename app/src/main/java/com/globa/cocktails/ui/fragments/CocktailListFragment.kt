@@ -10,6 +10,8 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -21,9 +23,11 @@ import com.globa.cocktails.databinding.CocktailListFragmentBinding
 import com.globa.cocktails.datalayer.database.CocktailLocalDataSource
 import com.globa.cocktails.datalayer.database.getDatabase
 import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.datalayer.models.CocktailFilter
 import com.globa.cocktails.datalayer.network.CocktailNetworkDataSource
 import com.globa.cocktails.datalayer.network.CocktailNetworkService
 import com.globa.cocktails.datalayer.repository.CocktailRepository
+import com.globa.cocktails.domain.FilterCocktailsUseCase
 import com.globa.cocktails.ui.viewmodels.CocktailListViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,7 +47,8 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {
         val cocktailNetworkDataSource = CocktailNetworkDataSource(Dispatchers.IO,CocktailNetworkService)
         val cocktailLocalDataSource = CocktailLocalDataSource(getDatabase(requireContext()),Dispatchers.IO)
         val repository = CocktailRepository(cocktailLocalDataSource,cocktailNetworkDataSource)
-        ViewModelProvider(this, CocktailListViewModel.Factory(repository))[CocktailListViewModel::class.java]
+        val filterCocktailsUseCase = FilterCocktailsUseCase(repository,Dispatchers.IO)
+        ViewModelProvider(this, CocktailListViewModel.Factory(filterCocktailsUseCase))[CocktailListViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -56,7 +61,7 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadCocktails()
+        viewModel.loadCocktails(CocktailFilter())
         adapter = CocktailsAdapter()
         adapter?.clickInterface = this
         cocktailListRecyclerView = view.findViewById(R.id.cocktailListRecyclerView)
@@ -69,6 +74,10 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked {
                     adapter?.list = it.cocktailList
                 }
             }
+        }
+
+        binding.searchEditText.addTextChangedListener {
+            viewModel.loadCocktails(CocktailFilter(it.toString()))
         }
     }
 

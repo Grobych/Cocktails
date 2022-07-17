@@ -2,7 +2,9 @@ package com.globa.cocktails.ui.viewmodels
 
 import androidx.lifecycle.*
 import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.datalayer.models.CocktailFilter
 import com.globa.cocktails.datalayer.repository.CocktailRepository
+import com.globa.cocktails.domain.FilterCocktailsUseCase
 import com.globa.cocktails.ui.CocktailListUiState
 import com.globa.cocktails.ui.CocktailUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CocktailListViewModel(
-    private val cocktailRepository: CocktailRepository
+    val filterCocktailsUseCase: FilterCocktailsUseCase
 ) : ViewModel() {
     private val tag = this.javaClass.simpleName
 
@@ -20,13 +22,13 @@ class CocktailListViewModel(
     val uiState : StateFlow<CocktailListUiState> = _uiState.asStateFlow()
 
 
-    fun loadCocktails(){
+    fun loadCocktails(filter: CocktailFilter){
         viewModelScope.launch {
             _uiState.update {
                 it.copy(isLoading = true)
             }
             try {
-                val res = cocktailRepository.getCocktails()
+                val res = filterCocktailsUseCase(filter)
                 _uiState.update { it.copy(
                     isLoading = false,
                     cocktailList = res
@@ -44,11 +46,11 @@ class CocktailListViewModel(
 
 
 
-    class Factory(private val repository: CocktailRepository) : ViewModelProvider.Factory {
+    class Factory(private val filterCocktailsUseCase: FilterCocktailsUseCase) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(CocktailListViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return CocktailListViewModel(repository) as T
+                return CocktailListViewModel(filterCocktailsUseCase) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
