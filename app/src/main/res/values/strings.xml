@@ -8,6 +8,7 @@
     <string name="cocktail_fragment_glass_template">Serve on %1$s</string>
     <string name="loading_data">Loading data</string>
     <string name="has_alcohol">Has alcohol</string>
+    <string name="get_random_button_text">Random</string>
 
 
     <!--    Filters-->

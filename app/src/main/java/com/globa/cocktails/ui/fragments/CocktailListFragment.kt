@@ -2,7 +2,6 @@ package com.globa.cocktails.ui.fragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +27,7 @@ import com.globa.cocktails.datalayer.network.CocktailNetworkDataSource
 import com.globa.cocktails.datalayer.network.CocktailNetworkService
 import com.globa.cocktails.datalayer.repository.CocktailRepository
 import com.globa.cocktails.domain.FilterCocktailsUseCase
+import com.globa.cocktails.domain.RandomCocktailUseCase
 import com.globa.cocktails.ui.viewmodels.CocktailListViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,7 +49,8 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterVi
         val cocktailLocalDataSource = CocktailLocalDataSource(getDatabase(requireContext()),Dispatchers.IO)
         val repository = CocktailRepository(cocktailLocalDataSource,cocktailNetworkDataSource)
         val filterCocktailsUseCase = FilterCocktailsUseCase(repository,Dispatchers.IO)
-        ViewModelProvider(this, CocktailListViewModel.Factory(filterCocktailsUseCase))[CocktailListViewModel::class.java]
+        val getRandomCocktailUseCase = RandomCocktailUseCase(repository,Dispatchers.IO)
+        ViewModelProvider(this, CocktailListViewModel.Factory(filterCocktailsUseCase, getRandomCocktailUseCase))[CocktailListViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -61,6 +62,11 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterVi
             if (binding.filtersLayout.visibility == GONE)
                 binding.filtersLayout.visibility = VISIBLE
             else binding.filtersLayout.visibility = GONE
+        }
+        binding.getRandomCocktailButton.setOnClickListener{
+            lifecycleScope.launch {
+                openFragment?.open(viewModel.getRandomCocktail())
+            }
         }
 
         return binding.root
