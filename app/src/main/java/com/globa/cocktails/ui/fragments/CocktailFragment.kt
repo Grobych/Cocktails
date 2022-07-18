@@ -2,7 +2,6 @@ package com.globa.cocktails.ui.fragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -47,7 +46,6 @@ class CocktailFragment(val cocktail: Cocktail) : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
         val map = cocktail.ingredients.zip(cocktail.measures).toMap()
-        Log.d("COCKTAIL", "$map")
         adapter!!.map = map
     }
 

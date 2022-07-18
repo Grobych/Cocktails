@@ -1,7 +1,5 @@
 package com.globa.cocktails.domain
 
-import android.util.Log
-import android.util.TimeUtils
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
 import kotlinx.coroutines.CoroutineDispatcher
