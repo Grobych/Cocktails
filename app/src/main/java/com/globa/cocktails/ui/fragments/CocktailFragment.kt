@@ -16,11 +16,9 @@ import com.globa.cocktails.ui.viewmodels.CocktailViewModel
 
 class CocktailFragment(val cocktail: Cocktail) : Fragment() {
 
-    companion object {
-        fun newInstance(cocktail: Cocktail) = CocktailFragment(cocktail)
-    }
+    companion object;
     lateinit var binding: CocktailFragmentBinding
-    var adapter : IngredientsAdapter? = null
+    private var adapter : IngredientsAdapter? = null
     private lateinit var recyclerView : RecyclerView
 
     private val viewModel by lazy {

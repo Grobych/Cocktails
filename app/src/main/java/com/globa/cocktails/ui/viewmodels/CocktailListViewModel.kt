@@ -1,6 +1,7 @@
 package com.globa.cocktails.ui.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.models.CocktailFilter
 import com.globa.cocktails.domain.FilterCocktailsUseCase
@@ -11,16 +12,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
 
 class CocktailListViewModel @Inject constructor(
     val filterCocktailsUseCase: FilterCocktailsUseCase,
     val randomCocktailUseCase: RandomCocktailUseCase
 ) : ViewModel() {
-    private val tag = this.javaClass.simpleName
-
     private val _uiState = MutableStateFlow(CocktailListUiState())
     val uiState : StateFlow<CocktailListUiState> = _uiState.asStateFlow()
 

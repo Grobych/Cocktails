@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.globa.cocktails.R
 import com.globa.cocktails.databinding.CocktailIngredientsItemBinding
 
-class IngredientsAdapter() : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+class IngredientsAdapter : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     var map : Map<String,String> = emptyMap()
     @SuppressLint("NotifyDataSetChanged")

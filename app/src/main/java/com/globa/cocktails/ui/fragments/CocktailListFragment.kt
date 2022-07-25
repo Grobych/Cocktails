@@ -1,6 +1,5 @@
 package com.globa.cocktails.ui.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,17 +19,9 @@ import com.globa.cocktails.App
 import com.globa.cocktails.R
 import com.globa.cocktails.adapters.CocktailsAdapter
 import com.globa.cocktails.databinding.CocktailListFragmentBinding
-import com.globa.cocktails.datalayer.database.CocktailLocalDataSource
-import com.globa.cocktails.datalayer.database.DatabaseModule
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.models.CocktailFilter
-import com.globa.cocktails.datalayer.network.CocktailNetworkDataSource
-import com.globa.cocktails.datalayer.network.NetworkModule
-import com.globa.cocktails.datalayer.repository.CocktailRepository
-import com.globa.cocktails.domain.FilterCocktailsUseCase
-import com.globa.cocktails.domain.RandomCocktailUseCase
 import com.globa.cocktails.ui.viewmodels.CocktailListViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,20 +33,8 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterVi
     var openFragment : OpenFragment? = null
     private val filter = CocktailFilter()
 
-    companion object {
-        fun newInstance() = CocktailListFragment()
-    }
-
     @Inject
     lateinit var viewModel: CocktailListViewModel
-//    private val viewModel by lazy {
-//        val cocktailNetworkDataSource = CocktailNetworkDataSource(Dispatchers.IO,NetworkModule().providesCocktailNetworkService())
-//        val cocktailLocalDataSource = CocktailLocalDataSource(DatabaseModule.getDatabase(requireContext()),Dispatchers.IO)
-//        val repository = CocktailRepository(cocktailLocalDataSource,cocktailNetworkDataSource)
-//        val filterCocktailsUseCase = FilterCocktailsUseCase(repository,Dispatchers.IO)
-//        val getRandomCocktailUseCase = RandomCocktailUseCase(repository,Dispatchers.IO)
-//        ViewModelProvider(this, CocktailListViewModel.Factory(filterCocktailsUseCase, getRandomCocktailUseCase))[CocktailListViewModel::class.java]
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (requireContext().applicationContext as App).appComponent.inject(this)

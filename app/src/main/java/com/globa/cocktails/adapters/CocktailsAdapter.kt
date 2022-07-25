@@ -9,7 +9,7 @@ import com.globa.cocktails.R
 import com.globa.cocktails.databinding.CocktailListFragmentItemBinding
 import com.globa.cocktails.datalayer.models.Cocktail
 
-class CocktailsAdapter() : RecyclerView.Adapter<CocktailsAdapter.ViewHolder>() {
+class CocktailsAdapter : RecyclerView.Adapter<CocktailsAdapter.ViewHolder>() {
 
     var clickInterface : ItemClicked? = null
 
