@@ -1,16 +1,18 @@
 package com.globa.cocktails.datalayer.network
 
 import com.globa.cocktails.datalayer.models.CocktailAPIModel
+import com.globa.cocktails.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CocktailNetworkDataSource(
-    private val coroutineDispatcher: CoroutineDispatcher,
+class CocktailNetworkDataSource @Inject constructor(
+    @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     private val cocktailNetworkService : CocktailNetworkService) {
 
     suspend fun getCocktails() : List<CocktailAPIModel> =
         withContext(coroutineDispatcher){
-            cocktailNetworkService.instance.getDrinks().filter { it.drinkNumber != 0 }
+            cocktailNetworkService.getDrinks().filter { it.drinkNumber != 0 }
         }
 
 }

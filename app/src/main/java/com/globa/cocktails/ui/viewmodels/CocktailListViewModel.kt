@@ -12,9 +12,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
-class CocktailListViewModel(
+class CocktailListViewModel @Inject constructor(
     val filterCocktailsUseCase: FilterCocktailsUseCase,
     val randomCocktailUseCase: RandomCocktailUseCase
 ) : ViewModel() {
@@ -49,17 +50,17 @@ class CocktailListViewModel(
     suspend fun getRandomCocktail() : Cocktail = randomCocktailUseCase()
 
 
-    class Factory(private val filterCocktailsUseCase: FilterCocktailsUseCase,
-                    private val getRandomCocktailUseCase: RandomCocktailUseCase)
-        : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(CocktailListViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return CocktailListViewModel(
-                    filterCocktailsUseCase,
-                    getRandomCocktailUseCase) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
+//    class Factory(private val filterCocktailsUseCase: FilterCocktailsUseCase,
+//                    private val getRandomCocktailUseCase: RandomCocktailUseCase)
+//        : ViewModelProvider.Factory {
+//        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//            if (modelClass.isAssignableFrom(CocktailListViewModel::class.java)) {
+//                @Suppress("UNCHECKED_CAST")
+//                return CocktailListViewModel(
+//                    filterCocktailsUseCase,
+//                    getRandomCocktailUseCase) as T
+//            }
+//            throw IllegalArgumentException("Unable to construct viewmodel")
+//        }
+//    }
 }

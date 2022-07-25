@@ -2,14 +2,16 @@ package com.globa.cocktails.domain
 
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
+import com.globa.cocktails.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.util.*
+import javax.inject.Inject
 import kotlin.random.Random
 
-class RandomCocktailUseCase(
+class RandomCocktailUseCase @Inject constructor(
     private val repository: CocktailRepository,
-    private val coroutineDispatcher: CoroutineDispatcher
+    @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) {
     suspend operator fun invoke() : Cocktail = withContext(coroutineDispatcher){
             val list = repository.getCocktails()

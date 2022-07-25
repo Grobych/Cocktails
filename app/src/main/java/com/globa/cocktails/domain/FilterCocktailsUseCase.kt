@@ -3,13 +3,15 @@ package com.globa.cocktails.domain
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.models.CocktailFilter
 import com.globa.cocktails.datalayer.repository.CocktailRepository
+import com.globa.cocktails.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class FilterCocktailsUseCase(
+class FilterCocktailsUseCase @Inject constructor(
     private val cocktailRepository: CocktailRepository,
-    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.Default) {
+    @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.Default) {
 
     suspend operator fun invoke(filter: CocktailFilter) : List<Cocktail> = withContext(coroutineDispatcher){
         return@withContext cocktailRepository.getCocktails()

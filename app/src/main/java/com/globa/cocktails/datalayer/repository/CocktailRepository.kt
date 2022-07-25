@@ -5,8 +5,11 @@ import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.models.asDBModel
 import com.globa.cocktails.datalayer.models.asDomainModel
 import com.globa.cocktails.datalayer.network.CocktailNetworkDataSource
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class CocktailRepository (
+@Singleton
+class CocktailRepository @Inject constructor (
     private val cocktailLocalDataSource: CocktailLocalDataSource,
     private val cocktailNetworkDataSource: CocktailNetworkDataSource
         ) {

@@ -1,12 +1,14 @@
 package com.globa.cocktails.datalayer.database
 
 import com.globa.cocktails.datalayer.models.CocktailDBModel
+import com.globa.cocktails.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CocktailLocalDataSource(
+class CocktailLocalDataSource @Inject constructor(
     private val db : CocktailDatabase,
-    private val coroutineDispatcher: CoroutineDispatcher
+    @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) {
     suspend fun getCocktails() =
         withContext(coroutineDispatcher){

@@ -16,21 +16,23 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.globa.cocktails.App
 import com.globa.cocktails.R
 import com.globa.cocktails.adapters.CocktailsAdapter
 import com.globa.cocktails.databinding.CocktailListFragmentBinding
 import com.globa.cocktails.datalayer.database.CocktailLocalDataSource
-import com.globa.cocktails.datalayer.database.getDatabase
+import com.globa.cocktails.datalayer.database.DatabaseModule
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.models.CocktailFilter
 import com.globa.cocktails.datalayer.network.CocktailNetworkDataSource
-import com.globa.cocktails.datalayer.network.CocktailNetworkService
+import com.globa.cocktails.datalayer.network.NetworkModule
 import com.globa.cocktails.datalayer.repository.CocktailRepository
 import com.globa.cocktails.domain.FilterCocktailsUseCase
 import com.globa.cocktails.domain.RandomCocktailUseCase
 import com.globa.cocktails.ui.viewmodels.CocktailListViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterView.OnItemSelectedListener {
 
@@ -44,13 +46,20 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterVi
         fun newInstance() = CocktailListFragment()
     }
 
-    private val viewModel by lazy {
-        val cocktailNetworkDataSource = CocktailNetworkDataSource(Dispatchers.IO,CocktailNetworkService)
-        val cocktailLocalDataSource = CocktailLocalDataSource(getDatabase(requireContext()),Dispatchers.IO)
-        val repository = CocktailRepository(cocktailLocalDataSource,cocktailNetworkDataSource)
-        val filterCocktailsUseCase = FilterCocktailsUseCase(repository,Dispatchers.IO)
-        val getRandomCocktailUseCase = RandomCocktailUseCase(repository,Dispatchers.IO)
-        ViewModelProvider(this, CocktailListViewModel.Factory(filterCocktailsUseCase, getRandomCocktailUseCase))[CocktailListViewModel::class.java]
+    @Inject
+    lateinit var viewModel: CocktailListViewModel
+//    private val viewModel by lazy {
+//        val cocktailNetworkDataSource = CocktailNetworkDataSource(Dispatchers.IO,NetworkModule().providesCocktailNetworkService())
+//        val cocktailLocalDataSource = CocktailLocalDataSource(DatabaseModule.getDatabase(requireContext()),Dispatchers.IO)
+//        val repository = CocktailRepository(cocktailLocalDataSource,cocktailNetworkDataSource)
+//        val filterCocktailsUseCase = FilterCocktailsUseCase(repository,Dispatchers.IO)
+//        val getRandomCocktailUseCase = RandomCocktailUseCase(repository,Dispatchers.IO)
+//        ViewModelProvider(this, CocktailListViewModel.Factory(filterCocktailsUseCase, getRandomCocktailUseCase))[CocktailListViewModel::class.java]
+//    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        (requireContext().applicationContext as App).appComponent.inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
