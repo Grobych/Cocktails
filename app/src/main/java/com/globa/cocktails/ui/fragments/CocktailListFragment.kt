@@ -1,5 +1,6 @@
 package com.globa.cocktails.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -36,9 +37,10 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterVi
     @Inject
     lateinit var viewModel: CocktailListViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        (requireContext().applicationContext as App).appComponent.inject(this)
-        super.onCreate(savedInstanceState)
+
+    override fun onAttach(context: Context) {
+        (context.applicationContext as App).appComponent.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(
