@@ -10,65 +10,72 @@
             type="com.globa.cocktails.datalayer.models.Cocktail" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cocktailFragmentNameTextView"
-            android:textSize="12pt"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="@{cocktail.drinkName}"/>
+        android:layout_height="match_parent">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="300dp"
-                android:id="@+id/cocktailFragmentImageView"
-                android:layout_margin="10dp"
-                app:imageUrl="@{cocktail.imageURL}"
-                android:contentDescription="@{cocktail.drinkName}"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/cocktailIngredientsRecyclerView"
-                android:layout_margin="10dp"
-                tools:listitem="@layout/cocktail_ingredients_item"/>
-
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cocktailFragmentNameTextView"
+                android:textSize="12pt"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="@{cocktail.drinkName}"/>
 
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/cocktailFragmentGlassTextView"
-                android:textSize="10pt"
-                android:layout_margin="10dp"
-                android:text="@{@string/cocktail_fragment_glass_template(cocktail.drinkGlass)}"/>
-            <TextView
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="180dp"
+                    android:layout_height="270dp"
+                    android:id="@+id/cocktailFragmentImageView"
+                    android:layout_margin="10dp"
+                    app:imageUrl="@{cocktail.imageURL}"
+                    android:contentDescription="@{cocktail.drinkName}"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/cocktailIngredientsRecyclerView"
+                    android:layout_margin="10dp"
+                    tools:listitem="@layout/cocktail_ingredients_item"/>
+
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="10pt"
-                android:layout_margin="10dp"
-                android:id="@+id/cocktailInstructionsTextView"
-                android:text="@{cocktail.instructions}"/>
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cocktailFragmentGlassTextView"
+                    android:textSize="10pt"
+                    android:layout_margin="10dp"
+                    android:text="@{@string/cocktail_fragment_glass_template(cocktail.drinkGlass)}"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="10pt"
+                    android:layout_margin="10dp"
+                    android:id="@+id/cocktailInstructionsTextView"
+                    android:text="@{cocktail.instructions}"/>
+            </LinearLayout>
+
         </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
 
 </layout>
