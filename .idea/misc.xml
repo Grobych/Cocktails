@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Alexander/AndroidStudioProjects/Cocktails/app/src/main/res/drawable/broken_image.xml" value="0.2085" />
+        <entry key="..\:/Users/Alexander/AndroidStudioProjects/Cocktails/app/src/main/res/drawable/ic_launcher_new.xml" value="0.1" />
         <entry key="..\:/Users/Alexander/AndroidStudioProjects/Cocktails/app/src/main/res/drawable/ic_loading.xml" value="0.2085" />
         <entry key="..\:/Users/Alexander/AndroidStudioProjects/Cocktails/app/src/main/res/drawable/loading_img.xml" value="0.2085" />
         <entry key="..\:/Users/Alexander/AndroidStudioProjects/Cocktails/app/src/main/res/layout/activity_main.xml" value="0.2677083333333333" />
@@ -11,6 +12,8 @@
         <entry key="..\:/Users/Alexander/AndroidStudioProjects/Cocktails/app/src/main/res/layout/cocktail_ingredients_item.xml" value="0.33559782608695654" />
         <entry key="..\:/Users/Alexander/AndroidStudioProjects/Cocktails/app/src/main/res/layout/cocktail_list_fragment.xml" value="0.2677083333333333" />
         <entry key="..\:/Users/Alexander/AndroidStudioProjects/Cocktails/app/src/main/res/layout/cocktail_list_fragment_item.xml" value="0.2677083333333333" />
+        <entry key="..\:/Users/Alexander/AndroidStudioProjects/Cocktails/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2345" />
+        <entry key="..\:/Users/Alexander/AndroidStudioProjects/Cocktails/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>
     </option>
   </component>
