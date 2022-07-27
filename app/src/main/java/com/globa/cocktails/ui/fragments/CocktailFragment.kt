@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.globa.cocktails.R
 import com.globa.cocktails.adapters.IngredientsAdapter
 import com.globa.cocktails.databinding.CocktailFragmentBinding
 import com.globa.cocktails.datalayer.models.Cocktail
@@ -16,10 +14,7 @@ import com.globa.cocktails.ui.viewmodels.CocktailViewModel
 
 class CocktailFragment(val cocktail: Cocktail) : Fragment() {
 
-    companion object;
-    lateinit var binding: CocktailFragmentBinding
-    private var adapter : IngredientsAdapter? = null
-    private lateinit var recyclerView : RecyclerView
+    private lateinit var binding: CocktailFragmentBinding
 
     private val viewModel by lazy {
         ViewModelProvider(this, CocktailViewModel.Factory(cocktail))[CocktailViewModel::class.java]
@@ -39,12 +34,11 @@ class CocktailFragment(val cocktail: Cocktail) : Fragment() {
             binding.cocktail = cocktail
         }
 
-        adapter = IngredientsAdapter()
-        recyclerView = view.findViewById(R.id.cocktailIngredientsRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
-        val map = cocktail.ingredients.zip(cocktail.measures).toMap()
-        adapter!!.map = map
+        binding.cocktailIngredientsRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = IngredientsAdapter()
+            (adapter as IngredientsAdapter).map = cocktail.ingredients.zip(cocktail.measures).toMap()
+        }
     }
 
 }
