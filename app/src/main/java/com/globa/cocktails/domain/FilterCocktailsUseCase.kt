@@ -3,7 +3,7 @@ package com.globa.cocktails.domain
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.models.CocktailFilter
 import com.globa.cocktails.datalayer.repository.CocktailRepository
-import com.globa.cocktails.di.IoDispatcher
+import com.globa.cocktails.di.modules.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -1,4 +1,4 @@
-package com.globa.cocktails.di
+package com.globa.cocktails.di.modules
 
 import dagger.Module
 import dagger.Provides

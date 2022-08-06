@@ -1,7 +1,7 @@
 package com.globa.cocktails.datalayer.database
 
 import com.globa.cocktails.datalayer.models.CocktailDBModel
-import com.globa.cocktails.di.IoDispatcher
+import com.globa.cocktails.di.modules.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

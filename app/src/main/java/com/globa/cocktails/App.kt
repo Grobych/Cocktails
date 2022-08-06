@@ -1,7 +1,7 @@
 package com.globa.cocktails
 
 import android.app.Application
-import com.globa.cocktails.di.AppModule
+import com.globa.cocktails.di.modules.AppModule
 import com.globa.cocktails.di.ApplicationComponent
 import com.globa.cocktails.di.DaggerApplicationComponent
 

@@ -45,19 +45,4 @@ class CocktailListViewModel @Inject constructor(
     }
 
     suspend fun getRandomCocktail() : Cocktail = randomCocktailUseCase()
-
-
-//    class Factory(private val filterCocktailsUseCase: FilterCocktailsUseCase,
-//                    private val getRandomCocktailUseCase: RandomCocktailUseCase)
-//        : ViewModelProvider.Factory {
-//        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//            if (modelClass.isAssignableFrom(CocktailListViewModel::class.java)) {
-//                @Suppress("UNCHECKED_CAST")
-//                return CocktailListViewModel(
-//                    filterCocktailsUseCase,
-//                    getRandomCocktailUseCase) as T
-//            }
-//            throw IllegalArgumentException("Unable to construct viewmodel")
-//        }
-//    }
 }

@@ -1,7 +1,8 @@
-package com.globa.cocktails.datalayer.database
+package com.globa.cocktails.di.modules
 
 import android.content.Context
 import androidx.room.Room
+import com.globa.cocktails.datalayer.database.CocktailDatabase
 import dagger.Module
 import dagger.Provides
 
@@ -11,7 +12,7 @@ object DatabaseModule{
 
     @Provides
     fun getDatabase(context: Context) : CocktailDatabase {
-        if (!::instance.isInitialized){
+        if (!DatabaseModule::instance.isInitialized){
             instance = Room.databaseBuilder(
                 context.applicationContext,
                 CocktailDatabase::class.java,
