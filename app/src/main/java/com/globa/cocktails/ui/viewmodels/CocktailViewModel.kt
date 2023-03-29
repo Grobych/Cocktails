@@ -1,18 +1,20 @@
 package com.globa.cocktails.ui.viewmodels
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.globa.cocktails.datalayer.models.Cocktail
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class CocktailViewModel @AssistedInject constructor(
     @Assisted("cocktail") cocktail: Cocktail
 ) : ViewModel() {
 
-    val cocktail = MutableLiveData(cocktail)
+    private val _cocktail = MutableStateFlow(cocktail)
+    val cocktail = _cocktail.asStateFlow()
 }
 
 class CocktailViewModelFactory @AssistedInject constructor(

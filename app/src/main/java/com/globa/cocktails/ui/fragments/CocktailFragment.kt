@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globa.cocktails.App
 import com.globa.cocktails.adapters.IngredientsAdapter
@@ -13,6 +14,8 @@ import com.globa.cocktails.databinding.CocktailFragmentBinding
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.viewmodels.CocktailViewModel
 import com.globa.cocktails.ui.viewmodels.CocktailViewModelFactory
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class CocktailFragment(val cocktail: Cocktail) : Fragment() {
@@ -40,15 +43,15 @@ class CocktailFragment(val cocktail: Cocktail) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.cocktail.observe(viewLifecycleOwner) { cocktail ->
-            binding.cocktail = cocktail
-        }
-
-        binding.cocktailIngredientsRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = IngredientsAdapter()
-            (adapter as IngredientsAdapter).map = cocktail.ingredients.zip(cocktail.measures).toMap()
-        }
+        viewModel.cocktail
+            .onEach {
+            binding.cocktail = it
+            binding.cocktailIngredientsRecyclerView.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = IngredientsAdapter()
+                (adapter as IngredientsAdapter).map = it.ingredients.zip(it.measures).toMap()
+            }
+        }.launchIn(lifecycleScope)
     }
 
 }
