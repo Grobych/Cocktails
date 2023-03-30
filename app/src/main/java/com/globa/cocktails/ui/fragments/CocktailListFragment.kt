@@ -22,6 +22,7 @@ import com.globa.cocktails.adapters.CocktailsAdapter
 import com.globa.cocktails.databinding.CocktailListFragmentBinding
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.models.CocktailFilter
+import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.ui.viewmodels.CocktailListViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -73,7 +74,7 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterVi
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 viewModel.uiState.collect{
-                    binding.cocktailListLoadingImageView.isVisible = it.isLoading
+                    binding.cocktailListLoadingImageView.isVisible = (it.status == UiStateStatus.LOADING)
                     adapter?.list = it.cocktailList
                 }
             }

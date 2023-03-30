@@ -7,6 +7,7 @@ import com.globa.cocktails.datalayer.models.CocktailFilter
 import com.globa.cocktails.domain.FilterCocktailsUseCase
 import com.globa.cocktails.domain.RandomCocktailUseCase
 import com.globa.cocktails.ui.CocktailListUiState
+import com.globa.cocktails.ui.UiStateStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,19 +26,18 @@ class CocktailListViewModel @Inject constructor(
     fun loadCocktails(filter: CocktailFilter){
         viewModelScope.launch {
             _uiState.update {
-                it.copy(isLoading = true)
+                it.copy(status = UiStateStatus.LOADING)
             }
             try {
                 val res = filterCocktailsUseCase(filter)
                 _uiState.update { it.copy(
-                    isLoading = false,
+                    status = UiStateStatus.DONE,
                     cocktailList = res
                 ) }
             } catch (e : Exception){
                 _uiState.update {
                     it.copy(
-                        isLoading = false,
-                        isError = true
+                        status = UiStateStatus.ERROR,
                     )
                 }
             }

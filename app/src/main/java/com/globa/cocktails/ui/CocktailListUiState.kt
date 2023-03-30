@@ -3,7 +3,6 @@ package com.globa.cocktails.ui
 import com.globa.cocktails.datalayer.models.Cocktail
 
 data class CocktailListUiState(
-    val isLoading : Boolean = true,
-    val isError : Boolean = false,
+    val status: UiStateStatus = UiStateStatus.LOADING,
     val cocktailList : List<Cocktail> = listOf()
 )
