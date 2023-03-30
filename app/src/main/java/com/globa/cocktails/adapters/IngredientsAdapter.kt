@@ -1,7 +1,5 @@
 package com.globa.cocktails.adapters
 
-import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -9,16 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.globa.cocktails.R
 import com.globa.cocktails.databinding.CocktailIngredientsItemBinding
 
-class IngredientsAdapter : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
-
-    var map : Map<String,String> = emptyMap()
-    @SuppressLint("NotifyDataSetChanged")
-    set(value){
-        field = value
-        Log.d("ADAPTER", "$field")
-        notifyDataSetChanged()
-    }
-
+class IngredientsAdapter(
+    private val map: Map<String,String> = emptyMap()
+) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: CocktailIngredientsItemBinding) : RecyclerView.ViewHolder(binding.root) {
 

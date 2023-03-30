@@ -48,8 +48,7 @@ class CocktailFragment(val cocktail: Cocktail) : Fragment() {
             binding.cocktail = it
             binding.cocktailIngredientsRecyclerView.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = IngredientsAdapter()
-                (adapter as IngredientsAdapter).map = it.ingredients.zip(it.measures).toMap()
+                adapter = IngredientsAdapter(it.ingredients.zip(it.measures).toMap())
             }
         }.launchIn(lifecycleScope)
     }
