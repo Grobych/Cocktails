@@ -1,6 +1,7 @@
 package com.globa.cocktails.di
 
 import android.content.Context
+import com.globa.cocktails.activities.MainActivity
 import com.globa.cocktails.di.modules.DatabaseModule
 import com.globa.cocktails.di.modules.NetworkModule
 import com.globa.cocktails.di.modules.DispatcherModule
@@ -21,6 +22,7 @@ import javax.inject.Singleton
 interface ApplicationComponent{
     fun inject(fragment: CocktailListFragment)
     fun inject(fragment: CocktailFragment)
+    fun inject(mainActivity: MainActivity)
 
     @Component.Builder
     interface Builder {

@@ -23,7 +23,7 @@ class CocktailListViewModel @Inject constructor(
     val uiState : StateFlow<CocktailListUiState> = _uiState.asStateFlow()
 
 
-    fun loadCocktails(filter: CocktailFilter){
+    fun loadCocktails(filter: CocktailFilter = CocktailFilter()){
         viewModelScope.launch {
             _uiState.update {
                 it.copy(status = UiStateStatus.LOADING)
