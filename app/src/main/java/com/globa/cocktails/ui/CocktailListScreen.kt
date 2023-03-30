@@ -1,16 +1,13 @@
 package com.globa.cocktails.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -77,21 +74,35 @@ fun CocktailListItem(cocktail: Cocktail) {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TagField(list: List<String>) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
-        Modifier.fillMaxWidth().height(100.dp),
-        content = {
-        items(list) {
+    FlowRow(
+        maxItemsInEachRow = 3
+    ) {
+        list.forEach {
             Button(
                 onClick = { /*TODO*/ },
-                Modifier.size(40.dp,40.dp).padding(4.dp)
+                modifier = Modifier
+                    .padding(top = 5.dp, end = 5.dp),
             ) {
-                Text(text = it, fontSize = 10.sp, modifier = Modifier.fillMaxSize())
+                Text(text = it, fontSize = 10.sp)
             }
         }
-    })
+    }
+//    LazyVerticalGrid(
+//        columns = GridCells.Fixed(3),
+//        Modifier.fillMaxWidth().height(100.dp),
+//        content = {
+//        items(list) {
+//            Button(
+//                onClick = { /*TODO*/ },
+//                Modifier.size(40.dp,40.dp).padding(4.dp)
+//            ) {
+//                Text(text = it, fontSize = 10.sp, modifier = Modifier.fillMaxSize())
+//            }
+//        }
+//    })
 }
 
 @Preview
