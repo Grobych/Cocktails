@@ -22,6 +22,9 @@ class CocktailListViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CocktailListUiState())
     val uiState : StateFlow<CocktailListUiState> = _uiState.asStateFlow()
 
+    init {
+        loadCocktails()
+    }
 
     fun loadCocktails(filter: CocktailFilter = CocktailFilter()){
         viewModelScope.launch {

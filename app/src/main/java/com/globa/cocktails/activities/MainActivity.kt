@@ -3,6 +3,9 @@ package com.globa.cocktails.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
 import com.globa.cocktails.App
 import com.globa.cocktails.R
 import com.globa.cocktails.ui.fragments.CocktailFragment
@@ -25,7 +28,9 @@ class MainActivity : AppCompatActivity(), CocktailListFragment.OpenFragment {
         (applicationContext as App).appComponent.inject(this)
 
         setContent {
-            CocktailListScreen(viewModel = cocktailListViewModel)
+            Surface(modifier = Modifier.fillMaxSize()) {
+                CocktailListScreen(viewModel = cocktailListViewModel)
+            }
         }
 
 

@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,12 +23,15 @@ import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.viewmodels.CocktailListViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun CocktailListScreen(viewModel: CocktailListViewModel) {
-    val uiState = viewModel.uiState.collectAsState()
-    viewModel.loadCocktails()
-    when (uiState.value.status) {
+fun CocktailListScreen(
+    viewModel: CocktailListViewModel = viewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    when (uiState.status) {
         UiStateStatus.LOADING -> {
 
         }
@@ -37,7 +41,7 @@ fun CocktailListScreen(viewModel: CocktailListViewModel) {
         UiStateStatus.DONE -> {
             LazyColumn(
                 content = {
-                    items(uiState.value.cocktailList) {
+                    items(uiState.cocktailList) {
                         CocktailListItem(cocktail = it)
                     }
                 },
@@ -90,19 +94,6 @@ fun TagField(list: List<String>) {
             }
         }
     }
-//    LazyVerticalGrid(
-//        columns = GridCells.Fixed(3),
-//        Modifier.fillMaxWidth().height(100.dp),
-//        content = {
-//        items(list) {
-//            Button(
-//                onClick = { /*TODO*/ },
-//                Modifier.size(40.dp,40.dp).padding(4.dp)
-//            ) {
-//                Text(text = it, fontSize = 10.sp, modifier = Modifier.fillMaxSize())
-//            }
-//        }
-//    })
 }
 
 @Preview
