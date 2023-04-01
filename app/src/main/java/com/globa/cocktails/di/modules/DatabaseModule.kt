@@ -5,15 +5,19 @@ import androidx.room.Room
 import com.globa.cocktails.datalayer.database.CocktailDatabase
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+@InstallIn(SingletonComponent::class)
 @Module
 object DatabaseModule{
-    @Provides
     @Singleton
-    fun getDatabase(context: Context) : CocktailDatabase =
+    @Provides
+    fun getDatabase(@ApplicationContext applicationContext: Context) : CocktailDatabase =
         Room.databaseBuilder(
-            context.applicationContext,
+            applicationContext,
             CocktailDatabase::class.java,
             "cocktails"
         )

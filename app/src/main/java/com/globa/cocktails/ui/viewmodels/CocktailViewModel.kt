@@ -1,19 +1,19 @@
 package com.globa.cocktails.ui.viewmodels
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CocktailViewModel @AssistedInject constructor(
-    @Assisted("cocktailId") cocktailId: String,
+@HiltViewModel
+class CocktailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     repository: CocktailRepository
 ) : ViewModel() {
 
@@ -22,27 +22,9 @@ class CocktailViewModel @AssistedInject constructor(
 
     init {
         viewModelScope.launch {
+            val cocktailId = savedStateHandle.get<String>("cocktailId")
             val cocktail = repository.getCocktails().find { it.id == cocktailId }
             cocktail?.let { _cocktail.value = it } // TODO
         }
-    }
-}
-
-class CocktailViewModelFactory @AssistedInject constructor(
-    @Assisted("cocktailId") private val cocktailId: String,
-    private val repository: CocktailRepository
-) : ViewModelProvider.Factory {
-
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(CocktailViewModel::class.java)) {
-            return CocktailViewModel(cocktailId, repository) as T
-        }
-        throw IllegalArgumentException("Unable to construct viewmodel")
-    }
-
-    @AssistedFactory
-    interface Factory {
-        fun create(@Assisted("cocktailId") cocktailId: String): CocktailViewModelFactory
     }
 }

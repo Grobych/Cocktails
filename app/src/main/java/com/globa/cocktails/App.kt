@@ -1,18 +1,7 @@
 package com.globa.cocktails
 
 import android.app.Application
-import com.globa.cocktails.di.ApplicationComponent
-import com.globa.cocktails.di.DaggerApplicationComponent
+import dagger.hilt.android.HiltAndroidApp
 
-
+@HiltAndroidApp
 class App : Application()
-{
-    lateinit var appComponent: ApplicationComponent
-
-    override fun onCreate() {
-        super.onCreate()
-        appComponent = DaggerApplicationComponent.builder()
-            .context(this)
-            .build()
-    }
-}

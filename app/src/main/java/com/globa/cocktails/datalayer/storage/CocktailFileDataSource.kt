@@ -5,6 +5,7 @@ import com.globa.cocktails.datalayer.models.CocktailAPIModel
 import com.globa.cocktails.di.modules.IoDispatcher
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 class CocktailFileDataSource @Inject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
-    private val context: Context
+    @ApplicationContext private val context: Context
 ) {
     suspend fun getCocktails(): List<CocktailAPIModel> = withContext(coroutineDispatcher) {
         val json = readAsset(context, "recipes.json")

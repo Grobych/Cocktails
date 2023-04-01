@@ -35,12 +35,12 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterVi
     var openFragment : OpenFragment? = null
     private val filter = CocktailFilter()
 
-    @Inject
-    lateinit var viewModel: CocktailListViewModel
+//    @Inject
+//    lateinit var viewModel: CocktailListViewModel
 
 
     override fun onAttach(context: Context) {
-        (context.applicationContext as App).appComponent.inject(this)
+//        (context.applicationContext as App).appComponent.inject(this)
         super.onAttach(context)
     }
 
@@ -48,44 +48,44 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterVi
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = CocktailListFragmentBinding.inflate(inflater,container,false)
-        binding.filterButton.setOnClickListener {
-            if (binding.filtersLayout.visibility == GONE)
-                binding.filtersLayout.visibility = VISIBLE
-            else binding.filtersLayout.visibility = GONE
-        }
-        binding.getRandomCocktailButton.setOnClickListener{
-            lifecycleScope.launch {
-                openFragment?.open(viewModel.getRandomCocktail())
-            }
-        }
+//        binding = CocktailListFragmentBinding.inflate(inflater,container,false)
+//        binding.filterButton.setOnClickListener {
+//            if (binding.filtersLayout.visibility == GONE)
+//                binding.filtersLayout.visibility = VISIBLE
+//            else binding.filtersLayout.visibility = GONE
+//        }
+//        binding.getRandomCocktailButton.setOnClickListener{
+//            lifecycleScope.launch {
+//                openFragment?.open(viewModel.getRandomCocktail())
+//            }
+//        }
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadCocktails(CocktailFilter())
-        adapter = CocktailsAdapter()
-        adapter?.clickInterface = this
-        cocktailListRecyclerView = view.findViewById(R.id.cocktailListRecyclerView)
-        cocktailListRecyclerView.layoutManager = LinearLayoutManager(context)
-        cocktailListRecyclerView.adapter = adapter
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.uiState.collect{
-                    binding.cocktailListLoadingImageView.isVisible = (it.status == UiStateStatus.LOADING)
-                    adapter?.list = it.cocktailList
-                }
-            }
-        }
+//        viewModel.loadCocktails(CocktailFilter())
+//        adapter = CocktailsAdapter()
+//        adapter?.clickInterface = this
+//        cocktailListRecyclerView = view.findViewById(R.id.cocktailListRecyclerView)
+//        cocktailListRecyclerView.layoutManager = LinearLayoutManager(context)
+//        cocktailListRecyclerView.adapter = adapter
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED){
+//                viewModel.uiState.collect{
+//                    binding.cocktailListLoadingImageView.isVisible = (it.status == UiStateStatus.LOADING)
+//                    adapter?.list = it.cocktailList
+//                }
+//            }
+//        }
 
-        binding.searchEditText.addTextChangedListener {
-            filter.name = it.toString()
-            viewModel.loadCocktails(filter)
-        }
-        binding.typeOfCocktailSpinner.onItemSelectedListener = this
-        binding.hasAlcoholSpinner.onItemSelectedListener = this
+//        binding.searchEditText.addTextChangedListener {
+//            filter.name = it.toString()
+//            viewModel.loadCocktails(filter)
+//        }
+//        binding.typeOfCocktailSpinner.onItemSelectedListener = this
+//        binding.hasAlcoholSpinner.onItemSelectedListener = this
     }
 
     override fun clicked(cocktail: Cocktail) {
@@ -97,11 +97,11 @@ class CocktailListFragment : Fragment(), CocktailsAdapter.ItemClicked, AdapterVi
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        when(parent?.id){
-            R.id.typeOfCocktailSpinner -> filter.type = parent.selectedItem.toString()
-            R.id.hasAlcoholSpinner -> filter.hasAlcohol = parent.selectedItem.toString()
-        }
-        viewModel.loadCocktails(filter)
+//        when(parent?.id){
+//            R.id.typeOfCocktailSpinner -> filter.type = parent.selectedItem.toString()
+//            R.id.hasAlcoholSpinner -> filter.hasAlcohol = parent.selectedItem.toString()
+//        }
+//        viewModel.loadCocktails(filter)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
