@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.globa.cocktails.ui.CocktailListScreen
+import com.globa.cocktails.ui.NavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             Surface(modifier = Modifier.fillMaxSize()) {
-                CocktailListScreen()
+                NavController()
             }
         }
 

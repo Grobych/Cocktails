@@ -28,7 +28,7 @@ class CocktailListViewModel @Inject constructor(
         loadCocktails()
     }
 
-    fun loadCocktails(filter: CocktailFilter = CocktailFilter()){
+    private fun loadCocktails(filter: CocktailFilter = CocktailFilter()){
         viewModelScope.launch {
             _uiState.update {
                 it.copy(status = UiStateStatus.LOADING)

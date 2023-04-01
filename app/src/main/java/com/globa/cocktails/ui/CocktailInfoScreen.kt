@@ -9,14 +9,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.globa.cocktails.ui.viewmodels.CocktailViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.datalayer.models.Cocktail
 
 @Composable
 fun CocktailInfoScreen(
-    viewModel: CocktailViewModel = viewModel()
+    viewModel: CocktailViewModel = hiltViewModel()
 ) {
 
     val cocktail by viewModel.cocktail.collectAsState()

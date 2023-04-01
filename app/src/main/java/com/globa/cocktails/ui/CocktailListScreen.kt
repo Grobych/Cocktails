@@ -1,5 +1,6 @@
 package com.globa.cocktails.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -19,15 +20,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.viewmodels.CocktailListViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun CocktailListScreen(
-    viewModel: CocktailListViewModel = viewModel()
+    viewModel: CocktailListViewModel = hiltViewModel(),
+    onItemClickAction: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -39,23 +41,22 @@ fun CocktailListScreen(
 
         }
         UiStateStatus.DONE -> {
-            LazyColumn(
-                content = {
-                    items(uiState.cocktailList) {
-                        CocktailListItem(cocktail = it)
-                    }
-                },
-            )
+            LazyColumn {
+                items(uiState.cocktailList) {
+                    CocktailListItem(cocktail = it) { onItemClickAction(it.id) }
+                }
+            }
         }
     }
 }
 
 @Composable
-fun CocktailListItem(cocktail: Cocktail) {
+fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit) {
     Row (
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 10.dp)
+            .clickable(onClick = onItemClickAction)
     ) {
         AsyncImage(
             model = cocktail.imageURL,
@@ -105,5 +106,5 @@ fun CocktailListItemPreview(){
         ingredients = listOf("Tequila","Triple sec","Lime juice","Salt")
     )
 
-    CocktailListItem(cocktail = cocktail)
+    CocktailListItem(cocktail = cocktail) {}
 }
