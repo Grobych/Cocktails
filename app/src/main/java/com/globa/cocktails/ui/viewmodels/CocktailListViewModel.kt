@@ -3,7 +3,7 @@ package com.globa.cocktails.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.datalayer.models.Cocktail
-import com.globa.cocktails.datalayer.models.CocktailFilter
+import com.globa.cocktails.datalayer.repository.CocktailRepository
 import com.globa.cocktails.domain.FilterCocktailsUseCase
 import com.globa.cocktails.domain.RandomCocktailUseCase
 import com.globa.cocktails.ui.CocktailListUiState
@@ -18,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CocktailListViewModel @Inject constructor(
+    private val cocktailRepository: CocktailRepository,
     val filterCocktailsUseCase: FilterCocktailsUseCase,
     val randomCocktailUseCase: RandomCocktailUseCase
 ) : ViewModel() {
@@ -28,13 +29,13 @@ class CocktailListViewModel @Inject constructor(
         loadCocktails()
     }
 
-    private fun loadCocktails(filter: CocktailFilter = CocktailFilter()){
+    private fun loadCocktails(){
         viewModelScope.launch {
             _uiState.update {
                 it.copy(status = UiStateStatus.LOADING)
             }
             try {
-                val res = filterCocktailsUseCase(filter)
+                val res = cocktailRepository.getCocktails()
                 _uiState.update { it.copy(
                     status = UiStateStatus.DONE,
                     cocktailList = res
@@ -43,6 +44,7 @@ class CocktailListViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         status = UiStateStatus.ERROR,
+                        errorMessage = e.toString()
                     )
                 }
             }
