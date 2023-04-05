@@ -4,66 +4,68 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
-import com.globa.cocktails.domain.FilterCocktailsUseCase
 import com.globa.cocktails.domain.RandomCocktailUseCase
+import com.globa.cocktails.ui.CocktailFilterUiState
 import com.globa.cocktails.ui.CocktailListUiState
 import com.globa.cocktails.ui.UiStateStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CocktailListViewModel @Inject constructor(
     private val cocktailRepository: CocktailRepository,
-    val filterCocktailsUseCase: FilterCocktailsUseCase,
     val randomCocktailUseCase: RandomCocktailUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(CocktailListUiState())
     val uiState : StateFlow<CocktailListUiState> = _uiState.asStateFlow()
 
+    private val _cocktailListState = MutableStateFlow(listOf<Cocktail>())
+    private val cocktailListState = _cocktailListState.asStateFlow()
 
-    init {
-        loadCocktails()
+    private val _filter = MutableStateFlow("")
+    private val filter = _filter.asStateFlow()
+
+    private suspend fun getCocktails() = cocktailRepository.getCocktails()
+
+    private fun initCocktailList() {
+        cocktailListState.onEach {
+            _uiState.update {
+                it.copy(
+                    status = UiStateStatus.DONE,
+                    cocktailList = cocktailListState.value
+                )
+            }
+        }.launchIn(viewModelScope)
     }
 
-    private fun loadCocktails(){
-        viewModelScope.launch {
+    private fun initFilters() {
+        filter.onEach { filter ->
             _uiState.update {
-                it.copy(status = UiStateStatus.LOADING)
+                it.copy(filterUiState = CocktailFilterUiState(filter))
             }
-            try {
-                val filter = uiState.value.filterUiState.filter
-                val res = cocktailRepository.getCocktails()
+            _cocktailListState.value =
+                getCocktails()
                     .filter {
-                        uiState.value.filterUiState.filter.ifEmpty { true }
-                        it.drinkName.contains(filter, ignoreCase = true)
-                    }
-                _uiState.update {
-                    it.copy(
-                        status = UiStateStatus.DONE,
-                        cocktailList = res
-                    )
+                    filter.ifEmpty { true }
+                    it.drinkName.contains(filter, ignoreCase = true)
                 }
-            } catch (e : Exception){
-                _uiState.update {
-                    it.copy(
-                        status = UiStateStatus.ERROR,
-                        errorMessage = e.toString()
-                    )
-                }
-            }
-        }
+        }.launchIn(viewModelScope)
+    }
+
+
+    init {
+        initFilters()
+        initCocktailList()
     }
 
     fun updateFilter(filter: String) {
-        _uiState.update {
-            it.copy(filterUiState = it.filterUiState.copy(filter = filter))
-        }
-        loadCocktails()
+        _filter.update { filter }
     }
 
     suspend fun getRandomCocktail() : Cocktail = randomCocktailUseCase()
