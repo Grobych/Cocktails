@@ -25,6 +25,7 @@ class CocktailListViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CocktailListUiState())
     val uiState : StateFlow<CocktailListUiState> = _uiState.asStateFlow()
 
+
     init {
         loadCocktails()
     }
@@ -35,11 +36,18 @@ class CocktailListViewModel @Inject constructor(
                 it.copy(status = UiStateStatus.LOADING)
             }
             try {
+                val filter = uiState.value.filterUiState.filter
                 val res = cocktailRepository.getCocktails()
-                _uiState.update { it.copy(
-                    status = UiStateStatus.DONE,
-                    cocktailList = res
-                ) }
+                    .filter {
+                        uiState.value.filterUiState.filter.ifEmpty { true }
+                        it.drinkName.contains(filter, ignoreCase = true)
+                    }
+                _uiState.update {
+                    it.copy(
+                        status = UiStateStatus.DONE,
+                        cocktailList = res
+                    )
+                }
             } catch (e : Exception){
                 _uiState.update {
                     it.copy(
@@ -49,6 +57,13 @@ class CocktailListViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun updateFilter(filter: String) {
+        _uiState.update {
+            it.copy(filterUiState = it.filterUiState.copy(filter = filter))
+        }
+        loadCocktails()
     }
 
     suspend fun getRandomCocktail() : Cocktail = randomCocktailUseCase()

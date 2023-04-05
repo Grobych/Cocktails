@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -37,6 +39,10 @@ fun CocktailListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    val onFilterChangeAction: (String) -> Unit = {
+        viewModel.updateFilter(it)
+    }
+
     when (uiState.status) {
         UiStateStatus.LOADING -> {
             LoadingComposable()
@@ -45,8 +51,19 @@ fun CocktailListScreen(
             ErrorComposable(errorMessage = uiState.errorMessage)
         }
         UiStateStatus.DONE -> {
-            CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction)
+            Column(modifier = Modifier.fillMaxSize()) {
+                Header(filterValue = uiState.filterUiState.filter, onFilterChangeAction = onFilterChangeAction)
+                CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction)
+            }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Header(filterValue: String, onFilterChangeAction: (String) -> Unit) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        TextField(value = filterValue, onValueChange = {onFilterChangeAction(it)})
     }
 }
 
