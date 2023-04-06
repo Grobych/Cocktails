@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
-import com.globa.cocktails.domain.RandomCocktailUseCase
 import com.globa.cocktails.ui.CocktailFilterUiState
 import com.globa.cocktails.ui.CocktailListUiState
 import com.globa.cocktails.ui.UiStateStatus
@@ -16,11 +15,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class CocktailListViewModel @Inject constructor(
-    private val cocktailRepository: CocktailRepository,
-    val randomCocktailUseCase: RandomCocktailUseCase
+    private val cocktailRepository: CocktailRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(CocktailListUiState())
     val uiState : StateFlow<CocktailListUiState> = _uiState.asStateFlow()
@@ -65,5 +64,8 @@ class CocktailListViewModel @Inject constructor(
         filter.update { value }
     }
 
-    suspend fun getRandomCocktail() : Cocktail = randomCocktailUseCase()
+    fun getRandomCocktail() : String {
+        val list = cocktailListState.value
+        return list[Random.Default.nextInt(list.lastIndex)].id
+    }
 }

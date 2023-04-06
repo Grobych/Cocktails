@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,6 +44,10 @@ fun CocktailListScreen(
         viewModel.updateFilter(it)
     }
 
+    val onRandomButtonAction: () -> Unit = {
+        onItemClickAction(viewModel.getRandomCocktail())
+    }
+
     when (uiState.status) {
         UiStateStatus.LOADING -> {
             LoadingComposable()
@@ -52,7 +57,7 @@ fun CocktailListScreen(
         }
         UiStateStatus.DONE -> {
             Column(modifier = Modifier.fillMaxSize()) {
-                Header(filterValue = uiState.filterUiState.filter, onFilterChangeAction = onFilterChangeAction)
+                Header(filterValue = uiState.filterUiState.filter, onFilterChangeAction = onFilterChangeAction, onRandomButtonAction = onRandomButtonAction)
                 CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction)
             }
         }
@@ -61,9 +66,19 @@ fun CocktailListScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Header(filterValue: String, onFilterChangeAction: (String) -> Unit) {
-    Row(modifier = Modifier.fillMaxWidth()) {
+fun Header(
+    filterValue: String,
+    onFilterChangeAction: (String) -> Unit,
+    onRandomButtonAction: () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
         TextField(value = filterValue, onValueChange = {onFilterChangeAction(it)})
+        Button(onClick = { onRandomButtonAction() }) {
+            Text(text = stringResource(id = R.string.get_random_button_text))
+        }
     }
 }
 
