@@ -25,11 +25,8 @@ class CocktailListViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CocktailListUiState())
     val uiState : StateFlow<CocktailListUiState> = _uiState.asStateFlow()
 
-    private val _cocktailListState = MutableStateFlow(listOf<Cocktail>())
-    private val cocktailListState = _cocktailListState.asStateFlow()
-
-    private val _filter = MutableStateFlow("")
-    private val filter = _filter.asStateFlow()
+    private val cocktailListState = MutableStateFlow(listOf<Cocktail>())
+    private val filter = MutableStateFlow("")
 
     private suspend fun getCocktails() = cocktailRepository.getCocktails()
 
@@ -49,7 +46,7 @@ class CocktailListViewModel @Inject constructor(
             _uiState.update {
                 it.copy(filterUiState = CocktailFilterUiState(filter))
             }
-            _cocktailListState.value =
+            cocktailListState.value =
                 getCocktails()
                     .filter {
                     filter.ifEmpty { true }
@@ -64,8 +61,8 @@ class CocktailListViewModel @Inject constructor(
         initCocktailList()
     }
 
-    fun updateFilter(filter: String) {
-        _filter.update { filter }
+    fun updateFilter(value: String) {
+        filter.update { value }
     }
 
     suspend fun getRandomCocktail() : Cocktail = randomCocktailUseCase()
