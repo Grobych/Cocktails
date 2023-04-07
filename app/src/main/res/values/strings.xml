@@ -1,33 +1,9 @@
 <resources>
     <string name="app_name">Cocktails</string>
-    <string name="fragment_item_image_content_decription">image</string>
-    <string name="filter_button_text">Filters…</string>
-    <string name="add_recipes_button_text">Add</string>
-    <string name="has_alcohol_radiobutton_text">Has alcohol</string>
-    <string name="type">Type</string>
-    <string name="cocktail_fragment_glass_template">Serve on %1$s</string>
-    <string name="loading_data">Loading data</string>
-    <string name="has_alcohol">Has alcohol</string>
     <string name="get_random_button_text">Random</string>
 
 
     <!--    Filters-->
-    <string-array name="drinkCategory">
-        <item>All</item>
-        <item>Cocktails</item>
-        <item>Beer</item>
-        <item>Cocoa</item>
-        <item>Homemade Liqueur</item>
-        <item>Milk</item>
-        <item>Ordinary Drinks</item>
-        <item>Other</item>
-        <item>Shots</item>
-    </string-array>
-    <string-array name="drinkIsAlcohol">
-        <item>All</item>
-        <item>Alcoholic</item>
-        <item>Non-alcoholic</item>
-    </string-array>
     <!--    Filters-->
 
 
