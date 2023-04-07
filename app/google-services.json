@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "668559379398",
+    "project_id": "cocktails-c0242",
+    "storage_bucket": "cocktails-c0242.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668559379398:android:7b5e07243ca792369240c7",
+        "android_client_info": {
+          "package_name": "com.globa.cocktails"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668559379398-lgat7otaoqv65gn491so1tlipcg1j49n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_Ai-pprPHxPb39jVpZA3LXeUGYdc4N-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "668559379398-lgat7otaoqv65gn491so1tlipcg1j49n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
