@@ -8,15 +8,20 @@ import com.globa.cocktails.datalayer.storage.CocktailFileDataSource
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
+interface CocktailRepository {
+    suspend fun getCocktails(): List<Cocktail>
+}
+
 @Singleton
-class CocktailRepository @Inject constructor (
+class CocktailRepositoryImpl @Inject constructor (
     private val cocktailLocalDataSource: CocktailLocalDataSource,
     private val cocktailFileDataSource: CocktailFileDataSource
-) {
+): CocktailRepository {
 
     private var cocktails : List<Cocktail> = emptyList()
 
-    suspend fun getCocktails() : List<Cocktail> {
+    override suspend fun getCocktails() : List<Cocktail> {
         if (cocktails.isEmpty()){
             cocktails = cocktailLocalDataSource.getCocktails().asDomainModel().ifEmpty {
                 val cocktailFromFile = cocktailFileDataSource.getCocktails()
