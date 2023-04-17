@@ -12,16 +12,6 @@ class CocktailListViewModelTest {
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
-
-    inner class FakeGoodCocktailRepository @Inject constructor(): CocktailRepository {
-        override suspend fun getCocktails(): List<Cocktail> {
-            return listOf(
-                Cocktail(drinkName = "Margarita", id = "1"),
-                Cocktail(drinkName = "Martini", id = "2"),
-                Cocktail(drinkName = "Cuba Libre", id = "3")
-            )
-        }
-    }
     inner class FakeBadCocktailRepository @Inject constructor(): CocktailRepository {
         override suspend fun getCocktails(): List<Cocktail> {
             return emptyList()
@@ -30,7 +20,7 @@ class CocktailListViewModelTest {
 
     @Test
     fun isCocktailListInitialized() {
-        val fakeGoogRepository = FakeGoodCocktailRepository()
+        val fakeGoogRepository = FakeCocktailRepository()
         val viewModel = CocktailListViewModel(fakeGoogRepository)
         assert(viewModel.uiState.value.cocktailList.isNotEmpty())
         assert(viewModel.uiState.value.cocktailList.findLast { it.drinkName == "Cuba Libre" } != null)
@@ -45,7 +35,7 @@ class CocktailListViewModelTest {
 
     @Test
     fun testFilter() {
-        val fakeGoogRepository = FakeGoodCocktailRepository()
+        val fakeGoogRepository = FakeCocktailRepository()
         val viewModel = CocktailListViewModel(fakeGoogRepository)
         assert(viewModel.uiState.value.cocktailList.isNotEmpty())
         viewModel.updateFilter("m")
@@ -62,7 +52,7 @@ class CocktailListViewModelTest {
 
     @Test
     fun testGetRandomCocktail() {
-        val repository = FakeGoodCocktailRepository()
+        val repository = FakeCocktailRepository()
         val viewModel = CocktailListViewModel(repository)
         val res = viewModel.getRandomCocktail()
         assert(listOf("1","2","3").contains(res))
