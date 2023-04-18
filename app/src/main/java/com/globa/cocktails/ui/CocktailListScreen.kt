@@ -2,6 +2,7 @@ package com.globa.cocktails.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -58,7 +59,9 @@ fun CocktailListScreen(
         UiStateStatus.DONE -> {
             Column(modifier = Modifier.fillMaxSize()) {
                 Header(filterValue = uiState.filterUiState.filter, onFilterChangeAction = onFilterChangeAction, onRandomButtonAction = onRandomButtonAction)
-                CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction)
+                if (uiState.cocktailList.isNotEmpty()) {
+                    CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction)
+                } else EmptyList()
             }
         }
     }
@@ -155,6 +158,15 @@ fun ErrorComposable(errorMessage: String) {
         modifier = Modifier.fillMaxSize()
     ) {
         Text(text = "ERROR: $errorMessage")
+    }
+}
+
+@Composable
+fun EmptyList() {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(text = stringResource(R.string.empty_container_to_show), modifier = Modifier.align(Alignment.Center))
     }
 }
 
