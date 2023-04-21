@@ -2,6 +2,12 @@ package com.globa.cocktails.ui
 
 import com.globa.cocktails.datalayer.models.Cocktail
 
-data class CocktailUiState(
-    val cocktail: Cocktail
-)
+//data class CocktailUiState(
+//    val cocktail: Cocktail
+//)
+
+sealed class CocktailUiState() {
+    class Loading(): CocktailUiState()
+    data class Success(val cocktail: Cocktail): CocktailUiState()
+    data class Error(val message: String): CocktailUiState()
+}

@@ -1,8 +1,10 @@
 package com.globa.cocktails.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,12 +16,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.globa.cocktails.ui.viewmodels.CocktailViewModel
 import coil.compose.AsyncImage
+import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 
 @Composable
@@ -27,9 +31,24 @@ fun CocktailInfoScreen(
     viewModel: CocktailViewModel = hiltViewModel()
 ) {
 
-    val cocktail by viewModel.cocktail.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
+    CocktailScreenSelect(uiState = uiState)
+}
 
-    CocktailInfo(cocktail = cocktail)
+@Composable
+fun CocktailScreenSelect(uiState: CocktailUiState) {
+    when (uiState) {
+        is CocktailUiState.Loading -> CocktailLoading()
+        is CocktailUiState.Success -> CocktailInfo(cocktail = uiState.cocktail)
+        is CocktailUiState.Error -> CocktailError(errorMessage = uiState.message)
+    }
+}
+
+@Composable
+fun CocktailLoading() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Text(text = stringResource(R.string.loading_string), modifier = Modifier.align(Alignment.Center))
+    }
 }
 
 @Composable
@@ -65,7 +84,9 @@ fun CocktailInfo(cocktail: Cocktail) {
 
 @Composable
 fun CocktailIngredients(cocktail: Cocktail) {
-    Row(modifier = Modifier.fillMaxWidth().padding(end = 10.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(end = 10.dp), horizontalArrangement = Arrangement.SpaceBetween) {
         LazyColumn(horizontalAlignment = Alignment.Start) {
             items(cocktail.ingredients) {
                 Text(text = it)
@@ -76,6 +97,13 @@ fun CocktailIngredients(cocktail: Cocktail) {
                 Text(text = it)
             }
         }
+    }
+}
+
+@Composable
+fun CocktailError(errorMessage: String) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Text(text = errorMessage, modifier = Modifier.align(Alignment.Center))
     }
 }
 

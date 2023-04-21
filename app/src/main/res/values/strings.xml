@@ -2,6 +2,7 @@
     <string name="app_name">Cocktails</string>
     <string name="get_random_button_text">Random</string>
     <string name="empty_container_to_show">Nothing to show…</string>
+    <string name="loading_string">Loading…</string>
 
 
     <!--    Filters-->

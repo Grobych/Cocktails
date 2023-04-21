@@ -16,6 +16,8 @@ class CocktiailViewModelTest {
         val repository = FakeCocktailRepository()
         val savedStateHandle = SavedStateHandle(mapOf("cocktailId" to "2"))
         val viewModel = CocktailViewModel(savedStateHandle, repository)
-        assert(viewModel.cocktail.value.drinkName == "Martini")
+        assert(viewModel.uiState.value is CocktailUiState.Success)
+        val cocktail = (viewModel.uiState.value as CocktailUiState.Success).cocktail
+        assert(cocktail.drinkName == "Martini")
     }
 }
