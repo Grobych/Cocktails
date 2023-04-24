@@ -2,7 +2,8 @@ package com.globa.cocktails.ui
 
 import androidx.lifecycle.SavedStateHandle
 import com.globa.cocktails.MainDispatcherRule
-import com.globa.cocktails.ui.viewmodels.CocktailViewModel
+import com.globa.cocktails.ui.cocktailinfo.CocktailUiState
+import com.globa.cocktails.ui.cocktailinfo.CocktailViewModel
 import org.junit.Rule
 import org.junit.Test
 

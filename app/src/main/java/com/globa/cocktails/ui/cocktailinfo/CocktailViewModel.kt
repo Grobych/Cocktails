@@ -1,10 +1,9 @@
-package com.globa.cocktails.ui.viewmodels
+package com.globa.cocktails.ui.cocktailinfo
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.datalayer.repository.CocktailRepository
-import com.globa.cocktails.ui.CocktailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

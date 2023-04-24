@@ -1,4 +1,4 @@
-package com.globa.cocktails.ui
+package com.globa.cocktails.ui.cocktailinfo
 
 import com.globa.cocktails.datalayer.models.Cocktail
 

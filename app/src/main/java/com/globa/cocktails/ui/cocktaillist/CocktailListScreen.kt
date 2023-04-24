@@ -1,4 +1,4 @@
-package com.globa.cocktails.ui
+package com.globa.cocktails.ui.cocktaillist
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,8 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.ui.util.LoadingAnimation
-import com.globa.cocktails.ui.viewmodels.CocktailListViewModel
 
 @Composable
 fun CocktailListScreen(

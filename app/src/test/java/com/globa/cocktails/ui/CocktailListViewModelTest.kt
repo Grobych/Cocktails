@@ -3,7 +3,7 @@ package com.globa.cocktails.ui
 import com.globa.cocktails.MainDispatcherRule
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
-import com.globa.cocktails.ui.viewmodels.CocktailListViewModel
+import com.globa.cocktails.ui.cocktaillist.CocktailListViewModel
 import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
