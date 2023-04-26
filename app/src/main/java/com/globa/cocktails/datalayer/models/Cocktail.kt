@@ -11,3 +11,14 @@ data class Cocktail(
     val ingredients : List<String> = listOf(),
     val measures : List<String> = listOf(),
     val instructions : String = "")
+
+fun Cocktail.createTagLine(): String {
+    val res = StringBuilder()
+        .append("$drinkName ")
+        .append("$drinkCategory ")
+        .append("$drinkGlass ")
+    ingredients.forEach {
+        res.append("$it ")
+    }
+    return res.toString()
+}

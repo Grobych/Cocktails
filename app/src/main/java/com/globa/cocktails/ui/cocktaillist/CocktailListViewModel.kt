@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
+import com.globa.cocktails.domain.FilterCocktailsUseCase.filterByTags
 import com.globa.cocktails.ui.UiStateStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,17 +43,11 @@ class CocktailListViewModel @Inject constructor(
     }
 
     private fun initFilters() {
-//        filter.onEach { filter ->
-//            _uiState.update {
-//                it.copy(filterUiState = CocktailFilterUiState(filter))
-//            }
-//            cocktailListState.value =
-//                getCocktails()
-//                    .filter {
-//                    filter.ifEmpty { true }
-//                    it.drinkName.contains(filter, ignoreCase = true)
-//                }
-//        }.launchIn(viewModelScope)
+        filterUiState.onEach { filter ->
+            cocktailListState.update {
+                getCocktails().filterByTags(filter.expandTags())
+            }
+        }.launchIn(viewModelScope)
     }
 
 
