@@ -33,6 +33,7 @@ import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.ui.util.CustomSearchField
 import com.globa.cocktails.ui.util.LoadingAnimation
+import com.globa.cocktails.ui.util.TagButton
 
 @Composable
 fun CocktailListScreen(
@@ -57,6 +58,10 @@ fun CocktailListScreen(
         viewModel.removeFilterTag(it)
     }
 
+    val addTagAction: (String) -> Unit = {
+        viewModel.addFilterTag(it)
+    }
+
     val onRandomButtonAction: () -> Unit = {
         onItemClickAction(viewModel.getRandomCocktail())
     }
@@ -72,7 +77,7 @@ fun CocktailListScreen(
             Column(modifier = Modifier.fillMaxSize()) {
                 Header(filterUiState = filterUiState, onFilterChangeAction = onFilterChangeAction, onRandomButtonAction = onRandomButtonAction, onTagClicked = removeTagAction)
                 if (uiState.cocktailList.isNotEmpty()) {
-                    CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction)
+                    CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction, onTagClicked = addTagAction)
                 } else EmptyList()
             }
         }
@@ -103,16 +108,20 @@ fun Header(
 }
 
 @Composable
-fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit) {
+fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTagClicked: (String) -> Unit) {
     LazyColumn {
         items(list) {
-            CocktailListItem(cocktail = it) { onItemClickAction(it.id) }
+            CocktailListItem(
+                cocktail = it,
+                onItemClickAction = {onItemClickAction(it.id)},
+                onTagClicked = onTagClicked
+            )
         }
     }
 }
 
 @Composable
-fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit) {
+fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagClicked: (String) -> Unit) {
     Row (
         modifier = Modifier
             .fillMaxWidth()
@@ -134,7 +143,7 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit) {
                     .padding(start = 10.dp),
                 fontSize = 16.sp
             )
-            TagField(cocktail.ingredients)
+            TagField(cocktail.ingredients, onTagClicked)
         }
 
     }
@@ -142,18 +151,18 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun TagField(list: List<String>) {
+fun TagField(
+    list: List<String>,
+    onItemClickAction: (String) -> Unit
+) {
     FlowRow(
         maxItemsInEachRow = 3
     ) {
         list.forEach {
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .padding(top = 5.dp, end = 5.dp),
-            ) {
-                Text(text = it, fontSize = 10.sp)
-            }
+            TagButton(
+                text = it,
+                onClickAction = {onItemClickAction(it)}
+            )
         }
     }
 }
@@ -196,5 +205,5 @@ fun CocktailListItemPreview(){
         ingredients = listOf("Tequila","Triple sec","Lime juice","Salt")
     )
 
-    CocktailListItem(cocktail = cocktail) {}
+    CocktailListItem(cocktail = cocktail, onTagClicked = {}, onItemClickAction = {})
 }
