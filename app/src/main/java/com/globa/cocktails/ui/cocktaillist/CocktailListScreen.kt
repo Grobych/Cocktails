@@ -14,9 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -24,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,6 +31,7 @@ import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.UiStateStatus
+import com.globa.cocktails.ui.util.CustomSearchField
 import com.globa.cocktails.ui.util.LoadingAnimation
 
 @Composable
@@ -40,9 +40,21 @@ fun CocktailListScreen(
     onItemClickAction: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val filterUiState by viewModel.filterUiState.collectAsState()
 
-    val onFilterChangeAction: (String) -> Unit = {
-        viewModel.updateFilter(it)
+    val onFilterChangeAction: (TextFieldValue) -> Unit = { value ->
+        val text = value.text
+        if (text.takeLast(1) == " ") {
+            val tag = text.take(text.length - 1)
+            viewModel.addFilterTag(tag)
+            viewModel.updateFilterLine(TextFieldValue(""))
+        } else {
+            viewModel.updateFilterLine(value)
+        }
+    }
+
+    val removeTagAction: (String) -> Unit = {
+        viewModel.removeFilterTag(it)
     }
 
     val onRandomButtonAction: () -> Unit = {
@@ -58,7 +70,7 @@ fun CocktailListScreen(
         }
         UiStateStatus.DONE -> {
             Column(modifier = Modifier.fillMaxSize()) {
-                Header(filterValue = uiState.filterUiState.filter, onFilterChangeAction = onFilterChangeAction, onRandomButtonAction = onRandomButtonAction)
+                Header(filterUiState = filterUiState, onFilterChangeAction = onFilterChangeAction, onRandomButtonAction = onRandomButtonAction, onTagClicked = removeTagAction)
                 if (uiState.cocktailList.isNotEmpty()) {
                     CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction)
                 } else EmptyList()
@@ -67,18 +79,23 @@ fun CocktailListScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Header(
-    filterValue: String,
-    onFilterChangeAction: (String) -> Unit,
-    onRandomButtonAction: () -> Unit
+    filterUiState: CocktailFilterUiState,
+    onFilterChangeAction: (TextFieldValue) -> Unit,
+    onRandomButtonAction: () -> Unit,
+    onTagClicked: (String) -> Unit
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        TextField(value = filterValue, onValueChange = {onFilterChangeAction(it)})
+        CustomSearchField(
+            tags = filterUiState.tags,
+            text = filterUiState.line,
+            onTextChanged = onFilterChangeAction,
+            onTagClicked = onTagClicked
+        )
         Button(onClick = { onRandomButtonAction() }) {
             Text(text = stringResource(id = R.string.get_random_button_text))
         }

@@ -6,10 +6,6 @@ import com.globa.cocktails.ui.UiStateStatus
 data class CocktailListUiState(
     val status: UiStateStatus = UiStateStatus.LOADING,
     val cocktailList: List<Cocktail> = listOf(),
-    val errorMessage: String = "",
-    val filterUiState: CocktailFilterUiState = CocktailFilterUiState()
+    val errorMessage: String = ""
 )
 
-data class CocktailFilterUiState(
-    val filter: String = ""
-)

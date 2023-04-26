@@ -1,5 +1,6 @@
 package com.globa.cocktails.ui.cocktaillist
 
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.datalayer.models.Cocktail
@@ -22,8 +23,10 @@ class CocktailListViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CocktailListUiState())
     val uiState : StateFlow<CocktailListUiState> = _uiState.asStateFlow()
 
+    private val _filterUiState = MutableStateFlow(CocktailFilterUiState())
+    val filterUiState = _filterUiState.asStateFlow()
+
     private val cocktailListState = MutableStateFlow(listOf<Cocktail>())
-    private val filter = MutableStateFlow("")
 
     private suspend fun getCocktails() = cocktailRepository.getCocktails()
 
@@ -39,17 +42,17 @@ class CocktailListViewModel @Inject constructor(
     }
 
     private fun initFilters() {
-        filter.onEach { filter ->
-            _uiState.update {
-                it.copy(filterUiState = CocktailFilterUiState(filter))
-            }
-            cocktailListState.value =
-                getCocktails()
-                    .filter {
-                    filter.ifEmpty { true }
-                    it.drinkName.contains(filter, ignoreCase = true)
-                }
-        }.launchIn(viewModelScope)
+//        filter.onEach { filter ->
+//            _uiState.update {
+//                it.copy(filterUiState = CocktailFilterUiState(filter))
+//            }
+//            cocktailListState.value =
+//                getCocktails()
+//                    .filter {
+//                    filter.ifEmpty { true }
+//                    it.drinkName.contains(filter, ignoreCase = true)
+//                }
+//        }.launchIn(viewModelScope)
     }
 
 
@@ -58,12 +61,23 @@ class CocktailListViewModel @Inject constructor(
         initCocktailList()
     }
 
-    fun updateFilter(value: String) {
-        filter.update { value }
-    }
-
     fun getRandomCocktail() : String {
         val list = cocktailListState.value
         return list[Random.Default.nextInt(list.lastIndex)].id
+    }
+
+    fun updateFilterLine(line: TextFieldValue) {
+        _filterUiState.update { it.copy(line = line) }
+    }
+    fun addFilterTag(tag: String) {
+        _filterUiState.update {
+            it.copy(tags = it.tags.plus(tag))
+        }
+    }
+
+    fun removeFilterTag(tag: String) {
+        _filterUiState.update {
+            it.copy(tags = it.tags.minus(tag))
+        }
     }
 }
