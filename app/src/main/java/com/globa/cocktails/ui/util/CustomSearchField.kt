@@ -30,6 +30,7 @@ fun CustomSearchField(
             tags.forEach {
                 TagButton(
                     text = it,
+                    modifier = Modifier,
                     onClickAction = {onTagClicked(it)}
                 )
             }

@@ -18,6 +18,7 @@ import com.globa.cocktails.ui.theme.AppTheme
 @Composable
 fun TagButton(
     text: String,
+    modifier: Modifier,
     onClickAction: () -> Unit
 ) {
         Button(
@@ -26,7 +27,7 @@ fun TagButton(
                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer
             ),
-            modifier = Modifier
+            modifier = modifier
                 .height(25.dp),
             shape = MaterialTheme.shapes.extraLarge,
             contentPadding = PaddingValues(0.dp)
@@ -46,7 +47,7 @@ fun TagButton(
 fun TagButtonPreviewLight() {
     AppTheme {
         Surface {
-            TagButton(text = "SomeTag") {
+            TagButton(text = "SomeTag", modifier = Modifier) {
 
             }
         }

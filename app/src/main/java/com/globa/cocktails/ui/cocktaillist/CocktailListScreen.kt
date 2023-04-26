@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,6 +29,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -116,7 +119,9 @@ fun Header(
 
 @Composable
 fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTagClicked: (String) -> Unit) {
-    LazyColumn {
+    LazyColumn(
+        contentPadding = PaddingValues(bottom = 1.dp)
+    ) {
         items(list) {
             CocktailListItem(
                 cocktail = it,
@@ -146,6 +151,7 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagCli
                 .size(80.dp)
                 .align(Alignment.CenterVertically)
                 .padding(start = 16.dp)
+                .clip(MaterialTheme.shapes.large)
         )
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -155,7 +161,10 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagCli
                     .fillMaxSize()
                     .padding(top = 20.dp, bottom = 20.dp, start = 10.dp)
             ) {
-                Column {
+                Column(
+                    modifier = Modifier.fillMaxHeight().padding(start = 10.dp),
+                    verticalArrangement = Arrangement.SpaceEvenly
+                ) {
                     Row {
                         Text(text = cocktail.drinkName, fontSize = MaterialTheme.typography.titleMedium.fontSize)
                         //star
@@ -182,7 +191,8 @@ fun TagField(
         list.forEach {
             TagButton(
                 text = it,
-                onClickAction = {onItemClickAction(it)}
+                modifier = Modifier.padding(end = 10.dp),
+                onClickAction = {onItemClickAction(it)},
             )
         }
     }
