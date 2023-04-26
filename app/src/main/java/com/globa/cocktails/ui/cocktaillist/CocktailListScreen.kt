@@ -1,6 +1,10 @@
 package com.globa.cocktails.ui.cocktaillist
 
+import android.content.res.Configuration
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,11 +13,14 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -25,12 +32,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.UiStateStatus
+import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.util.CustomSearchField
 import com.globa.cocktails.ui.util.LoadingAnimation
 import com.globa.cocktails.ui.util.TagButton
@@ -125,25 +132,39 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagCli
     Row (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 10.dp)
-            .clickable(onClick = onItemClickAction)
+            .height(120.dp)
+            .background(color = MaterialTheme.colorScheme.surface) //TODO: add elevation table
+            .clickable(onClick = onItemClickAction),
+        horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         AsyncImage(
             model = cocktail.imageURL,
             contentDescription = cocktail.drinkName,
             placeholder = painterResource(id = R.drawable.loading_img),
             error = painterResource(id = R.drawable.broken_image),
-            modifier = Modifier.size(130.dp)
+            modifier = Modifier
+                .size(80.dp)
+                .align(Alignment.CenterVertically)
+                .padding(start = 16.dp)
         )
-        Column {
-            Text(
-                text = cocktail.drinkName,
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 10.dp),
-                fontSize = 16.sp
-            )
-            TagField(cocktail.ingredients, onTagClicked)
+                    .fillMaxSize()
+                    .padding(top = 20.dp, bottom = 20.dp, start = 10.dp)
+            ) {
+                Column {
+                    Row {
+                        Text(text = cocktail.drinkName, fontSize = MaterialTheme.typography.titleMedium.fontSize)
+                        //star
+                    }
+                    Row {
+                        TagField(list = cocktail.ingredients, onItemClickAction = onTagClicked)
+                    }
+                }
+            }
         }
 
     }
@@ -156,7 +177,7 @@ fun TagField(
     onItemClickAction: (String) -> Unit
 ) {
     FlowRow(
-        maxItemsInEachRow = 3
+        modifier = Modifier.horizontalScroll(state = ScrollState(0))
     ) {
         list.forEach {
             TagButton(
@@ -197,13 +218,19 @@ fun EmptyList() {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun CocktailListItemPreview(){
     val cocktail = Cocktail(
         drinkName = "Margarita",
         imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
-        ingredients = listOf("Tequila","Triple sec","Lime juice","Salt")
+        ingredients = listOf("Tequila","Triple sec","Lime juice","Agava", "Salt", "Vodka")
     )
 
-    CocktailListItem(cocktail = cocktail, onTagClicked = {}, onItemClickAction = {})
+    AppTheme {
+        Surface {
+            CocktailListItem(cocktail = cocktail, onTagClicked = {}, onItemClickAction = {})
+        }
+    }
+
 }
