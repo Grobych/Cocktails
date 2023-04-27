@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -41,8 +40,10 @@ import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.ui.theme.AppTheme
+import com.globa.cocktails.ui.util.AddButton
 import com.globa.cocktails.ui.util.CustomSearchField
 import com.globa.cocktails.ui.util.LoadingAnimation
+import com.globa.cocktails.ui.util.MenuButton
 import com.globa.cocktails.ui.util.TagButton
 
 @Composable
@@ -101,20 +102,29 @@ fun Header(
     onRandomButtonAction: () -> Unit,
     onTagClicked: (String) -> Unit
 ) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        CustomSearchField(
-            tags = filterUiState.tags,
-            text = filterUiState.line,
-            onTextChanged = onFilterChangeAction,
-            onTagClicked = onTagClicked
-        )
-        Button(onClick = { onRandomButtonAction() }) {
-            Text(text = stringResource(id = R.string.get_random_button_text))
+    Surface {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(60.dp)
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CustomSearchField(
+                modifier = Modifier.fillMaxWidth(0.7f),
+                tags = filterUiState.tags,
+                text = filterUiState.line,
+                onTextChanged = onFilterChangeAction,
+                onTagClicked = onTagClicked
+            )
+            AddButton(
+                onClickAction = {}
+            )
+            MenuButton()
         }
     }
+
 }
 
 @Composable
@@ -162,7 +172,9 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagCli
                     .padding(top = 20.dp, bottom = 20.dp, start = 10.dp)
             ) {
                 Column(
-                    modifier = Modifier.fillMaxHeight().padding(start = 10.dp),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(start = 10.dp),
                     verticalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Row {
@@ -175,7 +187,6 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagCli
                 }
             }
         }
-
     }
 }
 
@@ -242,5 +253,24 @@ fun CocktailListItemPreview(){
             CocktailListItem(cocktail = cocktail, onTagClicked = {}, onItemClickAction = {})
         }
     }
+}
 
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun HeaderPreview() {
+    val filterUiState = CocktailFilterUiState(
+        TextFieldValue(""),
+        emptyList()
+    )
+    AppTheme {
+        Surface {
+            Header(
+                filterUiState = filterUiState,
+                onFilterChangeAction = {},
+                onRandomButtonAction = { /*TODO*/ },
+                onTagClicked = {}
+            )
+        }
+    }
 }
