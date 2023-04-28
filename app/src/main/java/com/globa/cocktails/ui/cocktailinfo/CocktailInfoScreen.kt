@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,6 +28,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.theme.AppTheme
+import com.globa.cocktails.ui.util.AddButton
+import com.globa.cocktails.ui.util.MenuButton
 
 @Composable
 fun CocktailInfoScreen(
@@ -58,8 +62,41 @@ fun CocktailInfo(cocktail: Cocktail) {
 }
 
 @Composable
-private fun Header() {
-
+private fun Header(cocktailName: String, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(60.dp)
+    ) {
+        Text(
+            text = cocktailName,
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .padding(start = 28.dp),
+            style = MaterialTheme.typography.headlineSmall.plus(
+                TextStyle(color = MaterialTheme.colorScheme.onSurface)
+            )
+        )
+        Row(
+            modifier = Modifier.align(Alignment.CenterEnd)
+        ) {
+            //TODO: Add elevation
+            AddButton(modifier = Modifier.padding(end = 10.dp)) {
+                // TODO: FavoriteButton
+            }
+            AddButton(modifier = Modifier.padding(end = 10.dp)) {
+                
+            }
+            MenuButton(modifier = Modifier.padding(end = 16.dp))
+        }
+        Divider(
+            color = MaterialTheme.colorScheme.surfaceVariant,
+            thickness = 1.dp,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(start = 16.dp, end = 16.dp)
+        )
+    }
 }
 
 @Composable
@@ -81,7 +118,9 @@ private fun Ingredients(ingredients: List<String>, measures: List<String>, modif
         )
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 12.dp)
         ) {
             Column(
                 modifier = Modifier.padding(start = 12.dp)
@@ -173,6 +212,18 @@ private val testCocktail = Cocktail(
 @Composable
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview
+fun HeaderPreview() {
+    val name = testCocktail.drinkName
+    AppTheme {
+        Surface {
+            Header(cocktailName = name, modifier = Modifier.width(360.dp))
+        }
+    }
+}
+
+@Composable
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview
 fun InstructionsPreview() {
     val instructions = testCocktail.instructions
     AppTheme {
@@ -191,7 +242,9 @@ fun IngredientsPreview() {
     AppTheme {
         Surface {
             Ingredients(ingredients = ingredients, measures = measures,
-                modifier = Modifier.padding(16.dp).width(150.dp)
+                modifier = Modifier
+                    .padding(16.dp)
+                    .width(150.dp)
             )
         }
     }

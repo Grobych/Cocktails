@@ -11,5 +11,8 @@ val typography = Typography(
     labelLarge = TextStyle(
         fontWeight = FontWeight.ExtraBold,
         fontSize = 16.sp
+    ),
+    headlineSmall = TextStyle(
+        fontSize = 16.sp
     )
 )
