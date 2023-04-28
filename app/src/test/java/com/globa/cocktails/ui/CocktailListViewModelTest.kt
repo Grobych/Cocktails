@@ -1,5 +1,6 @@
 package com.globa.cocktails.ui
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.globa.cocktails.MainDispatcherRule
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
@@ -34,19 +35,19 @@ class CocktailListViewModelTest {
     }
 
     @Test
-    fun testFilter() {
+    fun testFilterLine() {
         val fakeGoogRepository = FakeCocktailRepository()
         val viewModel = CocktailListViewModel(fakeGoogRepository)
         assert(viewModel.uiState.value.cocktailList.isNotEmpty())
-        viewModel.updateFilter("m")
+        viewModel.updateFilterLine(TextFieldValue("m"))
         assert(viewModel.uiState.value.cocktailList.size == 2)
-        viewModel.updateFilter("mart")
+        viewModel.updateFilterLine(TextFieldValue("mart"))
         assert(viewModel.uiState.value.cocktailList.size == 1)
-        viewModel.updateFilter("martt")
+        viewModel.updateFilterLine(TextFieldValue("martt"))
         assert(viewModel.uiState.value.cocktailList.isEmpty())
-        viewModel.updateFilter("cu")
+        viewModel.updateFilterLine(TextFieldValue("cu"))
         assert(viewModel.uiState.value.cocktailList.size == 1)
-        assert(viewModel.uiState.value.filterUiState.filter == "cu")
+        assert(viewModel.filterUiState.value.line.text == "cu")
         assert(viewModel.uiState.value.cocktailList.findLast { it.id == "3" } != null)
     }
 
