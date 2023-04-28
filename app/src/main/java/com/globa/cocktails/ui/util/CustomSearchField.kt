@@ -4,14 +4,13 @@ import android.content.res.Configuration
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Icon
@@ -71,12 +70,11 @@ fun CustomSearchField(
                     TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
                 ),
                 singleLine = true,
+                modifier = Modifier.requiredWidth(250.dp)
             ) { innerTextField ->
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .padding(start = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (text.text.isEmpty() && tags.isEmpty()) {
