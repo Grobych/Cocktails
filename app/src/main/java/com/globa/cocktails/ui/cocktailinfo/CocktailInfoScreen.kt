@@ -64,7 +64,7 @@ private fun Ingredients(cocktail: Cocktail) {
 
 }
 
-@Composable fun Instructions(instructions: String, modifier: Modifier) {
+@Composable fun Instructions(instructions: String, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
