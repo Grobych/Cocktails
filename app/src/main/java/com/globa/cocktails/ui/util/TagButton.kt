@@ -18,7 +18,7 @@ import com.globa.cocktails.ui.theme.AppTheme
 @Composable
 fun TagButton(
     text: String,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     onClickAction: () -> Unit
 ) {
         Button(

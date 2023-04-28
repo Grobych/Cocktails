@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -20,16 +21,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.util.AddButton
 import com.globa.cocktails.ui.util.MenuButton
+import com.globa.cocktails.ui.util.TagButton
 
 @Composable
 fun CocktailInfoScreen(
@@ -58,7 +62,41 @@ fun CocktailLoading() {
 
 @Composable
 fun CocktailInfo(cocktail: Cocktail) {
-
+    Column(modifier = Modifier.fillMaxSize()) {
+        Header(cocktailName = cocktail.drinkName)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Ingredients(
+                ingredients = cocktail.ingredients,
+                measures = cocktail.measures,
+                modifier = Modifier.fillMaxWidth(0.6f).padding(12.dp)
+            )
+            AsyncImage(
+                model = cocktail.imageURL,
+                contentDescription = cocktail.drinkName,
+                modifier = Modifier
+                    .height(225.dp)
+                    .clip(RoundedCornerShape(topStartPercent = 100, bottomStartPercent = 100))
+                    .padding(top = 12.dp, bottom = 12.dp)
+            )
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(start = 16.dp)
+        ) {
+            listOf(cocktail.drinkGlass, cocktail.drinkCategory).forEach {
+                TagButton(text = it, modifier = Modifier.padding(end = 10.dp)) {
+                    //TODO: onClick
+                }
+            }
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Instructions(instructions = cocktail.instructions, modifier = Modifier.padding(16.dp))
+        }
+    }
 }
 
 @Composable
@@ -246,6 +284,17 @@ fun IngredientsPreview() {
                     .padding(16.dp)
                     .width(150.dp)
             )
+        }
+    }
+}
+
+@Composable
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview
+fun CocktailInfoPreview() {
+    AppTheme {
+        Surface {
+            CocktailInfo(cocktail = testCocktail)
         }
     }
 }
