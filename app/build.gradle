@@ -40,6 +40,11 @@ android {
         compose true
     }
 
+    packagingOptions {
+        exclude("META-INF/LICENSE.md")
+        exclude("META-INF/LICENSE-notice.md")
+    }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.1"
     }
@@ -112,8 +117,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
 
     // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.2")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.4.2")
 
     // Optional - Included automatically by material, only add when you need
     // the icons but not the material library (e.g. when using Material3 or a
