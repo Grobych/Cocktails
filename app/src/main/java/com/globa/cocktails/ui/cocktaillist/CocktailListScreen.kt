@@ -86,7 +86,7 @@ fun CocktailListScreen(
         }
         UiStateStatus.DONE -> {
             Column(modifier = Modifier.fillMaxSize()) {
-                Header(filterUiState = filterUiState, onFilterChangeAction = onFilterChangeAction, onRandomButtonAction = onRandomButtonAction, onTagClicked = removeTagAction)
+                Header(filterUiState = filterUiState, onFilterChangeAction = onFilterChangeAction, onTagClicked = removeTagAction)
                 if (uiState.cocktailList.isNotEmpty()) {
                     CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction, onTagClicked = addTagAction)
                 } else EmptyList()
@@ -99,7 +99,6 @@ fun CocktailListScreen(
 fun Header(
     filterUiState: CocktailFilterUiState,
     onFilterChangeAction: (TextFieldValue) -> Unit,
-    onRandomButtonAction: () -> Unit,
     onTagClicked: (String) -> Unit
 ) {
     Surface {
@@ -268,7 +267,6 @@ fun HeaderPreview() {
             Header(
                 filterUiState = filterUiState,
                 onFilterChangeAction = {},
-                onRandomButtonAction = { /*TODO*/ },
                 onTagClicked = {}
             )
         }
