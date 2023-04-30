@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -22,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +33,7 @@ import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.util.AddButton
 import com.globa.cocktails.ui.util.MenuButton
+import com.globa.cocktails.ui.util.SemiCircleShape
 import com.globa.cocktails.ui.util.TagButton
 
 @Composable
@@ -66,7 +67,8 @@ fun CocktailInfo(cocktail: Cocktail) {
         Header(cocktailName = cocktail.drinkName)
         Row(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Ingredients(
                 ingredients = cocktail.ingredients,
@@ -76,10 +78,11 @@ fun CocktailInfo(cocktail: Cocktail) {
             AsyncImage(
                 model = cocktail.imageURL,
                 contentDescription = cocktail.drinkName,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
+                    .padding(top = 12.dp)
                     .height(225.dp)
-                    .clip(RoundedCornerShape(topStartPercent = 100, bottomStartPercent = 100))
-                    .padding(top = 12.dp, bottom = 12.dp)
+                    .clip(SemiCircleShape)
             )
         }
         Row(
@@ -241,12 +244,6 @@ private val testCocktail = Cocktail(
         instructions = "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten only the outer rim and sprinkle the salt on it. The salt should present to the lips of the imbiber and never mix into the cocktail. Shake the other ingredients with ice, then carefully pour into the glass."
     )
 
-//@Composable
-//@Preview
-//fun CocktailInfoPreview() {
-//    CocktailInfo(cocktail = cocktail)
-//}
-
 @Composable
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview
@@ -279,7 +276,8 @@ fun IngredientsPreview() {
     val measures = testCocktail.measures
     AppTheme {
         Surface {
-            Ingredients(ingredients = ingredients, measures = measures,
+            Ingredients(
+                ingredients = ingredients, measures = measures,
                 modifier = Modifier
                     .padding(16.dp)
                     .width(150.dp)
@@ -289,7 +287,6 @@ fun IngredientsPreview() {
 }
 
 @Composable
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview
 fun CocktailInfoPreview() {
     AppTheme {
