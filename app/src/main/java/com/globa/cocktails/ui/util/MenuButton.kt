@@ -30,7 +30,7 @@ fun MenuButton(
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = CircleShape
             )
-            .size(30.dp),
+            .size(45.dp),
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu),

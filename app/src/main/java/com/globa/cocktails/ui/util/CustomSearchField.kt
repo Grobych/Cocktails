@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Icon
@@ -42,9 +43,8 @@ fun CustomSearchField(
 ) {
     Box(
         modifier = modifier
-            .width(246.dp)
-            .height(30.dp)
-            .clip(shape = MaterialTheme.shapes.large)
+            .height(45.dp)
+            .clip(shape = MaterialTheme.shapes.extraLarge)
             .background(
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = MaterialTheme.shapes.medium
@@ -91,7 +91,7 @@ fun CustomSearchField(
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_search),
                 contentDescription = "Search",
-                modifier = Modifier.align(Alignment.CenterEnd).padding(end = 10.dp)
+                modifier = Modifier.align(Alignment.CenterEnd).padding(end = 10.dp).size(25.dp)
             )
         }
     }
@@ -111,6 +111,7 @@ fun CustomSearchFieldPreview() {
     AppTheme {
         Surface {
             CustomSearchField(
+                modifier = Modifier.width(300.dp),
                 tags = tags,
                 text = filter,
                 onTextChanged = onTextChanged,
@@ -133,6 +134,7 @@ fun CustomSearchFieldPreviewWithTags() {
     AppTheme {
         Surface {
             CustomSearchField(
+                modifier = Modifier.width(300.dp),
                 tags = tags,
                 text = filter,
                 onTextChanged = onTextChanged,

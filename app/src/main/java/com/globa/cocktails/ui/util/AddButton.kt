@@ -30,7 +30,7 @@ fun AddButton(
                 color = MaterialTheme.colorScheme.primary,
                 shape = CircleShape
             )
-            .size(30.dp),
+            .size(45.dp),
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_add),

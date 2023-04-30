@@ -12,14 +12,15 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -40,10 +41,8 @@ import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.ui.theme.AppTheme
-import com.globa.cocktails.ui.util.AddButton
 import com.globa.cocktails.ui.util.CustomSearchField
 import com.globa.cocktails.ui.util.LoadingAnimation
-import com.globa.cocktails.ui.util.MenuButton
 import com.globa.cocktails.ui.util.TagButton
 
 @Composable
@@ -102,25 +101,27 @@ fun Header(
     onTagClicked: (String) -> Unit
 ) {
     Surface {
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(60.dp)
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+                .height(70.dp)
+                .padding(top = 16.dp, start = 26.dp, bottom = 10.dp, end = 26.dp),
         ) {
             CustomSearchField(
-                modifier = Modifier.fillMaxWidth(0.7f),
+                modifier = Modifier.width(420.dp).align(Alignment.CenterStart),
                 tags = filterUiState.tags,
                 text = filterUiState.line,
                 onTextChanged = onFilterChangeAction,
                 onTagClicked = onTagClicked
             )
-            AddButton(
-                onClickAction = {}
-            )
-            MenuButton()
+//            Row(
+//                modifier = Modifier.align(Alignment.CenterEnd)
+//            ) {
+//                AddButton(
+//                    onClickAction = {}
+//                )
+//                MenuButton()
+//            }
         }
     }
 
@@ -137,6 +138,7 @@ fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTa
                 onItemClickAction = {onItemClickAction(it.id)},
                 onTagClicked = onTagClicked
             )
+            Divider(modifier = Modifier.padding(start = 16.dp, end = 16.dp), thickness = 1.dp)
         }
     }
 }
@@ -146,10 +148,12 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagCli
     Row (
         modifier = Modifier
             .fillMaxWidth()
-            .height(120.dp)
+            .height(140.dp)
             .background(color = MaterialTheme.colorScheme.surface) //TODO: add elevation table
+            .padding(start = 16.dp)
             .clickable(onClick = onItemClickAction),
-        horizontalArrangement = Arrangement.SpaceEvenly
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
             model = cocktail.imageURL,
@@ -157,32 +161,25 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagCli
             placeholder = painterResource(id = R.drawable.loading_img),
             error = painterResource(id = R.drawable.broken_image),
             modifier = Modifier
-                .size(80.dp)
+                .size(100.dp)
                 .align(Alignment.CenterVertically)
-                .padding(start = 16.dp)
+//                .padding(start = 16.dp)
                 .clip(MaterialTheme.shapes.large)
         )
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Box(
+        Box(modifier = Modifier.padding(start = 10.dp)){
+            Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 20.dp, bottom = 20.dp, start = 10.dp)
+                    .fillMaxWidth()
+                    .height(140.dp),
+                verticalArrangement = Arrangement.SpaceEvenly,
+                horizontalAlignment = Alignment.Start
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(start = 10.dp),
-                    verticalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Row {
-                        Text(text = cocktail.drinkName, fontSize = MaterialTheme.typography.titleMedium.fontSize)
-                        //star
-                    }
-                    Row {
-                        TagField(list = cocktail.ingredients, onItemClickAction = onTagClicked)
-                    }
+                Row {
+                    Text(text = cocktail.drinkName, fontSize = MaterialTheme.typography.titleMedium.fontSize)
+                    //star
+                }
+                Row {
+                    TagField(list = cocktail.ingredients, onItemClickAction = onTagClicked)
                 }
             }
         }
@@ -201,7 +198,7 @@ fun TagField(
         list.forEach {
             TagButton(
                 text = it,
-                modifier = Modifier.padding(end = 10.dp),
+                modifier = Modifier.padding(end = 12.dp),
                 onClickAction = {onItemClickAction(it)},
             )
         }
@@ -248,7 +245,9 @@ fun CocktailListItemPreview(){
     )
 
     AppTheme {
-        Surface {
+        Surface(
+            modifier = Modifier.width(480.dp)
+        ) {
             CocktailListItem(cocktail = cocktail, onTagClicked = {}, onItemClickAction = {})
         }
     }
@@ -263,7 +262,9 @@ fun HeaderPreview() {
         emptyList()
     )
     AppTheme {
-        Surface {
+        Surface(
+            modifier = Modifier.width(480.dp)
+        ) {
             Header(
                 filterUiState = filterUiState,
                 onFilterChangeAction = {},
