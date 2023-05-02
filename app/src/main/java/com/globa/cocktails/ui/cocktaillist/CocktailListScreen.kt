@@ -171,14 +171,18 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagCli
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(140.dp),
-                verticalArrangement = Arrangement.SpaceEvenly,
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
             ) {
                 Row {
-                    Text(text = cocktail.drinkName, fontSize = MaterialTheme.typography.titleMedium.fontSize)
+                    Text(
+                        text = cocktail.drinkName,
+                        style = MaterialTheme.typography.titleMedium)
                     //star
                 }
-                Row {
+                Row(
+                    modifier = Modifier.padding(top = 12.dp)
+                ) {
                     TagField(list = cocktail.ingredients, onItemClickAction = onTagClicked)
                 }
             }

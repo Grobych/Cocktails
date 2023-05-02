@@ -66,7 +66,7 @@ fun CustomSearchField(
             BasicTextField(
                 value = text,
                 onValueChange = onTextChanged,
-                textStyle = MaterialTheme.typography.bodyMedium.plus(
+                textStyle = MaterialTheme.typography.bodyLarge.plus(
                     TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
                 ),
                 singleLine = true,

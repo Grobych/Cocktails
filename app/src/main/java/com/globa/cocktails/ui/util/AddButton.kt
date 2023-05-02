@@ -2,7 +2,6 @@ package com.globa.cocktails.ui.util
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -13,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.globa.cocktails.R
 import com.globa.cocktails.ui.theme.AppTheme
 
@@ -30,7 +28,7 @@ fun AddButton(
                 color = MaterialTheme.colorScheme.primary,
                 shape = CircleShape
             )
-            .size(45.dp),
+//            .size(45.dp),
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_add),

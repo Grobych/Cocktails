@@ -4,7 +4,7 @@ import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-
+//TODO: review typography
 val typography = Typography(
     bodyMedium = TextStyle(
         fontWeight = FontWeight.Light),
@@ -14,5 +14,8 @@ val typography = Typography(
     ),
     headlineSmall = TextStyle(
         fontSize = 16.sp
+    ),
+    headlineMedium = TextStyle(
+        fontSize = 20.sp
     )
 )

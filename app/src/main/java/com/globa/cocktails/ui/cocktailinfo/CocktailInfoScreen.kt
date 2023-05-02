@@ -31,8 +31,6 @@ import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.theme.AppTheme
-import com.globa.cocktails.ui.util.AddButton
-import com.globa.cocktails.ui.util.MenuButton
 import com.globa.cocktails.ui.util.SemiCircleShape
 import com.globa.cocktails.ui.util.TagButton
 
@@ -107,29 +105,29 @@ private fun Header(cocktailName: String, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(60.dp)
+            .height(75.dp)
     ) {
         Text(
             text = cocktailName,
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .padding(start = 28.dp),
-            style = MaterialTheme.typography.headlineSmall.plus(
+            style = MaterialTheme.typography.headlineMedium.plus(
                 TextStyle(color = MaterialTheme.colorScheme.onSurface)
             )
         )
-        Row(
-            modifier = Modifier.align(Alignment.CenterEnd)
-        ) {
-            //TODO: Add elevation
-            AddButton(modifier = Modifier.padding(end = 10.dp)) {
-                // TODO: FavoriteButton
-            }
-            AddButton(modifier = Modifier.padding(end = 10.dp)) {
-                
-            }
-            MenuButton(modifier = Modifier.padding(end = 16.dp))
-        }
+//        Row(
+//            modifier = Modifier.align(Alignment.CenterEnd)
+//        ) {
+////            //TODO: Add elevation
+////            AddButton(modifier = Modifier.padding(end = 10.dp)) {
+////                // TODO: FavoriteButton
+////            }
+////            AddButton(modifier = Modifier.padding(end = 10.dp)) {
+////
+////            }
+////            MenuButton(modifier = Modifier.padding(end = 16.dp))
+//        }
         Divider(
             color = MaterialTheme.colorScheme.surfaceVariant,
             thickness = 1.dp,
