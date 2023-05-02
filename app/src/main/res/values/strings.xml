@@ -4,6 +4,7 @@
     <string name="empty_container_to_show">Nothing to show…</string>
     <string name="loading_string">Loading…</string>
     <string name="search_placeholder">Search for cocktails</string>
+    <string name="get_random_cocktail_button_string">Randomize</string>
 
 
     <!--    Filters-->

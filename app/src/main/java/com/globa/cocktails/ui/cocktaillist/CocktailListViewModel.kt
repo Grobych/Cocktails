@@ -59,7 +59,7 @@ class CocktailListViewModel @Inject constructor(
 
     fun getRandomCocktail() : String {
         val list = cocktailListState.value
-        return list[Random.Default.nextInt(list.lastIndex)].id
+        return list[Random.Default.nextInt(list.lastIndex + 1)].id
     }
 
     fun updateFilterLine(line: TextFieldValue) {

@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -87,7 +88,18 @@ fun CocktailListScreen(
             Column(modifier = Modifier.fillMaxSize()) {
                 Header(filterUiState = filterUiState, onFilterChangeAction = onFilterChangeAction, onTagClicked = removeTagAction)
                 if (uiState.cocktailList.isNotEmpty()) {
-                    CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction, onTagClicked = addTagAction)
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction, onTagClicked = addTagAction)
+                        Button(
+                            onClick = onRandomButtonAction,
+                            modifier = Modifier.align(Alignment.BottomEnd).padding(26.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.get_random_cocktail_button_string),
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
                 } else EmptyList()
             }
         }
@@ -108,7 +120,9 @@ fun Header(
                 .padding(top = 16.dp, start = 26.dp, bottom = 10.dp, end = 26.dp),
         ) {
             CustomSearchField(
-                modifier = Modifier.width(420.dp).align(Alignment.CenterStart),
+                modifier = Modifier
+                    .width(420.dp)
+                    .align(Alignment.CenterStart),
                 tags = filterUiState.tags,
                 text = filterUiState.line,
                 onTextChanged = onFilterChangeAction,
