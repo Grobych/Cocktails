@@ -7,6 +7,7 @@ import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
 import com.globa.cocktails.domain.FilterCocktailsUseCase.filterByTags
 import com.globa.cocktails.ui.UiStateStatus
+import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -65,9 +66,10 @@ class CocktailListViewModel @Inject constructor(
         _filterUiState.update { it.copy(line = line) }
     }
     fun addFilterTag(tag: String) {
-        _filterUiState.update {
-            it.copy(tags = it.tags.plus(tag))
-        }
+        if (!filterUiState.value.tags.contains(tag, ignoreCase = true))
+            _filterUiState.update {
+                it.copy(tags = it.tags.plus(tag))
+            }
     }
 
     fun removeFilterTag(tag: String) {
