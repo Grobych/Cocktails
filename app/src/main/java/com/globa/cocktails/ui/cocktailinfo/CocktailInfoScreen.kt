@@ -31,6 +31,7 @@ import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.theme.AppTheme
+import com.globa.cocktails.ui.theme.Paddings
 import com.globa.cocktails.ui.util.SemiCircleShape
 import com.globa.cocktails.ui.util.TagButton
 
@@ -71,23 +72,23 @@ fun CocktailInfo(cocktail: Cocktail) {
             Ingredients(
                 ingredients = cocktail.ingredients,
                 measures = cocktail.measures,
-                modifier = Modifier.fillMaxWidth(0.6f).padding(12.dp)
+                modifier = Modifier.fillMaxWidth(0.6f).padding(Paddings.medium)
             )
             AsyncImage(
                 model = cocktail.imageURL,
                 contentDescription = cocktail.drinkName,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .padding(top = 12.dp)
+                    .padding(top = Paddings.medium)
                     .height(225.dp)
                     .clip(SemiCircleShape)
             )
         }
         Row(
-            modifier = Modifier.fillMaxWidth().padding(start = 16.dp)
+            modifier = Modifier.fillMaxWidth().padding(start = Paddings.large)
         ) {
             listOf(cocktail.drinkGlass, cocktail.drinkCategory).forEach {
-                TagButton(text = it, modifier = Modifier.padding(end = 10.dp)) {
+                TagButton(text = it, modifier = Modifier.padding(end = Paddings.small)) {
                     //TODO: onClick
                 }
             }
@@ -95,7 +96,7 @@ fun CocktailInfo(cocktail: Cocktail) {
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Instructions(instructions = cocktail.instructions, modifier = Modifier.padding(16.dp))
+            Instructions(instructions = cocktail.instructions, modifier = Modifier.padding(Paddings.large))
         }
     }
 }
@@ -111,7 +112,7 @@ private fun Header(cocktailName: String, modifier: Modifier = Modifier) {
             text = cocktailName,
             modifier = Modifier
                 .align(Alignment.CenterStart)
-                .padding(start = 28.dp),
+                .padding(start = Paddings.extraLarge),
             style = MaterialTheme.typography.headlineMedium.plus(
                 TextStyle(color = MaterialTheme.colorScheme.onSurface)
             )
@@ -133,7 +134,7 @@ private fun Header(cocktailName: String, modifier: Modifier = Modifier) {
             thickness = 1.dp,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(start = 16.dp, end = 16.dp)
+                .padding(start = Paddings.large, end = Paddings.large)
         )
     }
 }
@@ -150,7 +151,7 @@ private fun Ingredients(ingredients: List<String>, measures: List<String>, modif
     ) {
         Text(
             text = "Ingredients",
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(Paddings.medium),
             style = MaterialTheme.typography.titleMedium.plus(
                 TextStyle(color = MaterialTheme.colorScheme.primary)
             )
@@ -159,16 +160,16 @@ private fun Ingredients(ingredients: List<String>, measures: List<String>, modif
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 12.dp)
+                .padding(bottom = Paddings.medium)
         ) {
             Column(
-                modifier = Modifier.padding(start = 12.dp)
+                modifier = Modifier.padding(start = Paddings.medium)
             ) {
                 ingredients.forEach {
                     Text(
                         text = it,
                         modifier = Modifier
-                            .padding(top = 2.dp),
+                            .padding(top = Paddings.extraSmall),
                         style = MaterialTheme.typography.bodyMedium.plus(
                             TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
                         )
@@ -177,13 +178,13 @@ private fun Ingredients(ingredients: List<String>, measures: List<String>, modif
             }
             Column(
                 horizontalAlignment = Alignment.End,
-                modifier = Modifier.padding(end = 12.dp)
+                modifier = Modifier.padding(end = Paddings.medium)
             ) {
                 measures.forEach {
                     Text(
                         text = it,
                         modifier = Modifier
-                            .padding(top = 2.dp),
+                            .padding(top = Paddings.extraSmall),
                         style = MaterialTheme.typography.bodyMedium.plus(
                             TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
                         )

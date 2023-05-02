@@ -42,6 +42,8 @@ import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.ui.theme.AppTheme
+import com.globa.cocktails.ui.theme.DPs
+import com.globa.cocktails.ui.theme.Paddings
 import com.globa.cocktails.ui.util.CustomSearchField
 import com.globa.cocktails.ui.util.LoadingAnimation
 import com.globa.cocktails.ui.util.TagButton
@@ -92,7 +94,7 @@ fun CocktailListScreen(
                         CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction, onTagClicked = addTagAction)
                         Button(
                             onClick = onRandomButtonAction,
-                            modifier = Modifier.align(Alignment.BottomEnd).padding(26.dp)
+                            modifier = Modifier.align(Alignment.BottomEnd).padding(Paddings.extraLarge)
                         ) {
                             Text(
                                 text = stringResource(R.string.get_random_cocktail_button_string),
@@ -117,7 +119,7 @@ fun Header(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(70.dp)
-                .padding(top = 16.dp, start = 26.dp, bottom = 10.dp, end = 26.dp),
+                .padding(top = Paddings.large, start = Paddings.extraLarge, bottom = Paddings.small, end = Paddings.extraLarge),
         ) {
             CustomSearchField(
                 modifier = Modifier
@@ -144,7 +146,7 @@ fun Header(
 @Composable
 fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTagClicked: (String) -> Unit) {
     LazyColumn(
-        contentPadding = PaddingValues(bottom = 1.dp)
+        contentPadding = PaddingValues(bottom = DPs.line)
     ) {
         items(list) {
             CocktailListItem(
@@ -152,7 +154,7 @@ fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTa
                 onItemClickAction = {onItemClickAction(it.id)},
                 onTagClicked = onTagClicked
             )
-            Divider(modifier = Modifier.padding(start = 16.dp, end = 16.dp), thickness = 1.dp)
+            Divider(modifier = Modifier.padding(start = Paddings.large, end = Paddings.large), thickness = DPs.line)
         }
     }
 }
@@ -164,7 +166,7 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagCli
             .fillMaxWidth()
             .height(140.dp)
             .background(color = MaterialTheme.colorScheme.surface) //TODO: add elevation table
-            .padding(start = 16.dp)
+            .padding(start = Paddings.large)
             .clickable(onClick = onItemClickAction),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
@@ -177,10 +179,9 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagCli
             modifier = Modifier
                 .size(100.dp)
                 .align(Alignment.CenterVertically)
-//                .padding(start = 16.dp)
                 .clip(MaterialTheme.shapes.large)
         )
-        Box(modifier = Modifier.padding(start = 10.dp)){
+        Box(modifier = Modifier.padding(start = Paddings.small)){
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -195,7 +196,7 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagCli
                     //star
                 }
                 Row(
-                    modifier = Modifier.padding(top = 12.dp)
+                    modifier = Modifier.padding(top = Paddings.medium)
                 ) {
                     TagField(list = cocktail.ingredients, onItemClickAction = onTagClicked)
                 }
@@ -216,7 +217,7 @@ fun TagField(
         list.forEach {
             TagButton(
                 text = it,
-                modifier = Modifier.padding(end = 12.dp),
+                modifier = Modifier.padding(end = Paddings.medium),
                 onClickAction = {onItemClickAction(it)},
             )
         }
