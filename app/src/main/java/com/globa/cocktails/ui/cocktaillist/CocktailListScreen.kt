@@ -94,7 +94,9 @@ fun CocktailListScreen(
                         CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction, onTagClicked = addTagAction)
                         Button(
                             onClick = onRandomButtonAction,
-                            modifier = Modifier.align(Alignment.BottomEnd).padding(Paddings.extraLarge)
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .padding(Paddings.extraLarge)
                         ) {
                             Text(
                                 text = stringResource(R.string.get_random_cocktail_button_string),
@@ -119,7 +121,12 @@ fun Header(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(70.dp)
-                .padding(top = Paddings.large, start = Paddings.extraLarge, bottom = Paddings.small, end = Paddings.extraLarge),
+                .padding(
+                    top = Paddings.large,
+                    start = Paddings.extraLarge,
+                    bottom = Paddings.small,
+                    end = Paddings.extraLarge
+                ),
         ) {
             CustomSearchField(
                 modifier = Modifier
