@@ -18,4 +18,18 @@ class CocktailLocalDataSource @Inject constructor(
         withContext(coroutineDispatcher){
             db.cocktailDao.insertAll(cocktails)
         }
+    suspend fun getFavoriteCocktails() =
+        withContext(coroutineDispatcher){
+            db.cocktailDao.getFavoriteCocktails()
+        }
+
+    suspend fun updateCocktail(cocktail: CocktailDBModel) =
+        withContext(coroutineDispatcher) {
+            db.cocktailDao.update(cocktail)
+        }
+
+    suspend fun getCocktailById(id: String) =
+        withContext(coroutineDispatcher) {
+            db.cocktailDao.getCocktailById(id)
+        }
 }

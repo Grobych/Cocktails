@@ -3,6 +3,7 @@ package com.globa.cocktails.ui.cocktailinfo
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,22 +14,31 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CocktailViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    repository: CocktailRepository
+    private val savedStateHandle: SavedStateHandle,
+    private val repository: CocktailRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<CocktailUiState>(CocktailUiState.Loading())
     val uiState = _uiState.asStateFlow()
 
+    private val cocktailId = savedStateHandle.get<String>("cocktailId")
     init {
         viewModelScope.launch {
-            val cocktailId = savedStateHandle.get<String>("cocktailId")
-            val cocktail = repository.getCocktails().find { it.id == cocktailId }
+            fetchCocktail()
+        }
+    }
+
+    private suspend fun fetchCocktail() {
+        if (cocktailId != null) {
+            val cocktail = repository.getCocktail(cocktailId)
             _uiState.update {
-                if (cocktail!= null)
-                    CocktailUiState.Success(cocktail)
-                else CocktailUiState.Error("Cocktail not found!")
+                CocktailUiState.Success(cocktail)
             }
         }
+    }
+
+    fun updateCocktail(cocktail: Cocktail) = viewModelScope.launch {
+        repository.updateCocktail(cocktail = cocktail)
+        fetchCocktail()
     }
 }

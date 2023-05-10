@@ -32,6 +32,7 @@ import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.Paddings
+import com.globa.cocktails.ui.util.FavoriteButton
 import com.globa.cocktails.ui.util.SemiCircleShape
 import com.globa.cocktails.ui.util.TagButton
 
@@ -41,14 +42,20 @@ fun CocktailInfoScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
-    CocktailScreenSelect(uiState = uiState)
+    val onFavoriteButtonClick: () -> Unit = {
+        if (uiState is CocktailUiState.Success) {
+            val cocktail = (uiState as CocktailUiState.Success).cocktail
+            viewModel.updateCocktail(cocktail.copy(isFavorite = cocktail.isFavorite.not()))
+        }
+    }
+    CocktailScreenSelect(uiState = uiState, onFavoriteButtonClick = onFavoriteButtonClick)
 }
 
 @Composable
-fun CocktailScreenSelect(uiState: CocktailUiState) {
+fun CocktailScreenSelect(uiState: CocktailUiState, onFavoriteButtonClick: () -> Unit) {
     when (uiState) {
         is CocktailUiState.Loading -> CocktailLoading()
-        is CocktailUiState.Success -> CocktailInfo(cocktail = uiState.cocktail)
+        is CocktailUiState.Success -> CocktailInfo(cocktail = uiState.cocktail, onFavoriteButtonClick = onFavoriteButtonClick)
         is CocktailUiState.Error -> CocktailError(errorMessage = uiState.message)
     }
 }
@@ -61,9 +68,9 @@ fun CocktailLoading() {
 }
 
 @Composable
-fun CocktailInfo(cocktail: Cocktail) {
+fun CocktailInfo(cocktail: Cocktail, onFavoriteButtonClick: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
-        Header(cocktailName = cocktail.drinkName)
+        Header(cocktailName = cocktail.drinkName, onFavoriteButtonClick = onFavoriteButtonClick, isFavorited = cocktail.isFavorite)
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -72,7 +79,9 @@ fun CocktailInfo(cocktail: Cocktail) {
             Ingredients(
                 ingredients = cocktail.ingredients,
                 measures = cocktail.measures,
-                modifier = Modifier.fillMaxWidth(0.6f).padding(Paddings.medium)
+                modifier = Modifier
+                    .fillMaxWidth(0.6f)
+                    .padding(Paddings.medium)
             )
             AsyncImage(
                 model = cocktail.imageURL,
@@ -85,7 +94,9 @@ fun CocktailInfo(cocktail: Cocktail) {
             )
         }
         Row(
-            modifier = Modifier.fillMaxWidth().padding(start = Paddings.large)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = Paddings.large)
         ) {
             listOf(cocktail.drinkGlass, cocktail.drinkCategory).forEach {
                 TagButton(text = it, modifier = Modifier.padding(end = Paddings.small)) {
@@ -102,7 +113,12 @@ fun CocktailInfo(cocktail: Cocktail) {
 }
 
 @Composable
-private fun Header(cocktailName: String, modifier: Modifier = Modifier) {
+private fun Header(
+    cocktailName: String,
+    modifier: Modifier = Modifier,
+    onFavoriteButtonClick: () -> Unit,
+    isFavorited: Boolean = false
+) {
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -117,18 +133,11 @@ private fun Header(cocktailName: String, modifier: Modifier = Modifier) {
                 TextStyle(color = MaterialTheme.colorScheme.onSurface)
             )
         )
-//        Row(
-//            modifier = Modifier.align(Alignment.CenterEnd)
-//        ) {
-////            //TODO: Add elevation
-////            AddButton(modifier = Modifier.padding(end = 10.dp)) {
-////                // TODO: FavoriteButton
-////            }
-////            AddButton(modifier = Modifier.padding(end = 10.dp)) {
-////
-////            }
-////            MenuButton(modifier = Modifier.padding(end = 16.dp))
-//        }
+        Row(
+            modifier = Modifier.align(Alignment.CenterEnd).padding(end = Paddings.large)
+        ) {
+            FavoriteButton(onClickAction = { onFavoriteButtonClick() }, isFavorited = isFavorited)
+        }
         Divider(
             color = MaterialTheme.colorScheme.surfaceVariant,
             thickness = 1.dp,
@@ -250,7 +259,7 @@ fun HeaderPreview() {
     val name = testCocktail.drinkName
     AppTheme {
         Surface {
-            Header(cocktailName = name, modifier = Modifier.width(360.dp))
+            Header(cocktailName = name, modifier = Modifier.width(360.dp), onFavoriteButtonClick = {})
         }
     }
 }
@@ -290,7 +299,7 @@ fun IngredientsPreview() {
 fun CocktailInfoPreview() {
     AppTheme {
         Surface {
-            CocktailInfo(cocktail = testCocktail)
+            CocktailInfo(cocktail = testCocktail, onFavoriteButtonClick = {})
         }
     }
 }

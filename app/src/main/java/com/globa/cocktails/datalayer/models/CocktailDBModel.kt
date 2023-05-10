@@ -15,7 +15,8 @@ data class CocktailDBModel(
     val drinkGlass : String,
     val ingredients : List<String>,
     val measures : List<String>,
-    val instructions : String)
+    val instructions : String,
+    val isFavorite : Boolean)
 
     fun List<CocktailDBModel>.asDomainModel() = map {
         Cocktail(
@@ -28,6 +29,22 @@ data class CocktailDBModel(
             drinkGlass = it.drinkGlass,
             ingredients = it.ingredients,
             measures = it.measures,
-            instructions = it.instructions
+            instructions = it.instructions,
+            isFavorite = it.isFavorite
         )
     }
+
+    fun CocktailDBModel.asDomainModel() =
+        Cocktail(
+            id = id,
+            drinkNumber = drinkNumber,
+            drinkName = drinkName,
+            alcohol = alcohol,
+            drinkCategory = drinkCategory,
+            imageURL = imageURL,
+            drinkGlass = drinkGlass,
+            ingredients = ingredients,
+            measures = measures,
+            instructions = instructions,
+            isFavorite = isFavorite
+        )

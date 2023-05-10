@@ -25,7 +25,8 @@ data class CocktailAPIModel(
             drinkGlass = it.drinkGlass,
             ingredients = it.ingredients,
             measures = it.measures,
-            instructions = it.instructions
+            instructions = it.instructions,
+            isFavorite = false
         )
     }
 
@@ -40,6 +41,7 @@ data class CocktailAPIModel(
             drinkGlass = it.drinkGlass,
             ingredients = it.ingredients,
             measures = it.measures,
-            instructions = it.instructions
+            instructions = it.instructions,
+            isFavorite = false
         )
     }

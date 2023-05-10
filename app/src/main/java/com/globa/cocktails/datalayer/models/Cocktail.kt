@@ -10,7 +10,9 @@ data class Cocktail(
     val drinkGlass : String = "",
     val ingredients : List<String> = listOf(),
     val measures : List<String> = listOf(),
-    val instructions : String = "")
+    val instructions : String = "",
+    val isFavorite : Boolean = false)
+
 
 fun Cocktail.createTagLine(): String {
     val res = StringBuilder()
@@ -22,3 +24,17 @@ fun Cocktail.createTagLine(): String {
     }
     return res.toString()
 }
+
+fun Cocktail.asDBModel(): CocktailDBModel = CocktailDBModel(
+    id = id,
+    drinkNumber = drinkNumber,
+    drinkName = drinkName,
+    alcohol = alcohol,
+    drinkCategory = drinkCategory,
+    imageURL = imageURL,
+    drinkGlass = drinkGlass,
+    ingredients = ingredients,
+    measures = measures,
+    instructions = instructions,
+    isFavorite = isFavorite
+)
