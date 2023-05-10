@@ -165,33 +165,26 @@ private fun Ingredients(ingredients: List<String>, measures: List<String>, modif
                 TextStyle(color = MaterialTheme.colorScheme.primary)
             )
         )
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = Paddings.medium)
+                .padding(Paddings.medium)
         ) {
-            Column(
-                modifier = Modifier.padding(start = Paddings.medium)
-            ) {
-                ingredients.forEach {
+            for (i in 0 .. maxOf(ingredients.lastIndex,measures.lastIndex)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Text(
-                        text = it,
+                        text = if (i <= ingredients.lastIndex) ingredients[i] else "",
                         modifier = Modifier
                             .padding(top = Paddings.extraSmall),
                         style = MaterialTheme.typography.bodyMedium.plus(
                             TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
                         )
                     )
-                }
-            }
-            Column(
-                horizontalAlignment = Alignment.End,
-                modifier = Modifier.padding(end = Paddings.medium)
-            ) {
-                measures.forEach {
                     Text(
-                        text = it,
+                        text = if (i <= measures.lastIndex) measures[i] else "",
                         modifier = Modifier
                             .padding(top = Paddings.extraSmall),
                         style = MaterialTheme.typography.bodyMedium.plus(
