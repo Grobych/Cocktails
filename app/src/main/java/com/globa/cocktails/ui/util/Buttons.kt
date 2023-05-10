@@ -3,7 +3,7 @@ package com.globa.cocktails.ui.util
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -35,7 +35,7 @@ fun CircleButton(
     IconButton(
         onClick = { onClickAction() },
         modifier = modifier
-            .clip(RoundedCornerShape(50))
+            .clip(CircleShape)
             .size(buttonSize)
             .background(color = buttonColor)
 
