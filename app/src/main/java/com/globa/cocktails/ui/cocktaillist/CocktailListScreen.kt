@@ -155,7 +155,10 @@ fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTa
     LazyColumn(
         contentPadding = PaddingValues(bottom = DPs.line)
     ) {
-        items(list) {
+        items(
+            items = list,
+            key = { it.id }
+        ) {
             CocktailListItem(
                 cocktail = it,
                 onItemClickAction = {onItemClickAction(it.id)},
