@@ -15,7 +15,7 @@ interface CocktailRepository {
     fun getCocktails(): Flow<List<Cocktail>>
     suspend fun getFavorites(): List<Cocktail>
 
-    suspend fun getCocktail(id: String): Cocktail
+    fun getCocktail(id: String): Flow<Cocktail>
     suspend fun updateCocktail(cocktail: Cocktail)
 }
 
@@ -42,8 +42,8 @@ class CocktailRepositoryImpl @Inject constructor (
         return cocktailLocalDataSource.getFavoriteCocktails().asDomainModel()
     }
 
-    override suspend fun getCocktail(id: String): Cocktail {
-        return  cocktailLocalDataSource.getCocktailById(id).asDomainModel()
+    override fun getCocktail(id: String): Flow<Cocktail> {
+        return cocktailLocalDataSource.getCocktailById(id).map { it.asDomainModel() }
     }
 
     override suspend fun updateCocktail(cocktail: Cocktail) {

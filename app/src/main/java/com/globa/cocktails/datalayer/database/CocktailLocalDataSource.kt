@@ -26,8 +26,6 @@ class CocktailLocalDataSource @Inject constructor(
             db.cocktailDao.update(cocktail)
         }
 
-    suspend fun getCocktailById(id: String) =
-        withContext(coroutineDispatcher) {
-            db.cocktailDao.getCocktailById(id)
-        }
+    fun getCocktailById(id: String) = db.cocktailDao.getCocktailById(id)
+
 }

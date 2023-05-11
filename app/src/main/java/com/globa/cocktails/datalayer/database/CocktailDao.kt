@@ -17,7 +17,7 @@ interface CocktailDao{
     @Query("select * from cocktails where isFavorite = true")
     fun getFavoriteCocktails(): List<CocktailDBModel>
     @Query("select * from cocktails where id = :id")
-    fun getCocktailById(id: String): CocktailDBModel
+    fun getCocktailById(id: String): Flow<CocktailDBModel>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(cocktails : List<CocktailDBModel>)
