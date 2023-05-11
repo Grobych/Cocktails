@@ -12,10 +12,6 @@ import kotlinx.coroutines.flow.Flow
 interface CocktailDao{
     @Query("select * from cocktails")
     fun getCocktails() : Flow<List<CocktailDBModel>>
-    @Query("select * from cocktails where drinkName like :name")
-    fun getCocktailByName(name : String) : List<CocktailDBModel>
-    @Query("select * from cocktails where isFavorite = true")
-    fun getFavoriteCocktails(): List<CocktailDBModel>
     @Query("select * from cocktails where id = :id")
     fun getCocktailById(id: String): Flow<CocktailDBModel>
 

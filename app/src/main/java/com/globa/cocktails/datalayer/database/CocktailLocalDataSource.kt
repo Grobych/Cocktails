@@ -16,10 +16,6 @@ class CocktailLocalDataSource @Inject constructor(
         withContext(coroutineDispatcher){
             db.cocktailDao.insertAll(cocktails)
         }
-    suspend fun getFavoriteCocktails() =
-        withContext(coroutineDispatcher){
-            db.cocktailDao.getFavoriteCocktails()
-        }
 
     suspend fun updateCocktail(cocktail: CocktailDBModel) =
         withContext(coroutineDispatcher) {
