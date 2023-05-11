@@ -26,10 +26,16 @@ class CocktailRepositoryImpl @Inject constructor (
 ): CocktailRepository {
 
 
-    override  fun getCocktails(): Flow<List<Cocktail>> {
-        val dbFlow = cocktailLocalDataSource.getCocktails().map { it.asDomainModel() }
-        val fileFlow = cocktailFileDataSource.getCocktails().map { it.asDomainModel() }
-        return dbFlow //TODO: make shure db is populated by first app launch
+    override fun getCocktails(): Flow<List<Cocktail>> {
+        return cocktailLocalDataSource.getCocktails()
+            .map {
+                    it
+                        .asDomainModel()
+                        .ifEmpty {
+                            cocktailLocalDataSource.putCocktails(cocktailFileDataSource.getCocktails().asDBModel())
+                            cocktailFileDataSource.getCocktails().asDomainModel()
+                    }
+            }
     }
 
     override suspend fun getFavorites(): List<Cocktail> {
