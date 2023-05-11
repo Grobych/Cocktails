@@ -220,6 +220,7 @@ fun CocktailListItem(
                         contentDescription = "",
                         modifier = Modifier
                             .padding(end = Paddings.small)
+                            .size(24.dp)
                             .clickable {
                                onFavoriteClicked(cocktail)
                             }
