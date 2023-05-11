@@ -5,12 +5,14 @@ import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.models.asDBModel
 import com.globa.cocktails.datalayer.models.asDomainModel
 import com.globa.cocktails.datalayer.storage.CocktailFileDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 interface CocktailRepository {
-    suspend fun getCocktails(): List<Cocktail>
+    fun getCocktails(): Flow<List<Cocktail>>
     suspend fun getFavorites(): List<Cocktail>
 
     suspend fun getCocktail(id: String): Cocktail
@@ -23,17 +25,11 @@ class CocktailRepositoryImpl @Inject constructor (
     private val cocktailFileDataSource: CocktailFileDataSource
 ): CocktailRepository {
 
-    private var cocktails : List<Cocktail> = emptyList()
 
-    override suspend fun getCocktails() : List<Cocktail> {
-        if (cocktails.isEmpty()){
-            cocktails = cocktailLocalDataSource.getCocktails().asDomainModel().ifEmpty {
-                val cocktailFromFile = cocktailFileDataSource.getCocktails()
-                cocktailLocalDataSource.putCocktails(cocktailFromFile.asDBModel())
-                cocktailFromFile.asDomainModel()
-            }
-        }
-        return cocktails
+    override  fun getCocktails(): Flow<List<Cocktail>> {
+        val dbFlow = cocktailLocalDataSource.getCocktails().map { it.asDomainModel() }
+        val fileFlow = cocktailFileDataSource.getCocktails().map { it.asDomainModel() }
+        return dbFlow //TODO: make shure db is populated by first app launch
     }
 
     override suspend fun getFavorites(): List<Cocktail> {

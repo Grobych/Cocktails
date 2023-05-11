@@ -10,10 +10,13 @@ import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import kotlin.random.Random
@@ -28,37 +31,32 @@ class CocktailListViewModel @Inject constructor(
     private val _filterUiState = MutableStateFlow(CocktailFilterUiState())
     val filterUiState = _filterUiState.asStateFlow()
 
-    private val cocktailListState = MutableStateFlow(listOf<Cocktail>())
-
-    private suspend fun getCocktails() = cocktailRepository.getCocktails()
+    private val cocktails =
+        cocktailRepository
+            .getCocktails()
+            .combine(filterUiState) { cocktails: List<Cocktail>, filter: CocktailFilterUiState ->
+                if (filter.tags.isEmpty() && filter.line.text.isEmpty()) cocktails
+                else cocktails.filterByTags(filter.expandTags())
+            }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     private fun initCocktailList() {
-        cocktailListState.onEach {
-            _uiState.update {
-                it.copy(
+        cocktails.onEach {
+            _uiState.update { uiState ->
+                uiState.copy(
                     status = UiStateStatus.DONE,
-                    cocktailList = cocktailListState.value
+                    cocktailList = it
                 )
             }
         }.launchIn(viewModelScope)
     }
 
-    private fun initFilters() {
-        filterUiState.onEach { filter ->
-            cocktailListState.update {
-                getCocktails().filterByTags(filter.expandTags())
-            }
-        }.launchIn(viewModelScope)
-    }
-
-
     init {
-        initFilters()
         initCocktailList()
     }
 
     fun getRandomCocktail() : String {
-        val list = cocktailListState.value
+        val list = cocktails.value
         return list[Random.Default.nextInt(list.lastIndex + 1)].id
     }
 
