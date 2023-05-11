@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
+import com.globa.cocktails.domain.UpdateCocktailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CocktailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val repository: CocktailRepository
+    private val repository: CocktailRepository,
+    private val updateCocktailUseCase: UpdateCocktailUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<CocktailUiState>(CocktailUiState.Loading())
@@ -38,7 +40,7 @@ class CocktailViewModel @Inject constructor(
     }
 
     fun updateCocktail(cocktail: Cocktail) = viewModelScope.launch {
-        repository.updateCocktail(cocktail = cocktail)
+        updateCocktailUseCase(cocktail)
         fetchCocktail()
     }
 }
