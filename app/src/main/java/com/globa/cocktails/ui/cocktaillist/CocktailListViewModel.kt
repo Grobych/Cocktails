@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -73,6 +74,12 @@ class CocktailListViewModel @Inject constructor(
     fun removeFilterTag(tag: String) {
         _filterUiState.update {
             it.copy(tags = it.tags.minus(tag))
+        }
+    }
+
+    fun updateCocktail(cocktail: Cocktail) {
+        viewModelScope.launch {
+            cocktailRepository.updateCocktail(cocktail)
         }
     }
 }

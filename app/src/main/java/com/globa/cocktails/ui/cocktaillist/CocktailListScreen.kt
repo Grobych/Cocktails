@@ -78,6 +78,10 @@ fun CocktailListScreen(
         viewModel.addFilterTag(it)
     }
 
+    val updateCocktail: (Cocktail) -> Unit = {
+        viewModel.updateCocktail(it.copy(isFavorite = it.isFavorite.not()))
+    }
+
     val onRandomButtonAction: () -> Unit = {
         onItemClickAction(viewModel.getRandomCocktail())
     }
@@ -94,7 +98,7 @@ fun CocktailListScreen(
                 Header(filterUiState = filterUiState, onFilterChangeAction = onFilterChangeAction, onTagClicked = removeTagAction)
                 if (uiState.cocktailList.isNotEmpty()) {
                     Box(modifier = Modifier.fillMaxSize()) {
-                        CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction, onTagClicked = addTagAction)
+                        CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction, onTagClicked = addTagAction, onFavoriteClicked = updateCocktail)
                         Button(
                             onClick = onRandomButtonAction,
                             modifier = Modifier
@@ -154,7 +158,7 @@ fun Header(
 }
 
 @Composable
-fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTagClicked: (String) -> Unit) {
+fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTagClicked: (String) -> Unit, onFavoriteClicked: (Cocktail) -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(bottom = DPs.line)
     ) {
@@ -165,7 +169,8 @@ fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTa
             CocktailListItem(
                 cocktail = it,
                 onItemClickAction = {onItemClickAction(it.id)},
-                onTagClicked = onTagClicked
+                onTagClicked = onTagClicked,
+                onFavoriteClicked = onFavoriteClicked
             )
             Divider(modifier = Modifier.padding(start = Paddings.large, end = Paddings.large), thickness = DPs.line)
         }
@@ -173,7 +178,12 @@ fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTa
 }
 
 @Composable
-fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagClicked: (String) -> Unit) {
+fun CocktailListItem(
+    cocktail: Cocktail,
+    onItemClickAction: () -> Unit,
+    onTagClicked: (String) -> Unit,
+    onFavoriteClicked: (Cocktail) -> Unit
+) {
     Row (
         modifier = Modifier
             .fillMaxWidth()
@@ -208,7 +218,12 @@ fun CocktailListItem(cocktail: Cocktail, onItemClickAction: () -> Unit, onTagCli
                             else R.drawable.ic_favorite_dis
                         ),
                         contentDescription = "",
-                        modifier = Modifier.padding(end = Paddings.small),
+                        modifier = Modifier
+                            .padding(end = Paddings.small)
+                            .clickable {
+                               onFavoriteClicked(cocktail)
+                            }
+                        ,
                         tint = MaterialTheme.colorScheme.tertiary
                     )
                     Text(
@@ -288,7 +303,7 @@ fun CocktailListItemPreview(){
         Surface(
             modifier = Modifier.width(480.dp)
         ) {
-            CocktailListItem(cocktail = cocktail, onTagClicked = {}, onItemClickAction = {})
+            CocktailListItem(cocktail = cocktail, onTagClicked = {}, onItemClickAction = {}, onFavoriteClicked = {})
         }
     }
 }
