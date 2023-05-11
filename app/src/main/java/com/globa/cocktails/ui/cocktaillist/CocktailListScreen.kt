@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -104,7 +105,11 @@ fun CocktailListScreen(
                             onClick = onRandomButtonAction,
                             modifier = Modifier
                                 .align(Alignment.BottomEnd)
-                                .padding(Paddings.extraLarge)
+                                .padding(Paddings.extraLarge),
+                            elevation = ButtonDefaults.buttonElevation(
+                                defaultElevation = 6.dp,
+                                pressedElevation = 8.dp,
+                            )
                         ) {
                             Text(
                                 text = stringResource(R.string.get_random_cocktail_button_string),
@@ -223,7 +228,7 @@ fun CocktailListItem(
                             .padding(end = Paddings.small)
                             .size(24.dp)
                             .clickable {
-                               onFavoriteClicked(cocktail)
+                                onFavoriteClicked(cocktail)
                             }
                         ,
                         tint = MaterialTheme.colorScheme.tertiary
