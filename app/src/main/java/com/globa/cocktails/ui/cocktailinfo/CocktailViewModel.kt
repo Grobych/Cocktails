@@ -9,7 +9,7 @@ import com.globa.cocktails.domain.UpdateCocktailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.flow.update
@@ -31,7 +31,7 @@ class CocktailViewModel @Inject constructor(
         fetchCocktail()
     }
 
-    private fun fetchCocktail() {
+    private fun fetchCocktail() = viewModelScope.launch {
         if (cocktailId != null) {
             repository
                 .getCocktail(cocktailId)
@@ -44,7 +44,7 @@ class CocktailViewModel @Inject constructor(
                     _uiState.update {
                         CocktailUiState.Error("Empty")
                     }
-                }.launchIn(viewModelScope)
+                }.collect()
         } else {
             _uiState.update {
                 CocktailUiState.Error("Incorrect ID")
