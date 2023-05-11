@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class CocktailListViewModel @Inject constructor(
@@ -49,12 +48,6 @@ class CocktailListViewModel @Inject constructor(
 
     init {
         initCocktailList()
-    }
-
-    fun getRandomCocktail() : String {
-        val list = uiState.value.cocktailList
-        if (list.isNotEmpty()) return list[Random.Default.nextInt(list.lastIndex + 1)].id
-        else throw java.lang.Exception("No items to get random!")
     }
 
     fun updateFilterLine(line: TextFieldValue) {

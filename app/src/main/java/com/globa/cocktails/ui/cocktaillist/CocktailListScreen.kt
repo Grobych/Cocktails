@@ -43,6 +43,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.domain.RandomCocktailUseCase
 import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs
@@ -58,6 +59,7 @@ fun CocktailListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val filterUiState by viewModel.filterUiState.collectAsState()
+    val randomCocktailUseCase = RandomCocktailUseCase()
 
     val onFilterChangeAction: (TextFieldValue) -> Unit = { value ->
         val text = value.text
@@ -82,10 +84,6 @@ fun CocktailListScreen(
         viewModel.updateCocktail(it.copy(isFavorite = it.isFavorite.not()))
     }
 
-    val onRandomButtonAction: () -> Unit = {
-        onItemClickAction(viewModel.getRandomCocktail())
-    }
-
     when (uiState.status) {
         UiStateStatus.LOADING -> {
             LoadingComposable()
@@ -94,6 +92,9 @@ fun CocktailListScreen(
             ErrorComposable(errorMessage = uiState.errorMessage)
         }
         UiStateStatus.DONE -> {
+            val onRandomButtonAction: () -> Unit = {
+                onItemClickAction(randomCocktailUseCase(uiState.cocktailList))
+            }
             Column(modifier = Modifier.fillMaxSize()) {
                 Header(filterUiState = filterUiState, onFilterChangeAction = onFilterChangeAction, onTagClicked = removeTagAction)
                 if (uiState.cocktailList.isNotEmpty()) {
