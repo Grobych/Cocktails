@@ -10,7 +10,7 @@ class CocktailLocalDataSource @Inject constructor(
     private val db : CocktailDatabase,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) {
-    fun getCocktails() = db.cocktailDao.getCocktails()
+    suspend fun getCocktails() = withContext(coroutineDispatcher) {db.cocktailDao.getCocktails()}
 
     suspend fun putCocktails(cocktails : List<CocktailDBModel>) =
         withContext(coroutineDispatcher){

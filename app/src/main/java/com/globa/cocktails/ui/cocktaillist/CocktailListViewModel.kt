@@ -11,13 +11,9 @@ import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,24 +30,21 @@ class CocktailListViewModel @Inject constructor(
     private val _filterUiState = MutableStateFlow(CocktailFilterUiState())
     val filterUiState = _filterUiState.asStateFlow()
 
-    private val cocktails =
+    private fun initCocktailList() = viewModelScope.launch {
         cocktailRepository
             .getCocktails()
             .combine(filterUiState) { cocktails: List<Cocktail>, filter: CocktailFilterUiState ->
                 if (filter.tags.isEmpty() && filter.line.text.isEmpty()) cocktails
                 else cocktails.filterByTags(filter.expandTags())
             }
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
-
-    private fun initCocktailList() {
-        cocktails.onEach {
-            _uiState.update { uiState ->
-                uiState.copy(
-                    status = UiStateStatus.DONE,
-                    cocktailList = it
-                )
+            .collect {
+                _uiState.update { uiState ->
+                    uiState.copy(
+                        status = UiStateStatus.DONE,
+                        cocktailList = it
+                    )
+                }
             }
-        }.launchIn(viewModelScope)
     }
 
     init {
@@ -59,8 +52,9 @@ class CocktailListViewModel @Inject constructor(
     }
 
     fun getRandomCocktail() : String {
-        val list = cocktails.value
-        return list[Random.Default.nextInt(list.lastIndex + 1)].id
+        val list = uiState.value.cocktailList
+        if (list.isNotEmpty()) return list[Random.Default.nextInt(list.lastIndex + 1)].id
+        else throw java.lang.Exception("No items to get random!")
     }
 
     fun updateFilterLine(line: TextFieldValue) {
