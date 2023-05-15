@@ -20,10 +20,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,10 +50,12 @@ import com.globa.cocktails.ui.theme.Paddings
 import com.globa.cocktails.ui.util.AddButton
 import com.globa.cocktails.ui.util.CustomSearchField
 import com.globa.cocktails.ui.util.FavoriteButton
+import com.globa.cocktails.ui.util.FooterButton
 import com.globa.cocktails.ui.util.LoadingAnimation
 import com.globa.cocktails.ui.util.MenuButton
 import com.globa.cocktails.ui.util.TagButton
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CocktailListScreen(
     viewModel: CocktailListViewModel = hiltViewModel(),
@@ -97,29 +99,33 @@ fun CocktailListScreen(
             val onRandomButtonAction: () -> Unit = {
                 onItemClickAction(randomCocktailUseCase(uiState.cocktailList))
             }
-            Column(modifier = Modifier.fillMaxSize()) {
-                Header(filterUiState = filterUiState, onFilterChangeAction = onFilterChangeAction, onTagClicked = removeTagAction)
-                if (uiState.cocktailList.isNotEmpty()) {
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction, onTagClicked = addTagAction, onFavoriteClicked = updateCocktail)
-                        Button(
-                            onClick = onRandomButtonAction,
-                            modifier = Modifier
-                                .align(Alignment.BottomEnd)
-                                .padding(Paddings.extraLarge),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 6.dp,
-                                pressedElevation = 8.dp,
+            Scaffold(
+                topBar = {
+                    Header(filterUiState = filterUiState, onFilterChangeAction = onFilterChangeAction, onTagClicked = removeTagAction)
+                },
+                bottomBar = {
+                    Footer(
+                        onAllReceipesClicked = { /*TODO*/ },
+                        onMyReceipesClicked = { /*TODO*/ },
+                        onFavoriteReceipesClicked = { /*TODO*/ },
+                        onRandomReceipeClicked = onRandomButtonAction
+                    )
+                },
+                content = { paddingValues ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(
+                                bottom = paddingValues.calculateBottomPadding(),
+                                top = paddingValues.calculateTopPadding()
                             )
-                        ) {
-                            Text(
-                                text = stringResource(R.string.get_random_cocktail_button_string),
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                        }
+                    ) {
+                        if (uiState.cocktailList.isNotEmpty())
+                            CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction, onTagClicked = addTagAction, onFavoriteClicked = updateCocktail)
+                        else EmptyList()
                     }
-                } else EmptyList()
-            }
+                }
+            )
         }
     }
 }
@@ -255,6 +261,44 @@ fun TagField(
 }
 
 @Composable
+fun Footer(
+    onAllReceipesClicked: () -> Unit,
+    onMyReceipesClicked: () -> Unit,
+    onFavoriteReceipesClicked: () -> Unit,
+    onRandomReceipeClicked: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(70.dp)
+            .background(color = MaterialTheme.colorScheme.background),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceAround
+    ) {
+        FooterButton(
+            onClickAction = onAllReceipesClicked,
+            icon = R.drawable.ic_all_receipes,
+            text = "All receipes"
+        )
+        FooterButton(
+            onClickAction = onMyReceipesClicked,
+            icon = R.drawable.ic_my_receipes,
+            text = "My receipes"
+        )
+        FooterButton(
+            onClickAction = onFavoriteReceipesClicked,
+            icon = R.drawable.ic_favorite_receipes,
+            text = "Favorite"
+        )
+        FooterButton(
+            onClickAction = onRandomReceipeClicked,
+            icon = R.drawable.ic_random_receipe,
+            text = "Random"
+        )
+    }
+}
+
+@Composable
 fun LoadingComposable() {
     Row(
         modifier = Modifier.fillMaxSize(),
@@ -318,6 +362,22 @@ fun HeaderPreview() {
                 filterUiState = filterUiState,
                 onFilterChangeAction = {},
                 onTagClicked = {}
+            )
+        }
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun FooterPreview() {
+    AppTheme {
+        Surface {
+            Footer(
+                onAllReceipesClicked = { },
+                onMyReceipesClicked = { },
+                onFavoriteReceipesClicked = { },
+                onRandomReceipeClicked = {}
             )
         }
     }
