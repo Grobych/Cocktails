@@ -114,6 +114,7 @@ fun CocktailInfo(cocktail: Cocktail, onFavoriteButtonClick: () -> Unit, onBackBu
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = Paddings.large)
+                .background(color = MaterialTheme.colorScheme.surface)
         ) {
             listOf(cocktail.drinkGlass, cocktail.drinkCategory).forEach {
                 TagButton(text = it, modifier = Modifier.padding(end = Paddings.medium)) {
@@ -122,7 +123,7 @@ fun CocktailInfo(cocktail: Cocktail, onFavoriteButtonClick: () -> Unit, onBackBu
             }
         }
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().background(color = MaterialTheme.colorScheme.surface)
         ) {
             Instructions(instructions = cocktail.instructions, modifier = Modifier.padding(Paddings.large))
         }
