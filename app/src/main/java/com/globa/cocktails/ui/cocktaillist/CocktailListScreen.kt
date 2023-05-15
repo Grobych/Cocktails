@@ -23,7 +23,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -33,10 +32,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,6 +48,7 @@ import com.globa.cocktails.ui.theme.DPs
 import com.globa.cocktails.ui.theme.Paddings
 import com.globa.cocktails.ui.util.AddButton
 import com.globa.cocktails.ui.util.CustomSearchField
+import com.globa.cocktails.ui.util.FavoriteButton
 import com.globa.cocktails.ui.util.LoadingAnimation
 import com.globa.cocktails.ui.util.MenuButton
 import com.globa.cocktails.ui.util.TagButton
@@ -204,7 +202,7 @@ fun CocktailListItem(
             placeholder = painterResource(id = R.drawable.loading_img),
             error = painterResource(id = R.drawable.broken_image),
             modifier = Modifier
-                .size(100.dp)
+                .size(106.dp)
                 .align(Alignment.CenterVertically)
                 .clip(MaterialTheme.shapes.large)
         )
@@ -217,22 +215,10 @@ fun CocktailListItem(
                 horizontalAlignment = Alignment.Start
             ) {
                 Row {
-                    Icon(imageVector = ImageVector.vectorResource(
-                        id = if (cocktail.isFavorite) R.drawable.ic_favorite_en
-                            else R.drawable.ic_favorite_dis
-                        ),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .padding(end = Paddings.small)
-                            .size(24.dp)
-                            .clickable {
-                                onFavoriteClicked(cocktail)
-                            }
-                        ,
-                        tint = MaterialTheme.colorScheme.tertiary
-                    )
+                    FavoriteButton(onClickAction = { onFavoriteClicked(cocktail) })
                     Text(
                         text = cocktail.drinkName,
+                        modifier = Modifier.padding(start = Paddings.small),
                         style = MaterialTheme.typography.titleMedium)
                     //star
                 }

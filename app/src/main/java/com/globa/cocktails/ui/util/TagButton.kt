@@ -28,15 +28,15 @@ fun TagButton(
                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer
             ),
             modifier = modifier
-                .height(25.dp),
+                .height(24.dp),
             shape = MaterialTheme.shapes.extraLarge,
             contentPadding = PaddingValues(0.dp)
         ) {
             Text(
                 text = text,
                 modifier = Modifier
-                    .padding(top = 3.dp, bottom = 3.dp, start = 12.dp, end = 12.dp),
-                style = MaterialTheme.typography.bodyMedium
+                    .padding(top = 4.dp, bottom = 4.dp, start = 12.dp, end = 12.dp),
+                style = MaterialTheme.typography.labelMedium
             )
         }
     }
