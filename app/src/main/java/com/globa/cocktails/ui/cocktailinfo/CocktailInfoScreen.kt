@@ -99,7 +99,7 @@ fun CocktailInfo(cocktail: Cocktail, onFavoriteButtonClick: () -> Unit) {
                 .padding(start = Paddings.large)
         ) {
             listOf(cocktail.drinkGlass, cocktail.drinkCategory).forEach {
-                TagButton(text = it, modifier = Modifier.padding(end = Paddings.small)) {
+                TagButton(text = it, modifier = Modifier.padding(end = Paddings.medium)) {
                     //TODO: onClick
                 }
             }
