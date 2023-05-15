@@ -43,7 +43,7 @@ fun CustomSearchField(
 ) {
     Box(
         modifier = modifier
-            .height(45.dp)
+            .height(36.dp)
             .clip(shape = MaterialTheme.shapes.extraLarge)
             .background(
                 color = MaterialTheme.colorScheme.surfaceVariant,
@@ -66,11 +66,11 @@ fun CustomSearchField(
             BasicTextField(
                 value = text,
                 onValueChange = onTextChanged,
-                textStyle = MaterialTheme.typography.bodyLarge.plus(
+                textStyle = MaterialTheme.typography.bodyMedium.plus(
                     TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
                 ),
                 singleLine = true,
-                modifier = Modifier.requiredWidth(250.dp)
+                modifier = Modifier.requiredWidth(300.dp)
             ) { innerTextField ->
                 Row(
                     modifier = Modifier
@@ -81,7 +81,7 @@ fun CustomSearchField(
                         Text(
                             text = stringResource(R.string.search_placeholder),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.labelLarge
                         )
                     } else innerTextField()
                 }
@@ -91,7 +91,7 @@ fun CustomSearchField(
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_search),
                 contentDescription = "Search",
-                modifier = Modifier.align(Alignment.CenterEnd).padding(end = 10.dp).size(25.dp)
+                modifier = Modifier.align(Alignment.CenterEnd).padding(end = 10.dp).size(22.dp)
             )
         }
     }
