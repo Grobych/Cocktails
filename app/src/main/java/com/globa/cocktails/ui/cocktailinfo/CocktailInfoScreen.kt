@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -31,9 +32,9 @@ import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.theme.AppTheme
+import com.globa.cocktails.ui.theme.DPs.largeImageRound
 import com.globa.cocktails.ui.theme.Paddings
 import com.globa.cocktails.ui.util.FavoriteButton
-import com.globa.cocktails.ui.util.SemiCircleShape
 import com.globa.cocktails.ui.util.TagButton
 
 @Composable
@@ -73,24 +74,26 @@ fun CocktailInfo(cocktail: Cocktail, onFavoriteButtonClick: () -> Unit) {
         Header(cocktailName = cocktail.drinkName, onFavoriteButtonClick = onFavoriteButtonClick, isFavorited = cocktail.isFavorite)
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+                .fillMaxWidth()
+                .padding(top = Paddings.medium, start = Paddings.large, bottom = Paddings.large)
+                .background(color = MaterialTheme.colorScheme.surface)
+            ,
+            verticalAlignment = Alignment.Top
         ) {
             Ingredients(
                 ingredients = cocktail.ingredients,
                 measures = cocktail.measures,
                 modifier = Modifier
                     .fillMaxWidth(0.6f)
-                    .padding(Paddings.medium)
             )
             AsyncImage(
                 model = cocktail.imageURL,
                 contentDescription = cocktail.drinkName,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .padding(top = Paddings.medium)
-                    .height(225.dp)
-                    .clip(SemiCircleShape)
+                    .height(287.dp)
+                    .padding(start = Paddings.large)
+                    .clip(RoundedCornerShape(topStart = largeImageRound, bottomStart = largeImageRound))
             )
         }
         Row(
@@ -134,7 +137,9 @@ private fun Header(
             )
         )
         Row(
-            modifier = Modifier.align(Alignment.CenterEnd).padding(end = Paddings.large)
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(end = Paddings.large)
         ) {
             FavoriteButton(onClickAction = { onFavoriteButtonClick() }, isFavorited = isFavorited)
         }
@@ -153,14 +158,10 @@ private fun Ingredients(ingredients: List<String>, measures: List<String>, modif
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                shape = MaterialTheme.shapes.large
-            )
     ) {
         Text(
             text = "Ingredients",
-            modifier = Modifier.padding(Paddings.medium),
+            modifier = Modifier.padding(start = Paddings.medium, top = Paddings.medium),
             style = MaterialTheme.typography.titleMedium.plus(
                 TextStyle(color = MaterialTheme.colorScheme.primary)
             )
@@ -168,30 +169,27 @@ private fun Ingredients(ingredients: List<String>, measures: List<String>, modif
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(Paddings.medium)
+                .padding(start = Paddings.medium, end = Paddings.medium, bottom = Paddings.medium)
         ) {
-            for (i in 0 .. maxOf(ingredients.lastIndex,measures.lastIndex)) {
+            for (i in 0 .. ingredients.lastIndex) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(top = Paddings.small),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = if (i <= ingredients.lastIndex) ingredients[i] else "",
-                        modifier = Modifier
-                            .padding(top = Paddings.extraSmall),
+                        text = ingredients[i],
                         style = MaterialTheme.typography.bodyMedium.plus(
                             TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
                         )
                     )
                     Text(
                         text = if (i <= measures.lastIndex) measures[i] else "",
-                        modifier = Modifier
-                            .padding(top = Paddings.extraSmall),
                         style = MaterialTheme.typography.bodyMedium.plus(
                             TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
                         )
                     )
                 }
+                Divider()
             }
         }
     }
