@@ -4,6 +4,5 @@ import androidx.compose.ui.unit.dp
 
 object DPs {
     val line = 1.dp
-    val circleButtonSize = 45.dp
-    val circleIconSize = 15.dp
+    val iconButtonSize = 20.dp
 }

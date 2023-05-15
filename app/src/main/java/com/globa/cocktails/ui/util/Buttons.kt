@@ -1,86 +1,79 @@
 package com.globa.cocktails.ui.util
 
 import android.content.res.Configuration
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.globa.cocktails.R
 import com.globa.cocktails.ui.theme.AppTheme
-import com.globa.cocktails.ui.theme.DPs.circleButtonSize
-import com.globa.cocktails.ui.theme.DPs.circleIconSize
+import com.globa.cocktails.ui.theme.DPs.iconButtonSize
 
 @Composable
-fun CircleButton(
+fun AddButton(
     modifier: Modifier = Modifier,
-    iconId: Int,
-    buttonColor: Color = MaterialTheme.colorScheme.primary,
-    iconColor: Color = MaterialTheme.colorScheme.onPrimary,
-    buttonSize: Dp = circleButtonSize,
-    iconSize: Dp = circleIconSize,
     onClickAction: () -> Unit,
+    iconColor: Color = MaterialTheme.colorScheme.primary,
 ) {
     IconButton(
-        onClick = { onClickAction() },
+        onClick = {onClickAction()},
         modifier = modifier
-            .clip(CircleShape)
-            .size(buttonSize)
-            .background(color = buttonColor)
-
     ) {
         Icon(
-            imageVector = ImageVector.vectorResource(id = iconId),
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_add),
             contentDescription = "",
             tint = iconColor,
-            modifier = Modifier.size(size = iconSize)
+            modifier = Modifier.size(iconButtonSize)
         )
     }
 }
 
 @Composable
-fun AddButton(
-    onClickAction: () -> Unit
-) {
-    CircleButton(
-        iconId = R.drawable.ic_add,
-        onClickAction = { onClickAction() }
-    )
-}
-
-@Composable
 fun MenuButton(
-    onClickAction: () -> Unit
+    modifier: Modifier = Modifier,
+    onClickAction: () -> Unit,
+    iconColor: Color = MaterialTheme.colorScheme.primary
 ) {
-    CircleButton(
-        iconId = R.drawable.ic_menu,
-        onClickAction = onClickAction,
-        buttonColor = MaterialTheme.colorScheme.surfaceVariant,
-        iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        iconSize = 19.dp
-    )
+    IconButton(
+        onClick = {onClickAction()},
+        modifier = modifier.size(iconButtonSize)
+    ) {
+        Icon(
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu),
+            contentDescription = "",
+            tint = iconColor,
+            modifier = Modifier.size(iconButtonSize)
+        )
+    }
 }
 
 @Composable
 fun FavoriteButton(
+    modifier: Modifier = Modifier,
     onClickAction: () -> Unit,
-    isFavorited: Boolean = false
+    isFavorited: Boolean = false,
+    iconColor: Color = MaterialTheme.colorScheme.primary
 ) {
-    CircleButton(
-        iconId = if (isFavorited) R.drawable.ic_favorite_en else R.drawable.ic_favorite_dis,
-        onClickAction = onClickAction
-    )
+    val vectorResource = if (isFavorited) R.drawable.ic_favorite_en else R.drawable.ic_favorite_dis
+    IconButton(
+        onClick = {onClickAction()},
+        modifier = modifier.size(iconButtonSize)
+    ) {
+        Icon(
+            imageVector = ImageVector.vectorResource(id = vectorResource),
+            contentDescription = "",
+            tint = iconColor,
+            modifier = Modifier.size(iconButtonSize)
+        )
+    }
 }
 
 @Composable
@@ -89,7 +82,7 @@ fun FavoriteButton(
 fun AddButtonPreview() {
     AppTheme {
         Surface(Modifier.size(45.dp)) {
-            AddButton {}
+            AddButton(onClickAction = {})
         }
     }
 }
@@ -100,7 +93,7 @@ fun AddButtonPreview() {
 fun MenuButtonPreview() {
     AppTheme {
         Surface(Modifier.size(45.dp)) {
-            MenuButton {}
+            MenuButton(onClickAction = {})
         }
     }
 }
@@ -111,7 +104,7 @@ fun MenuButtonPreview() {
 fun NotFavoriteButtonPreview() {
     AppTheme {
         Surface(Modifier.size(45.dp)) {
-            FavoriteButton(onClickAction = {})
+            FavoriteButton(isFavorited = false, onClickAction = {})
         }
     }
 }
