@@ -202,24 +202,24 @@ private fun Ingredients(ingredients: List<String>, measures: List<String>, modif
         modifier = modifier
             .fillMaxWidth()
             .background(
-                color = MaterialTheme.colorScheme.primary,
+                color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = MaterialTheme.shapes.large
             )
     ) {
         Text(
             text = "Receipe",
             modifier = Modifier
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                .padding(top = Paddings.small, start = Paddings.large),
             style = MaterialTheme.typography.titleMedium.plus(
-                TextStyle(color = MaterialTheme.colorScheme.onPrimary)
+                TextStyle(color = MaterialTheme.colorScheme.primary)
             )
         )
         Text(
             text = instructions,
             modifier = Modifier
-                .padding(top = 12.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+                .padding(top = Paddings.medium, start = Paddings.large, end = Paddings.extraLarge, bottom = Paddings.medium),
             style = MaterialTheme.typography.bodyMedium.plus(
-                TextStyle(color = MaterialTheme.colorScheme.primaryContainer)
+                TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
             )
         )
     }
