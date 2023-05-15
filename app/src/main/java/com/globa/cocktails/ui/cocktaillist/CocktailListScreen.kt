@@ -129,34 +129,32 @@ fun Header(
     onFilterChangeAction: (TextFieldValue) -> Unit,
     onTagClicked: (String) -> Unit
 ) {
-    Surface {
-        Row(
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(52.dp)
+            .background(color = MaterialTheme.colorScheme.background)
+            .padding(
+                start = Paddings.large,
+                end = Paddings.large
+            ),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        CustomSearchField(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp)
-                .padding(
-                    start = Paddings.large,
-                    end = Paddings.large
-                ),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CustomSearchField(
-                modifier = Modifier
-                    .width(300.dp),
-                tags = filterUiState.tags,
-                text = filterUiState.line,
-                onTextChanged = onFilterChangeAction,
-                onTagClicked = onTagClicked
-            )
-            AddButton(
-                onClickAction = {}
-            )
-            MenuButton(
-                onClickAction = {}
-            )
-        }
+                .width(300.dp),
+            tags = filterUiState.tags,
+            text = filterUiState.line,
+            onTextChanged = onFilterChangeAction,
+            onTagClicked = onTagClicked
+        )
+        AddButton(
+            onClickAction = {}
+        )
+        MenuButton(
+            onClickAction = {}
+        )
     }
-
 }
 
 @Composable
