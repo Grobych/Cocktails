@@ -49,8 +49,10 @@ import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs
 import com.globa.cocktails.ui.theme.Paddings
+import com.globa.cocktails.ui.util.AddButton
 import com.globa.cocktails.ui.util.CustomSearchField
 import com.globa.cocktails.ui.util.LoadingAnimation
+import com.globa.cocktails.ui.util.MenuButton
 import com.globa.cocktails.ui.util.TagButton
 
 @Composable
@@ -130,34 +132,30 @@ fun Header(
     onTagClicked: (String) -> Unit
 ) {
     Surface {
-        Box(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(70.dp)
+                .height(52.dp)
                 .padding(
-                    top = Paddings.large,
-                    start = Paddings.extraLarge,
-                    bottom = Paddings.small,
-                    end = Paddings.extraLarge
+                    start = Paddings.large,
+                    end = Paddings.large
                 ),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             CustomSearchField(
                 modifier = Modifier
-                    .width(420.dp)
-                    .align(Alignment.CenterStart),
+                    .width(300.dp),
                 tags = filterUiState.tags,
                 text = filterUiState.line,
                 onTextChanged = onFilterChangeAction,
                 onTagClicked = onTagClicked
             )
-//            Row(
-//                modifier = Modifier.align(Alignment.CenterEnd)
-//            ) {
-//                AddButton(
-//                    onClickAction = {}
-//                )
-//                MenuButton()
-//            }
+            AddButton(
+                onClickAction = {}
+            )
+            MenuButton(
+                onClickAction = {}
+            )
         }
     }
 

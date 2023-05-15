@@ -44,7 +44,7 @@ fun MenuButton(
 ) {
     IconButton(
         onClick = {onClickAction()},
-        modifier = modifier.size(iconButtonSize)
+        modifier = modifier.size(24.dp)
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu),
