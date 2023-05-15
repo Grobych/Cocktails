@@ -45,6 +45,7 @@ import com.globa.cocktails.domain.RandomCocktailUseCase
 import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs
+import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.Paddings
 import com.globa.cocktails.ui.util.AddButton
 import com.globa.cocktails.ui.util.CustomSearchField
@@ -132,13 +133,14 @@ fun Header(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(52.dp)
+            .height(headerHeight)
             .background(color = MaterialTheme.colorScheme.background)
             .padding(
                 start = Paddings.large,
                 end = Paddings.large
             ),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         CustomSearchField(
             modifier = Modifier
@@ -213,7 +215,10 @@ fun CocktailListItem(
                 horizontalAlignment = Alignment.Start
             ) {
                 Row {
-                    FavoriteButton(onClickAction = { onFavoriteClicked(cocktail) })
+                    FavoriteButton(
+                        isFavorited = cocktail.isFavorite,
+                        onClickAction = { onFavoriteClicked(cocktail) }
+                    )
                     Text(
                         text = cocktail.drinkName,
                         modifier = Modifier.padding(start = Paddings.small),

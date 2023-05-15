@@ -16,6 +16,9 @@ fun NavController() {
     val navigateToCocktail: (String) -> Unit = { cocktailId ->
         navController.navigate("cocktailInfo/${cocktailId}")
     }
+    val navigateToBack: () -> Unit = {
+        navController.popBackStack()
+    }
 
     NavHost(navController = navController, startDestination = "cocktailList") {
         composable(
@@ -27,7 +30,7 @@ fun NavController() {
             route = "cocktailInfo/{cocktailId}",
             arguments = listOf(navArgument("cocktailId") { type = NavType.StringType })
         ) {
-            CocktailInfoScreen()
+            CocktailInfoScreen(onBackButtonClick = navigateToBack)
         }
     }
 }

@@ -25,7 +25,7 @@ fun AddButton(
 ) {
     IconButton(
         onClick = {onClickAction()},
-        modifier = modifier
+        modifier = modifier.size(24.dp)
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_add),
@@ -59,16 +59,35 @@ fun MenuButton(
 fun FavoriteButton(
     modifier: Modifier = Modifier,
     onClickAction: () -> Unit,
-    isFavorited: Boolean = false,
+    isFavorited: Boolean,
     iconColor: Color = MaterialTheme.colorScheme.primary
 ) {
     val vectorResource = if (isFavorited) R.drawable.ic_favorite_en else R.drawable.ic_favorite_dis
     IconButton(
         onClick = {onClickAction()},
-        modifier = modifier.size(iconButtonSize)
+        modifier = modifier.size(24.dp)
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(id = vectorResource),
+            contentDescription = "",
+            tint = iconColor,
+            modifier = Modifier.size(iconButtonSize)
+        )
+    }
+}
+
+@Composable
+fun BackButton(
+    modifier: Modifier = Modifier,
+    onClickAction: () -> Unit,
+    iconColor: Color = MaterialTheme.colorScheme.onSurface
+) {
+    IconButton(
+        onClick = {onClickAction()},
+        modifier = modifier.size(20.dp)
+    ) {
+        Icon(
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_back),
             contentDescription = "",
             tint = iconColor,
             modifier = Modifier.size(iconButtonSize)

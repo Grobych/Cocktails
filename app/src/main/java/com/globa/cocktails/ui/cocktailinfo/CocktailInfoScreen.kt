@@ -1,7 +1,9 @@
 package com.globa.cocktails.ui.cocktailinfo
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
@@ -32,14 +35,19 @@ import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.ui.theme.AppTheme
+import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.DPs.largeImageRound
 import com.globa.cocktails.ui.theme.Paddings
+import com.globa.cocktails.ui.util.AddButton
+import com.globa.cocktails.ui.util.BackButton
 import com.globa.cocktails.ui.util.FavoriteButton
+import com.globa.cocktails.ui.util.MenuButton
 import com.globa.cocktails.ui.util.TagButton
 
 @Composable
 fun CocktailInfoScreen(
-    viewModel: CocktailViewModel = hiltViewModel()
+    viewModel: CocktailViewModel = hiltViewModel(),
+    onBackButtonClick: () -> Unit
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -49,14 +57,15 @@ fun CocktailInfoScreen(
             viewModel.updateCocktail(cocktail.copy(isFavorite = cocktail.isFavorite.not()))
         }
     }
-    CocktailScreenSelect(uiState = uiState, onFavoriteButtonClick = onFavoriteButtonClick)
+
+    CocktailScreenSelect(uiState = uiState, onFavoriteButtonClick = onFavoriteButtonClick, onBackButtonClick = onBackButtonClick)
 }
 
 @Composable
-fun CocktailScreenSelect(uiState: CocktailUiState, onFavoriteButtonClick: () -> Unit) {
+fun CocktailScreenSelect(uiState: CocktailUiState, onFavoriteButtonClick: () -> Unit, onBackButtonClick: () -> Unit) {
     when (uiState) {
         is CocktailUiState.Loading -> CocktailLoading()
-        is CocktailUiState.Success -> CocktailInfo(cocktail = uiState.cocktail, onFavoriteButtonClick = onFavoriteButtonClick)
+        is CocktailUiState.Success -> CocktailInfo(cocktail = uiState.cocktail, onFavoriteButtonClick = onFavoriteButtonClick, onBackButtonClick = onBackButtonClick)
         is CocktailUiState.Error -> CocktailError(errorMessage = uiState.message)
     }
 }
@@ -69,9 +78,9 @@ fun CocktailLoading() {
 }
 
 @Composable
-fun CocktailInfo(cocktail: Cocktail, onFavoriteButtonClick: () -> Unit) {
+fun CocktailInfo(cocktail: Cocktail, onFavoriteButtonClick: () -> Unit, onBackButtonClick: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
-        Header(cocktailName = cocktail.drinkName, onFavoriteButtonClick = onFavoriteButtonClick, isFavorited = cocktail.isFavorite)
+        Header(cocktailName = cocktail.drinkName, onFavoriteButtonClick = onFavoriteButtonClick, onBackButtonClick = onBackButtonClick, isFavorited = cocktail.isFavorite)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -93,7 +102,12 @@ fun CocktailInfo(cocktail: Cocktail, onFavoriteButtonClick: () -> Unit) {
                 modifier = Modifier
                     .height(287.dp)
                     .padding(start = Paddings.large)
-                    .clip(RoundedCornerShape(topStart = largeImageRound, bottomStart = largeImageRound))
+                    .clip(
+                        RoundedCornerShape(
+                            topStart = largeImageRound,
+                            bottomStart = largeImageRound
+                        )
+                    )
             )
         }
         Row(
@@ -120,34 +134,51 @@ private fun Header(
     cocktailName: String,
     modifier: Modifier = Modifier,
     onFavoriteButtonClick: () -> Unit,
-    isFavorited: Boolean = false
+    onBackButtonClick: () -> Unit,
+    isFavorited: Boolean
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(75.dp)
-    ) {
-        Text(
-            text = cocktailName,
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .padding(start = Paddings.extraLarge),
-            style = MaterialTheme.typography.headlineMedium.plus(
-                TextStyle(color = MaterialTheme.colorScheme.onSurface)
-            )
-        )
+    Column(modifier = Modifier.fillMaxWidth()) {
         Row(
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .padding(end = Paddings.large)
+            modifier = modifier
+                .fillMaxWidth()
+                .height(headerHeight)
+                .padding(start = Paddings.large, end = Paddings.large),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
         ) {
-            FavoriteButton(onClickAction = { onFavoriteButtonClick() }, isFavorited = isFavorited)
+            BackButton(onClickAction = { onBackButtonClick() })
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = cocktailName,
+                    modifier = Modifier
+                        .widthIn(max = 225.dp)
+                        .padding(start = Paddings.medium, end = Paddings.medium)
+                        .horizontalScroll(state = ScrollState(0))
+                    ,
+                    style = MaterialTheme.typography.headlineSmall.plus(
+                        TextStyle(color = MaterialTheme.colorScheme.onSurface)
+                    ),
+                    maxLines = 1,
+                    softWrap = false
+                )
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    AddButton(onClickAction = { /*TODO*/ }, modifier = Modifier.padding(end = Paddings.large))
+                    FavoriteButton(onClickAction = { onFavoriteButtonClick() }, isFavorited = isFavorited)
+                    MenuButton(onClickAction = { /*TODO*/ }, modifier = Modifier.padding(start = Paddings.large))
+                }
+            }
         }
         Divider(
             color = MaterialTheme.colorScheme.surfaceVariant,
             thickness = 1.dp,
             modifier = Modifier
-                .align(Alignment.BottomCenter)
                 .padding(start = Paddings.large, end = Paddings.large)
         )
     }
@@ -173,7 +204,9 @@ private fun Ingredients(ingredients: List<String>, measures: List<String>, modif
         ) {
             for (i in 0 .. ingredients.lastIndex) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = Paddings.small),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = Paddings.small),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -250,7 +283,7 @@ fun HeaderPreview() {
     val name = testCocktail.drinkName
     AppTheme {
         Surface {
-            Header(cocktailName = name, modifier = Modifier.width(360.dp), onFavoriteButtonClick = {})
+            Header(cocktailName = name, modifier = Modifier.width(420.dp), onFavoriteButtonClick = {}, onBackButtonClick = {}, isFavorited = false)
         }
     }
 }
@@ -290,7 +323,7 @@ fun IngredientsPreview() {
 fun CocktailInfoPreview() {
     AppTheme {
         Surface {
-            CocktailInfo(cocktail = testCocktail, onFavoriteButtonClick = {})
+            CocktailInfo(cocktail = testCocktail, onFavoriteButtonClick = {}, onBackButtonClick = {})
         }
     }
 }
