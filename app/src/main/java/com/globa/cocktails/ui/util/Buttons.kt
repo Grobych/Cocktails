@@ -36,7 +36,7 @@ fun AddButton(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_add),
             contentDescription = "",
             tint = iconColor,
-            modifier = Modifier.size(iconButtonSize)
+            modifier = Modifier.size(24.dp)
         )
     }
 }
@@ -76,7 +76,7 @@ fun FavoriteButton(
             imageVector = ImageVector.vectorResource(id = vectorResource),
             contentDescription = "",
             tint = iconColor,
-            modifier = Modifier.size(iconButtonSize)
+            modifier = Modifier.size(24.dp)
         )
     }
 }

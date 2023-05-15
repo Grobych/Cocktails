@@ -150,7 +150,7 @@ fun Header(
     ) {
         CustomSearchField(
             modifier = Modifier
-                .width(300.dp),
+                .width(280.dp),
             tags = filterUiState.tags,
             text = filterUiState.line,
             onTextChanged = onFilterChangeAction,
