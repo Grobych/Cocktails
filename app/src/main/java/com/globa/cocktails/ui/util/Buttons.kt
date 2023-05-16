@@ -106,7 +106,8 @@ fun FooterButton(
     onClickAction: () -> Unit,
     icon: Int,
     iconColor: Color = MaterialTheme.colorScheme.primary,
-    text: String
+    text: String,
+    textColor: Color = iconColor
 ) {
     IconButton(
         modifier = modifier,
@@ -127,7 +128,7 @@ fun FooterButton(
                 modifier = Modifier,
                 text = text,
                 style = MaterialTheme.typography.labelSmall.plus(
-                    TextStyle(color = MaterialTheme.colorScheme.primary)
+                    TextStyle(color = textColor)
                 )
             )
         }

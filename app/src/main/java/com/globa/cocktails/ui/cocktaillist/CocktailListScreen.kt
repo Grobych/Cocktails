@@ -63,6 +63,7 @@ fun CocktailListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val filterUiState by viewModel.filterUiState.collectAsState()
+    val selectorUiState by viewModel.selectorUiState.collectAsState()
     val randomCocktailUseCase = RandomCocktailUseCase()
 
     val onFilterChangeAction: (TextFieldValue) -> Unit = { value ->
@@ -105,9 +106,10 @@ fun CocktailListScreen(
                 },
                 bottomBar = {
                     Footer(
-                        onAllReceipesClicked = { /*TODO*/ },
-                        onMyReceipesClicked = { /*TODO*/ },
-                        onFavoriteReceipesClicked = { /*TODO*/ },
+                        selectorUiState = selectorUiState,
+                        onAllReceipesClicked = { viewModel.selectorChanged(FooterSelector.ALL_COCKTAILS) },
+                        onMyReceipesClicked = { viewModel.selectorChanged(FooterSelector.MY_COCKTAILS) },
+                        onFavoriteReceipesClicked = { viewModel.selectorChanged(FooterSelector.FAVORITE_COCKTAILS) },
                         onRandomReceipeClicked = onRandomButtonAction
                     )
                 },
@@ -262,6 +264,7 @@ fun TagField(
 
 @Composable
 fun Footer(
+    selectorUiState: CocktailSelectorUiState,
     onAllReceipesClicked: () -> Unit,
     onMyReceipesClicked: () -> Unit,
     onFavoriteReceipesClicked: () -> Unit,
@@ -275,19 +278,24 @@ fun Footer(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround
     ) {
+        val selectedColor = MaterialTheme.colorScheme.onBackground
+        val unSelectedColor = MaterialTheme.colorScheme.primary
         FooterButton(
             onClickAction = onAllReceipesClicked,
             icon = R.drawable.ic_all_receipes,
+            iconColor = if (selectorUiState.isAllCocktailsSelected) selectedColor else unSelectedColor,
             text = "All receipes"
         )
         FooterButton(
             onClickAction = onMyReceipesClicked,
             icon = R.drawable.ic_my_receipes,
+            iconColor = if (selectorUiState.isMyCocktailSelected) selectedColor else unSelectedColor,
             text = "My receipes"
         )
         FooterButton(
             onClickAction = onFavoriteReceipesClicked,
             icon = R.drawable.ic_favorite_receipes,
+            iconColor = if (selectorUiState.isFavoriteSelected) selectedColor else unSelectedColor,
             text = "Favorite"
         )
         FooterButton(
@@ -371,9 +379,11 @@ fun HeaderPreview() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun FooterPreview() {
+    val selectorUiState = CocktailSelectorUiState()
     AppTheme {
         Surface {
             Footer(
+                selectorUiState = selectorUiState,
                 onAllReceipesClicked = { },
                 onMyReceipesClicked = { },
                 onFavoriteReceipesClicked = { },

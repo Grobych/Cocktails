@@ -29,6 +29,9 @@ class CocktailListViewModel @Inject constructor(
     private val _filterUiState = MutableStateFlow(CocktailFilterUiState())
     val filterUiState = _filterUiState.asStateFlow()
 
+    private val _selectorUiState = MutableStateFlow(CocktailSelectorUiState())
+    val selectorUiState = _selectorUiState.asStateFlow()
+
     private fun initCocktailList() = viewModelScope.launch {
         cocktailRepository
             .getCocktails()
@@ -68,5 +71,19 @@ class CocktailListViewModel @Inject constructor(
 
     fun updateCocktail(cocktail: Cocktail) = viewModelScope.launch {
         updateCocktailUseCase(cocktail)
+    }
+
+    fun selectorChanged(clicked: FooterSelector) {
+        when (clicked) {
+            FooterSelector.ALL_COCKTAILS -> {
+                _selectorUiState.update { it.copy(isAllCocktailsSelected = it.isAllCocktailsSelected.not()) }
+            }
+            FooterSelector.MY_COCKTAILS -> {
+                _selectorUiState.update { it.copy(isMyCocktailSelected = it.isMyCocktailSelected.not()) }
+            }
+            FooterSelector.FAVORITE_COCKTAILS -> {
+                _selectorUiState.update { it.copy(isFavoriteSelected = it.isFavoriteSelected.not()) }
+            }
+        }
     }
 }
