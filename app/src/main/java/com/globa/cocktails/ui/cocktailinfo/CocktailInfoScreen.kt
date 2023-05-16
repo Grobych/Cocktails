@@ -143,6 +143,7 @@ private fun Header(
             modifier = modifier
                 .fillMaxWidth()
                 .height(headerHeight)
+                .background(color = MaterialTheme.colorScheme.background)
                 .padding(start = Paddings.large, end = Paddings.large),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
