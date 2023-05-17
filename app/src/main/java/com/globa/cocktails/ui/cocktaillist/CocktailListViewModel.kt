@@ -38,7 +38,9 @@ class CocktailListViewModel @Inject constructor(
         cocktailRepository
             .getCocktails()
             .combine(selectorUiState) { cocktails: List<Cocktail>, state: CocktailSelectorUiState ->
-                if (state.isFavoriteSelected) favoriteCocktailsUseCase(cocktails) else cocktails
+                if (state.isFavoriteSelected) favoriteCocktailsUseCase(cocktails)
+                else if (state.isMyCocktailSelected) emptyList() // TODO: myCocktailsUseCase
+                    else cocktails
             }
             .combine(filterUiState) { cocktails: List<Cocktail>, filter: CocktailFilterUiState ->
                 if (filter.tags.isEmpty() && filter.line.text.isEmpty()) cocktails
@@ -81,13 +83,31 @@ class CocktailListViewModel @Inject constructor(
     fun selectorChanged(clicked: FooterSelector) {
         when (clicked) {
             FooterSelector.ALL_COCKTAILS -> {
-                _selectorUiState.update { it.copy(isAllCocktailsSelected = it.isAllCocktailsSelected.not()) }
+                _selectorUiState.update {
+                    it.copy(
+                        isAllCocktailsSelected = true,
+                        isMyCocktailSelected = false,
+                        isFavoriteSelected = false
+                    )
+                }
             }
             FooterSelector.MY_COCKTAILS -> {
-                _selectorUiState.update { it.copy(isMyCocktailSelected = it.isMyCocktailSelected.not()) }
+                _selectorUiState.update {
+                    it.copy(
+                        isAllCocktailsSelected = false,
+                        isMyCocktailSelected = true,
+                        isFavoriteSelected = false
+                    )
+                }
             }
             FooterSelector.FAVORITE_COCKTAILS -> {
-                _selectorUiState.update { it.copy(isFavoriteSelected = it.isFavoriteSelected.not()) }
+                _selectorUiState.update {
+                    it.copy(
+                        isAllCocktailsSelected = false,
+                        isMyCocktailSelected = false,
+                        isFavoriteSelected = true
+                    )
+                }
             }
         }
     }
