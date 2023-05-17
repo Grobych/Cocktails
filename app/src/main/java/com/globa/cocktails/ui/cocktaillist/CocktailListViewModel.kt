@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
+import com.globa.cocktails.domain.FavoriteCocktailsUseCase
 import com.globa.cocktails.domain.FilterCocktailsUseCase.filterByTags
 import com.globa.cocktails.domain.UpdateCocktailUseCase
 import com.globa.cocktails.ui.UiStateStatus
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CocktailListViewModel @Inject constructor(
     private val cocktailRepository: CocktailRepository,
-    private val updateCocktailUseCase: UpdateCocktailUseCase
+    private val updateCocktailUseCase: UpdateCocktailUseCase,
+    private val favoriteCocktailsUseCase: FavoriteCocktailsUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(CocktailListUiState())
     val uiState : StateFlow<CocktailListUiState> = _uiState.asStateFlow()
@@ -35,6 +37,9 @@ class CocktailListViewModel @Inject constructor(
     private fun initCocktailList() = viewModelScope.launch {
         cocktailRepository
             .getCocktails()
+            .combine(selectorUiState) { cocktails: List<Cocktail>, state: CocktailSelectorUiState ->
+                if (state.isFavoriteSelected) favoriteCocktailsUseCase(cocktails) else cocktails
+            }
             .combine(filterUiState) { cocktails: List<Cocktail>, filter: CocktailFilterUiState ->
                 if (filter.tags.isEmpty() && filter.line.text.isEmpty()) cocktails
                 else cocktails.filterByTags(filter.expandTags())
