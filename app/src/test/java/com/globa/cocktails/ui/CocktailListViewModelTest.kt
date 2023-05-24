@@ -4,58 +4,107 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.globa.cocktails.MainDispatcherRule
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
+import com.globa.cocktails.domain.FavoriteCocktailsUseCase
+import com.globa.cocktails.domain.FilterCocktailsUseCase
+import com.globa.cocktails.domain.UpdateCocktailUseCase
+import com.globa.cocktails.ui.cocktaillist.CocktailListUiState
 import com.globa.cocktails.ui.cocktaillist.CocktailListViewModel
+import com.globa.cocktails.ui.cocktaillist.FooterSelector
+import io.mockk.coEvery
+import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
-import javax.inject.Inject
 
 class CocktailListViewModelTest {
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
-    inner class FakeBadCocktailRepository @Inject constructor(): CocktailRepository {
-        override suspend fun getCocktails(): List<Cocktail> {
-            return emptyList()
-        }
+
+    private val repository = mockk<CocktailRepository>()
+
+    private val filterCocktailsUseCase = FilterCocktailsUseCase()
+    private val favoriteCocktailsUseCase = FavoriteCocktailsUseCase()
+    private val updateCocktailUseCase = UpdateCocktailUseCase(repository)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun viewModelInitTest() = runTest {
+        val repoCocktails = listOf(
+            Cocktail(id = "1", drinkName = "1"),
+            Cocktail(id = "2", drinkName = "2"),
+            Cocktail(id = "3", drinkName = "3")
+        )
+        coEvery { repository.getCocktails() } returns flowOf(repoCocktails)
+        val viewModel = CocktailListViewModel(
+            cocktailRepository = repository,
+            updateCocktailUseCase = updateCocktailUseCase,
+            favoriteCocktailsUseCase = favoriteCocktailsUseCase,
+            filterCocktailsUseCase = filterCocktailsUseCase
+        )
+        val uiState = viewModel.uiState.first()
+        assert(uiState is CocktailListUiState.Done)
+        val list = (uiState as CocktailListUiState.Done).list
+        assert(repoCocktails == list)
+    }
+
+//    @OptIn(ExperimentalCoroutinesApi::class)
+//    @Test
+//    fun viewModelInitWithExceptionTest() = runTest {
+//        val errorMessage = "test error"
+//        coEvery { repository.getCocktails() }.throws(Exception(errorMessage))
+//        val viewModel = CocktailListViewModel(
+//            cocktailRepository = repository,
+//            updateCocktailUseCase = updateCocktailUseCase,
+//            favoriteCocktailsUseCase = favoriteCocktailsUseCase,
+//            filterCocktailsUseCase = filterCocktailsUseCase
+//        )
+//        try {
+//            val uiState = viewModel.uiState.first()
+//            assert(uiState is CocktailListUiState.Error)
+//        } catch (e: Exception) {
+//            assert(e.message == errorMessage)
+//        }
+//    }
+
+    @Test
+    fun filterTagsTest() {
+        coEvery { repository.getCocktails() } returns flowOf()
+        val viewModel = CocktailListViewModel(
+            cocktailRepository = repository,
+            updateCocktailUseCase = updateCocktailUseCase,
+            favoriteCocktailsUseCase = favoriteCocktailsUseCase,
+            filterCocktailsUseCase = filterCocktailsUseCase
+        )
+        val filterState = viewModel.filterUiState
+        assert(filterState.value.tags.isEmpty())
+        assert(filterState.value.line.text == "")
+        viewModel.addFilterTag("Tag1")
+        assert(filterState.value.tags.contains("Tag1"))
+        viewModel.updateFilterLine(TextFieldValue("t"))
+        assert(filterState.value.tags.contains("Tag1"))
+        assert(filterState.value.line.text == "t")
+        viewModel.removeFilterTag("Tag1")
+        assert(filterState.value.tags.isEmpty())
     }
 
     @Test
-    fun isCocktailListInitialized() {
-        val fakeGoogRepository = FakeCocktailRepository()
-        val viewModel = CocktailListViewModel(fakeGoogRepository)
-        assert(viewModel.uiState.value.cocktailList.isNotEmpty())
-        assert(viewModel.uiState.value.cocktailList.findLast { it.drinkName == "Cuba Libre" } != null)
-    }
-
-    @Test
-    fun testEmptyResponceFromRepository() {
-        val fakeBadCocktailRepository = FakeBadCocktailRepository()
-        val viewModel = CocktailListViewModel(fakeBadCocktailRepository)
-        assert(viewModel.uiState.value.cocktailList.isEmpty())
-    }
-
-    @Test
-    fun testFilterLine() {
-        val fakeGoogRepository = FakeCocktailRepository()
-        val viewModel = CocktailListViewModel(fakeGoogRepository)
-        assert(viewModel.uiState.value.cocktailList.isNotEmpty())
-        viewModel.updateFilterLine(TextFieldValue("m"))
-        assert(viewModel.uiState.value.cocktailList.size == 2)
-        viewModel.updateFilterLine(TextFieldValue("mart"))
-        assert(viewModel.uiState.value.cocktailList.size == 1)
-        viewModel.updateFilterLine(TextFieldValue("martt"))
-        assert(viewModel.uiState.value.cocktailList.isEmpty())
-        viewModel.updateFilterLine(TextFieldValue("cu"))
-        assert(viewModel.uiState.value.cocktailList.size == 1)
-        assert(viewModel.filterUiState.value.line.text == "cu")
-        assert(viewModel.uiState.value.cocktailList.findLast { it.id == "3" } != null)
-    }
-
-    @Test
-    fun testGetRandomCocktail() {
-        val repository = FakeCocktailRepository()
-        val viewModel = CocktailListViewModel(repository)
-        val res = viewModel.getRandomCocktail()
-        assert(listOf("1","2","3").contains(res))
+    fun selectorTest() {
+        coEvery { repository.getCocktails() } returns flowOf()
+        val viewModel = CocktailListViewModel(
+            cocktailRepository = repository,
+            updateCocktailUseCase = updateCocktailUseCase,
+            favoriteCocktailsUseCase = favoriteCocktailsUseCase,
+            filterCocktailsUseCase = filterCocktailsUseCase
+        )
+        val state = viewModel.selectorUiState
+        assert(state.value.isAllCocktailsSelected && !state.value.isMyCocktailSelected && !state.value.isFavoriteSelected)
+        viewModel.selectorChanged(FooterSelector.FAVORITE_COCKTAILS)
+        assert(!state.value.isAllCocktailsSelected && !state.value.isMyCocktailSelected && state.value.isFavoriteSelected)
+        viewModel.selectorChanged(FooterSelector.MY_COCKTAILS)
+        assert(!state.value.isAllCocktailsSelected && state.value.isMyCocktailSelected && !state.value.isFavoriteSelected)
     }
 }

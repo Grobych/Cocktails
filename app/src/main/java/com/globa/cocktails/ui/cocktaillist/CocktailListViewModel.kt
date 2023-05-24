@@ -39,7 +39,8 @@ class CocktailListViewModel @Inject constructor(
             .getCocktails()
             .catch { trowable ->
                 _uiState.update {
-                    CocktailListUiState.Error(trowable.toString())
+                    if (trowable.message != null) CocktailListUiState.Error(trowable.message!!)
+                    else CocktailListUiState.Error(trowable.toString())
                 }
             }
             .combine(selectorUiState) { cocktails: List<Cocktail>, state: CocktailSelectorUiState ->
