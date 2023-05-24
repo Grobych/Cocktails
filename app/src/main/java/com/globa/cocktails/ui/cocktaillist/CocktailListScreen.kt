@@ -42,7 +42,6 @@ import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.domain.RandomCocktailUseCase
-import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs
 import com.globa.cocktails.ui.theme.DPs.headerHeight
@@ -89,16 +88,16 @@ fun CocktailListScreen(
         viewModel.updateCocktail(it.copy(isFavorite = it.isFavorite.not()))
     }
 
-    when (uiState.status) {
-        UiStateStatus.LOADING -> {
+    when (val state = uiState) {
+        is CocktailListUiState.Loading -> {
             LoadingComposable()
         }
-        UiStateStatus.ERROR -> {
-            ErrorComposable(errorMessage = uiState.errorMessage)
+        is CocktailListUiState.Error -> {
+            ErrorComposable(errorMessage = state.message)
         }
-        UiStateStatus.DONE -> {
+        is CocktailListUiState.Done -> {
             val onRandomButtonAction: () -> Unit = {
-                onItemClickAction(randomCocktailUseCase(uiState.cocktailList))
+                onItemClickAction(randomCocktailUseCase(state.list))
             }
             Scaffold(
                 topBar = {
@@ -122,8 +121,8 @@ fun CocktailListScreen(
                                 top = paddingValues.calculateTopPadding()
                             )
                     ) {
-                        if (uiState.cocktailList.isNotEmpty())
-                            CocktailList(list = uiState.cocktailList, onItemClickAction = onItemClickAction, onTagClicked = addTagAction, onFavoriteClicked = updateCocktail)
+                        if (state.list.isNotEmpty())
+                            CocktailList(list = state.list, onItemClickAction = onItemClickAction, onTagClicked = addTagAction, onFavoriteClicked = updateCocktail)
                         else EmptyList()
                     }
                 }

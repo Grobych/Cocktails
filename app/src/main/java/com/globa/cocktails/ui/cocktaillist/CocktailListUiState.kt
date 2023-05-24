@@ -1,11 +1,10 @@
 package com.globa.cocktails.ui.cocktaillist
 
 import com.globa.cocktails.datalayer.models.Cocktail
-import com.globa.cocktails.ui.UiStateStatus
 
-data class CocktailListUiState(
-    val status: UiStateStatus = UiStateStatus.LOADING,
-    val cocktailList: List<Cocktail> = listOf(),
-    val errorMessage: String = ""
-)
+sealed class CocktailListUiState() {
+    class Loading(): CocktailListUiState()
+    class Done(val list: List<Cocktail>): CocktailListUiState()
+    class Error(val message: String): CocktailListUiState()
+}
 

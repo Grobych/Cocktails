@@ -8,12 +8,11 @@ import com.globa.cocktails.datalayer.repository.CocktailRepository
 import com.globa.cocktails.domain.FavoriteCocktailsUseCase
 import com.globa.cocktails.domain.FilterCocktailsUseCase
 import com.globa.cocktails.domain.UpdateCocktailUseCase
-import com.globa.cocktails.ui.UiStateStatus
 import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,8 +25,8 @@ class CocktailListViewModel @Inject constructor(
     private val favoriteCocktailsUseCase: FavoriteCocktailsUseCase,
     private val filterCocktailsUseCase: FilterCocktailsUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(CocktailListUiState())
-    val uiState : StateFlow<CocktailListUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow<CocktailListUiState>(CocktailListUiState.Loading())
+    val uiState = _uiState.asStateFlow()
 
     private val _filterUiState = MutableStateFlow(CocktailFilterUiState())
     val filterUiState = _filterUiState.asStateFlow()
@@ -38,6 +37,11 @@ class CocktailListViewModel @Inject constructor(
     private fun initCocktailList() = viewModelScope.launch {
         cocktailRepository
             .getCocktails()
+            .catch { trowable ->
+                _uiState.update {
+                    CocktailListUiState.Error(trowable.toString())
+                }
+            }
             .combine(selectorUiState) { cocktails: List<Cocktail>, state: CocktailSelectorUiState ->
                 if (state.isFavoriteSelected) favoriteCocktailsUseCase(cocktails)
                 else if (state.isMyCocktailSelected) emptyList() // TODO: myCocktailsUseCase
@@ -47,12 +51,9 @@ class CocktailListViewModel @Inject constructor(
                 if (filter.tags.isEmpty() && filter.line.text.isEmpty()) cocktails
                 else filterCocktailsUseCase(cocktails,filter.expandTags())
             }
-            .collect {
-                _uiState.update { uiState ->
-                    uiState.copy(
-                        status = UiStateStatus.DONE,
-                        cocktailList = it
-                    )
+            .collect { list ->
+                _uiState.update {
+                    CocktailListUiState.Done(list)
                 }
             }
     }
