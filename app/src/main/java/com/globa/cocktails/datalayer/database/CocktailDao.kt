@@ -2,7 +2,7 @@ package com.globa.cocktails.datalayer.database
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
+import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import androidx.room.Update
 import com.globa.cocktails.datalayer.models.CocktailDBModel
@@ -14,9 +14,11 @@ interface CocktailDao{
     fun getCocktails() : Flow<List<CocktailDBModel>>
     @Query("select * from cocktails where id = :id")
     fun getCocktailById(id: String): Flow<CocktailDBModel>
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = REPLACE)
+    fun insert(cocktail: CocktailDBModel)
+    @Insert(onConflict = REPLACE)
     fun insertAll(cocktails : List<CocktailDBModel>)
-    @Update(onConflict = OnConflictStrategy.REPLACE)
+    @Update(onConflict = REPLACE)
     fun update(cocktail: CocktailDBModel)
+
 }

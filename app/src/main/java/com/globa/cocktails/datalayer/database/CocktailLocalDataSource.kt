@@ -17,6 +17,11 @@ class CocktailLocalDataSource @Inject constructor(
             db.cocktailDao.insertAll(cocktails)
         }
 
+    suspend fun putCocktail(cocktail: CocktailDBModel) =
+        withContext(coroutineDispatcher) {
+            db.cocktailDao.insert(cocktail)
+        }
+
     suspend fun updateCocktail(cocktail: CocktailDBModel) =
         withContext(coroutineDispatcher) {
             db.cocktailDao.update(cocktail)

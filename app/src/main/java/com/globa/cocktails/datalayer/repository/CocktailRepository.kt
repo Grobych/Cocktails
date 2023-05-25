@@ -15,6 +15,7 @@ interface CocktailRepository {
     suspend fun getCocktails(): Flow<List<Cocktail>>
     suspend fun getCocktail(id: String): Flow<Cocktail>
     suspend fun updateCocktail(cocktail: Cocktail)
+    suspend fun saveCocktail(cocktail: Cocktail)
 }
 
 @Singleton
@@ -42,5 +43,9 @@ class CocktailRepositoryImpl @Inject constructor (
 
     override suspend fun updateCocktail(cocktail: Cocktail) {
         cocktailLocalDataSource.updateCocktail(cocktail.asDBModel())
+    }
+
+    override suspend fun saveCocktail(cocktail: Cocktail) {
+        cocktailLocalDataSource.putCocktail(cocktail.asDBModel())
     }
 }
