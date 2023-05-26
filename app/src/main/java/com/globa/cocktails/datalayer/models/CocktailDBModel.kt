@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "cocktails")
 data class CocktailDBModel(
-    @PrimaryKey(autoGenerate = true)
     val id : String,
+    @PrimaryKey(autoGenerate = true)
     val drinkNumber : Int,
     val drinkName : String,
     val alcohol : Boolean,
