@@ -16,6 +16,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -102,6 +103,7 @@ fun RedactorScreenHeader(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RedactorScreenBody(
     cocktail: Cocktail,
@@ -133,6 +135,20 @@ fun RedactorScreenBody(
                 mode = mode,
                 changeImage = changeImage,
                 cocktail = cocktail
+            )
+            OutlinedTextField(
+                value = cocktail.drinkName,
+                onValueChange = {onItemChange(cocktail.copy(drinkName = it))},
+                modifier = Modifier.fillMaxWidth().padding(top = Paddings.large),
+                enabled = mode == RedactorMode.ADD,
+                textStyle = MaterialTheme.typography.bodyLarge,
+                label = {
+                    Text(
+                        text = "Name",
+                        modifier = Modifier.padding(bottom = Paddings.extraSmall)
+                    )
+                },
+                shape = MaterialTheme.shapes.medium
             )
         }
     }
