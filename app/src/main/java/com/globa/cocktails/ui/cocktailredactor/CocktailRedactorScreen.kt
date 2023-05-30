@@ -1,22 +1,28 @@
 package com.globa.cocktails.ui.cocktailredactor
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,15 +58,19 @@ fun CocktailRedactorScreen(
             LoadingComposable()
         }
         is CocktailRedactorUiState.Editing -> {
-//            Scaffold(
-//                topBar = RedactorScreenHeader(state.mode, onBackButtonClick)
-//            ) {
-//                RedactorScreenBody(
-//                    modifier = Modifier
-//                        .padding(top = it.calculateTopPadding())
-//                        .verticalScroll(enabled = true, state = ScrollState(0))
-//                )
-//            }
+            Scaffold(
+                topBar = { RedactorScreenHeader(state.mode, onBackButtonClick) }
+            ) {
+                RedactorScreenBody(
+                    modifier = Modifier
+                        .padding(top = it.calculateTopPadding())
+                        .verticalScroll(enabled = true, state = ScrollState(0)),
+                    cocktail = state.cocktail,
+                    mode = state.mode,
+                    changeImage = { /*TODO*/ },
+                    onItemChange = {/*TODO*/}
+                )
+            }
         }
         is CocktailRedactorUiState.Error -> {
             ErrorComposable(errorMessage = state.message)
@@ -106,6 +116,7 @@ fun RedactorScreenHeader(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RedactorScreenBody(
+    modifier: Modifier = Modifier,
     cocktail: Cocktail,
     mode: RedactorMode,
     changeImage: ()-> Unit,
@@ -113,7 +124,7 @@ fun RedactorScreenBody(
 ) {
     Surface {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.surface)
                 .padding(
@@ -139,7 +150,9 @@ fun RedactorScreenBody(
             OutlinedTextField(
                 value = cocktail.drinkName,
                 onValueChange = {onItemChange(cocktail.copy(drinkName = it))},
-                modifier = Modifier.fillMaxWidth().padding(top = Paddings.large),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = Paddings.large),
                 enabled = mode == RedactorMode.ADD,
                 textStyle = MaterialTheme.typography.bodyLarge,
                 label = {
@@ -149,6 +162,15 @@ fun RedactorScreenBody(
                     )
                 },
                 shape = MaterialTheme.shapes.medium
+            )
+            EditableIngredientListScreen(
+                modifier.padding(top = Paddings.large),
+                ingredients = cocktail.ingredients,
+                measures = cocktail.measures,
+                onIngredientsChange = {},
+                onMeasuresChange = {},
+                onAddButtonClick = {},
+                onRemoveButtonClick = {}
             )
         }
     }
@@ -200,6 +222,117 @@ fun RedactorScreenImage(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EditableIngredientListScreen(
+    modifier: Modifier = Modifier,
+    ingredients: List<String>,
+    measures: List<String>,
+    onIngredientsChange: (List<String>) -> Unit,
+    onMeasuresChange: (List<String>) -> Unit,
+    onAddButtonClick: () -> Unit,
+    onRemoveButtonClick: (Int) -> Unit
+) {
+
+
+    Column(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = "Ingredients",
+            style = MaterialTheme.typography.titleMedium
+        )
+        ingredients.forEachIndexed {i, item ->
+            Row(
+                modifier = Modifier
+                    .padding(top = Paddings.large)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedTextField(
+                    value = item,
+                    onValueChange = { value ->
+                        onIngredientsChange(
+                            ingredients.toMutableList().apply { set(i, value) }.toList()
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f),
+                    label = {
+                        Text(
+                            text = "Ingredient $i",
+                            modifier = Modifier.padding(bottom = Paddings.small)
+                        )
+                    },
+                    singleLine = true,
+                    shape = MaterialTheme.shapes.large
+                )
+                OutlinedTextField(
+                    value = if (i in measures.indices) measures[i] else "",
+                    onValueChange = { value ->
+                        onMeasuresChange(
+                            measures.toMutableList().apply { set(i, value) }.toList()
+                        )
+                    },
+                    modifier = Modifier
+                        .width(100.dp)
+                        .padding(
+                            start = Paddings.large,
+                        )
+                    ,
+                    label = {
+                        Text(
+                            text = "Amount",
+                            modifier = Modifier.padding(bottom = Paddings.small),
+                            maxLines = 1
+                        )
+                    },
+                    singleLine = true,
+                    shape = MaterialTheme.shapes.large
+                )
+                IconButton(
+                    onClick = { onRemoveButtonClick(i) },
+                    modifier = Modifier
+                        .padding(start = Paddings.large, end = 4.dp)
+                        .size(24.dp)
+                ) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_remove),
+                        contentDescription = "",
+                        modifier = Modifier.size(10.dp)
+                    )
+                }
+
+            }
+        }
+        Text(
+            text = "+ Add ingredient",
+            style = MaterialTheme.typography.titleMedium.plus(
+                TextStyle(color = MaterialTheme.colorScheme.primary)
+            ),
+            modifier = Modifier
+                .clickable { onAddButtonClick() }
+                .padding(top = Paddings.large)
+        )
+    }
+
+
+
+}
+
+val testCocktail = Cocktail(
+    id = "id",
+    drinkNumber = 362,
+    drinkName = "Margarita",
+    alcohol = true,
+    drinkCategory = "Ordinary drinks",
+    imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
+    drinkGlass = "Cocktail glass",
+    ingredients = listOf("Tequila","Triple sec","Lime juice","Salt"),
+    measures = listOf("1 1/2 oz","1/2 oz","1 oz"),
+    instructions = "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten only the outer rim and sprinkle the salt on it. The salt should present to the lips of the imbiber and never mix into the cocktail. Shake the other ingredients with ice, then carefully pour into the glass."
+)
+
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
@@ -215,21 +348,32 @@ fun RedactorScreenHeaderPreview() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun RedactorScreenBodyPreview() {
-    val testCocktail = Cocktail(
-        id = "id",
-        drinkNumber = 362,
-        drinkName = "Margarita",
-        alcohol = true,
-        drinkCategory = "Ordinary drinks",
-        imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
-        drinkGlass = "Cocktail glass",
-        ingredients = listOf("Tequila","Triple sec","Lime juice","Salt"),
-        measures = listOf("1 1/2 oz","1/2 oz","1 oz"),
-        instructions = "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten only the outer rim and sprinkle the salt on it. The salt should present to the lips of the imbiber and never mix into the cocktail. Shake the other ingredients with ice, then carefully pour into the glass."
-    )
+
     AppTheme {
         Surface {
-            RedactorScreenBody(cocktail = testCocktail, mode = RedactorMode.ADD, changeImage = {}, onItemChange = {})
+            RedactorScreenBody(
+                cocktail = testCocktail,
+                mode = RedactorMode.ADD,
+                changeImage = {},
+                onItemChange = {})
+        }
+    }
+}
+
+@Preview(widthDp = 420)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun RedactorIngredientListPreview() {
+    AppTheme {
+        Surface {
+            EditableIngredientListScreen(
+                ingredients = testCocktail.ingredients,
+                measures = testCocktail.measures,
+                onIngredientsChange = {},
+                onMeasuresChange = {},
+                onAddButtonClick = {},
+                onRemoveButtonClick = {}
+            )
         }
     }
 }
