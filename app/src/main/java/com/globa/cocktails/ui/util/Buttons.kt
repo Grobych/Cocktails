@@ -101,6 +101,25 @@ fun BackButton(
 }
 
 @Composable
+fun EditButton(
+    modifier: Modifier = Modifier,
+    onClickAction: () -> Unit,
+    iconColor: Color = MaterialTheme.colorScheme.primary,
+) {
+    IconButton(
+        onClick = {onClickAction()},
+        modifier = modifier.size(24.dp)
+    ) {
+        Icon(
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_edit),
+            contentDescription = "",
+            tint = iconColor,
+            modifier = Modifier.size(24.dp)
+        )
+    }
+}
+
+@Composable
 fun FooterButton(
     modifier: Modifier = Modifier,
     onClickAction: () -> Unit,

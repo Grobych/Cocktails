@@ -38,8 +38,8 @@ import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.DPs.largeImageRound
 import com.globa.cocktails.ui.theme.Paddings
-import com.globa.cocktails.ui.util.AddButton
 import com.globa.cocktails.ui.util.BackButton
+import com.globa.cocktails.ui.util.EditButton
 import com.globa.cocktails.ui.util.FavoriteButton
 import com.globa.cocktails.ui.util.MenuButton
 import com.globa.cocktails.ui.util.TagButton
@@ -171,7 +171,7 @@ private fun Header(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    AddButton(onClickAction = { /*TODO*/ }, modifier = Modifier.padding(end = Paddings.large))
+                    EditButton(onClickAction = { /*TODO*/ }, modifier = Modifier.padding(end = Paddings.large))
                     FavoriteButton(onClickAction = { onFavoriteButtonClick() }, isFavorited = isFavorited)
                     MenuButton(onClickAction = { /*TODO*/ }, modifier = Modifier.padding(start = Paddings.large))
                 }
