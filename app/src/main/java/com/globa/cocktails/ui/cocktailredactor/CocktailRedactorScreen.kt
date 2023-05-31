@@ -275,7 +275,7 @@ fun EditableIngredientListScreen(
                         )
                     },
                     modifier = Modifier
-                        .fillMaxWidth(0.7f),
+                        .fillMaxWidth(0.6f),
                     label = {
                         Text(
                             text = "Ingredient $i",
