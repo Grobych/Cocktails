@@ -34,6 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.ui.cocktailredactor.RedactorMode
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.DPs.largeImageRound
@@ -47,7 +48,8 @@ import com.globa.cocktails.ui.util.TagButton
 @Composable
 fun CocktailInfoScreen(
     viewModel: CocktailViewModel = hiltViewModel(),
-    onBackButtonClick: () -> Unit
+    onBackButtonClick: () -> Unit,
+    navigateToRedactor: (String, RedactorMode) -> Unit
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -57,15 +59,26 @@ fun CocktailInfoScreen(
             viewModel.updateCocktail(cocktail.copy(isFavorite = cocktail.isFavorite.not()))
         }
     }
+    val onEditButtonClick: () -> Unit = {
+        if (uiState is CocktailUiState.Success) {
+            val cocktailId = (uiState as CocktailUiState.Success).cocktail.id
+            navigateToRedactor(cocktailId, RedactorMode.EDIT)
+        }
+    }
 
-    CocktailScreenSelect(uiState = uiState, onFavoriteButtonClick = onFavoriteButtonClick, onBackButtonClick = onBackButtonClick)
+    CocktailScreenSelect(uiState = uiState, onFavoriteButtonClick = onFavoriteButtonClick, onBackButtonClick = onBackButtonClick, onEditButtonClick = onEditButtonClick)
 }
 
 @Composable
-fun CocktailScreenSelect(uiState: CocktailUiState, onFavoriteButtonClick: () -> Unit, onBackButtonClick: () -> Unit) {
+fun CocktailScreenSelect(
+    uiState: CocktailUiState,
+    onFavoriteButtonClick: () -> Unit,
+    onBackButtonClick: () -> Unit,
+    onEditButtonClick: () -> Unit
+) {
     when (uiState) {
         is CocktailUiState.Loading -> CocktailLoading()
-        is CocktailUiState.Success -> CocktailInfo(cocktail = uiState.cocktail, onFavoriteButtonClick = onFavoriteButtonClick, onBackButtonClick = onBackButtonClick)
+        is CocktailUiState.Success -> CocktailInfo(cocktail = uiState.cocktail, onFavoriteButtonClick = onFavoriteButtonClick, onBackButtonClick = onBackButtonClick, onEditButtonClick = onEditButtonClick)
         is CocktailUiState.Error -> CocktailError(errorMessage = uiState.message)
     }
 }
@@ -78,9 +91,20 @@ fun CocktailLoading() {
 }
 
 @Composable
-fun CocktailInfo(cocktail: Cocktail, onFavoriteButtonClick: () -> Unit, onBackButtonClick: () -> Unit) {
+fun CocktailInfo(
+    cocktail: Cocktail,
+    onFavoriteButtonClick: () -> Unit,
+    onBackButtonClick: () -> Unit,
+    onEditButtonClick: () -> Unit
+) {
     Column(modifier = Modifier.fillMaxSize()) {
-        Header(cocktailName = cocktail.drinkName, onFavoriteButtonClick = onFavoriteButtonClick, onBackButtonClick = onBackButtonClick, isFavorited = cocktail.isFavorite)
+        Header(
+            cocktailName = cocktail.drinkName,
+            onFavoriteButtonClick = onFavoriteButtonClick,
+            onBackButtonClick = onBackButtonClick,
+            onEditButtonClick = onEditButtonClick,
+            isFavorited = cocktail.isFavorite
+        )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -136,6 +160,7 @@ private fun Header(
     modifier: Modifier = Modifier,
     onFavoriteButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
+    onEditButtonClick: () -> Unit,
     isFavorited: Boolean
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -171,7 +196,7 @@ private fun Header(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    EditButton(onClickAction = { /*TODO*/ }, modifier = Modifier.padding(end = Paddings.large))
+                    EditButton(onClickAction = { onEditButtonClick() }, modifier = Modifier.padding(end = Paddings.large))
                     FavoriteButton(onClickAction = { onFavoriteButtonClick() }, isFavorited = isFavorited)
                     MenuButton(onClickAction = { /*TODO*/ }, modifier = Modifier.padding(start = Paddings.large))
                 }
@@ -285,7 +310,7 @@ fun HeaderPreview() {
     val name = testCocktail.drinkName
     AppTheme {
         Surface {
-            Header(cocktailName = name, modifier = Modifier.width(420.dp), onFavoriteButtonClick = {}, onBackButtonClick = {}, isFavorited = false)
+            Header(cocktailName = name, modifier = Modifier.width(420.dp), onFavoriteButtonClick = {}, onBackButtonClick = {}, onEditButtonClick = {}, isFavorited = false)
         }
     }
 }
@@ -325,7 +350,7 @@ fun IngredientsPreview() {
 fun CocktailInfoPreview() {
     AppTheme {
         Surface {
-            CocktailInfo(cocktail = testCocktail, onFavoriteButtonClick = {}, onBackButtonClick = {})
+            CocktailInfo(cocktail = testCocktail, onFavoriteButtonClick = {}, onBackButtonClick = {}, onEditButtonClick = {})
         }
     }
 }

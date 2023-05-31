@@ -53,6 +53,10 @@ fun CocktailRedactorScreen(
     onBackButtonClick: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
+
+    val onItemChange: (Cocktail) -> Unit = {
+        viewModel.updateState(cocktail = it)
+    }
     when (val state = uiState.value) {
         is CocktailRedactorUiState.Loading -> {
             LoadingComposable()
@@ -63,12 +67,11 @@ fun CocktailRedactorScreen(
             ) {
                 RedactorScreenBody(
                     modifier = Modifier
-                        .padding(top = it.calculateTopPadding())
-                        .verticalScroll(enabled = true, state = ScrollState(0)),
+                        .padding(top = it.calculateTopPadding()),
                     cocktail = state.cocktail,
                     mode = state.mode,
                     changeImage = { /*TODO*/ },
-                    onItemChange = {/*TODO*/}
+                    onItemChange = onItemChange
                 )
             }
         }
@@ -354,21 +357,13 @@ val testCocktail = Cocktail(
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun RedactorScreenHeaderPreview() {
-    AppTheme {
-        Surface {
-            RedactorScreenHeader(mode = RedactorMode.EDIT) {}
-        }
-    }
-}
-
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun RedactorScreenBodyPreview() {
+fun RedactorScreenPreview() {
 
     AppTheme {
         Surface {
+            CocktailRedactorScreen {
+
+            }
             RedactorScreenBody(
                 cocktail = testCocktail,
                 mode = RedactorMode.ADD,

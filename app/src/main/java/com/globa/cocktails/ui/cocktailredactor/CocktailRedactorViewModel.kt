@@ -20,7 +20,7 @@ class CocktailRedactorViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<CocktailRedactorUiState>(CocktailRedactorUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
-    private val mode = savedStateHandle.get<RedactorMode>("mode") ?: RedactorMode.ADD
+    private val mode = RedactorMode.valueOf(savedStateHandle["mode"] ?: "ADD")
     private val cocktailId: String = when (mode) {
         RedactorMode.ADD -> {""}
         RedactorMode.EDIT -> {
