@@ -132,7 +132,9 @@ fun RedactorScreenBody(
                     bottom = Paddings.largeLarge,
                     start = Paddings.large,
                     end = Paddings.large
-                ),
+                )
+                .verticalScroll(ScrollState(0))
+            ,
             horizontalAlignment = Alignment.Start
         ) {
             Text(
@@ -171,6 +173,22 @@ fun RedactorScreenBody(
                 onMeasuresChange = {},
                 onAddButtonClick = {},
                 onRemoveButtonClick = {}
+            )
+            Text(
+                text = "Receipe descryption",
+                modifier = Modifier.padding(top = Paddings.large),
+                style = MaterialTheme.typography.titleMedium.plus(
+                    TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
+                )
+            )
+            OutlinedTextField(
+                value = cocktail.instructions,
+                onValueChange = {onItemChange(cocktail.copy(instructions = it))},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = Paddings.large),
+                textStyle = MaterialTheme.typography.bodyLarge,
+                shape = MaterialTheme.shapes.medium
             )
         }
     }
