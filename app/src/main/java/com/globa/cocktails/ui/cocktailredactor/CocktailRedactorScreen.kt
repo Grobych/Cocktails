@@ -116,7 +116,6 @@ fun RedactorScreenHeader(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RedactorScreenBody(
     modifier: Modifier = Modifier,
@@ -141,33 +140,18 @@ fun RedactorScreenBody(
             ,
             horizontalAlignment = Alignment.Start
         ) {
-            Text(
-                text = "Photo",
-                style = MaterialTheme.typography.titleMedium.plus(
-                    TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
-                )
-            )
             RedactorScreenImage(
-                modifier = Modifier.padding(top = Paddings.large),
                 mode = mode,
                 changeImage = changeImage,
                 cocktail = cocktail
             )
-            OutlinedTextField(
-                value = cocktail.drinkName,
-                onValueChange = {onItemChange(cocktail.copy(drinkName = it))},
+            NameBlock(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = Paddings.large),
-                enabled = mode == RedactorMode.ADD,
-                textStyle = MaterialTheme.typography.bodyLarge,
-                label = {
-                    Text(
-                        text = "Name",
-                        modifier = Modifier.padding(bottom = Paddings.extraSmall)
-                    )
-                },
-                shape = MaterialTheme.shapes.medium
+                name = cocktail.drinkName,
+                onNameChanged = {onItemChange(cocktail.copy(drinkName = it))},
+                mode = mode
             )
             EditableIngredientListScreen(
                 modifier.padding(top = Paddings.large),
@@ -178,21 +162,10 @@ fun RedactorScreenBody(
                 onAddButtonClick = {},
                 onRemoveButtonClick = {}
             )
-            Text(
-                text = "Receipe descryption",
+            InstructionsBlock(
                 modifier = Modifier.padding(top = Paddings.large),
-                style = MaterialTheme.typography.titleMedium.plus(
-                    TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
-                )
-            )
-            OutlinedTextField(
-                value = cocktail.instructions,
-                onValueChange = {onItemChange(cocktail.copy(instructions = it))},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = Paddings.large),
-                textStyle = MaterialTheme.typography.bodyLarge,
-                shape = MaterialTheme.shapes.medium
+                text = cocktail.instructions,
+                onTextChanged = {onItemChange(cocktail.copy(instructions = it))}
             )
         }
     }
@@ -206,6 +179,12 @@ fun RedactorScreenImage(
     changeImage: () -> Unit,
     cocktail: Cocktail
 ) {
+    Text(
+        text = "Photo",
+        style = MaterialTheme.typography.titleMedium.plus(
+            TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
+        )
+    )
     when (mode) {
         RedactorMode.EDIT-> {
             AsyncImage(
@@ -220,6 +199,7 @@ fun RedactorScreenImage(
                             bottomStart = DPs.largeImageRound
                         )
                     )
+                    .padding(top = Paddings.large)
             )
         }
         RedactorMode.ADD-> {
@@ -233,6 +213,7 @@ fun RedactorScreenImage(
                         )
                     )
                     .background(color = MaterialTheme.colorScheme.background)
+                    .padding(top = Paddings.large)
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_add_2),
@@ -242,6 +223,30 @@ fun RedactorScreenImage(
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun NameBlock(
+    modifier: Modifier = Modifier,
+    name: String,
+    onNameChanged: (String) -> Unit,
+    mode: RedactorMode
+) {
+    OutlinedTextField(
+        value = name,
+        onValueChange = {onNameChanged(it)},
+        modifier = modifier,
+        enabled = mode == RedactorMode.ADD,
+        textStyle = MaterialTheme.typography.bodyLarge,
+        label = {
+            Text(
+                text = "Name",
+                modifier = Modifier.padding(bottom = Paddings.extraSmall)
+            )
+        },
+        shape = MaterialTheme.shapes.medium
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -337,11 +342,37 @@ fun EditableIngredientListScreen(
                 .padding(top = Paddings.large)
         )
     }
-
-
-
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun InstructionsBlock(
+    modifier: Modifier = Modifier,
+    text: String,
+    onTextChanged: (String) -> Unit
+) {
+    Column(
+        modifier = modifier.background(color = MaterialTheme.colorScheme.surface),
+        horizontalAlignment = Alignment.Start
+    ) {
+        Text(
+            text = "Receipe descryption",
+            modifier = Modifier.padding(top = Paddings.large),
+            style = MaterialTheme.typography.titleMedium.plus(
+                TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
+            )
+        )
+        OutlinedTextField(
+            value = text,
+            onValueChange = {onTextChanged(it)},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = Paddings.large),
+            textStyle = MaterialTheme.typography.bodyLarge,
+            shape = MaterialTheme.shapes.medium
+        )
+    }
+}
 val testCocktail = Cocktail(
     id = "id",
     drinkNumber = 362,
