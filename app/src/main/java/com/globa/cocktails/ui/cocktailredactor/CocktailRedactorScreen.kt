@@ -1,7 +1,6 @@
 package com.globa.cocktails.ui.cocktailredactor
 
 import android.content.res.Configuration
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -15,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -125,6 +125,7 @@ fun RedactorScreenBody(
     changeImage: ()-> Unit,
     onItemChange: (Cocktail)-> Unit
 ) {
+    val scrollState = rememberScrollState()
     Surface {
         Column(
             modifier = modifier
@@ -136,7 +137,7 @@ fun RedactorScreenBody(
                     start = Paddings.large,
                     end = Paddings.large
                 )
-                .verticalScroll(ScrollState(0))
+                .verticalScroll(scrollState)
             ,
             horizontalAlignment = Alignment.Start
         ) {
