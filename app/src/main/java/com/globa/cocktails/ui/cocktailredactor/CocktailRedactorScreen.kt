@@ -39,6 +39,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.domain.RemoveIngredientUseCase
 import com.globa.cocktails.ui.cocktaillist.ErrorComposable
 import com.globa.cocktails.ui.cocktaillist.LoadingComposable
 import com.globa.cocktails.ui.theme.AppTheme
@@ -125,6 +126,7 @@ fun RedactorScreenBody(
     onItemChange: (Cocktail)-> Unit
 ) {
     val scrollState = rememberScrollState()
+    val removeIngredientUseCase = RemoveIngredientUseCase()
     Surface {
         Column(
             modifier = modifier
@@ -157,10 +159,25 @@ fun RedactorScreenBody(
                 modifier.padding(top = Paddings.large),
                 ingredients = cocktail.ingredients,
                 measures = cocktail.measures,
-                onIngredientsChange = {},
-                onMeasuresChange = {},
-                onAddButtonClick = {},
-                onRemoveButtonClick = {}
+                onIngredientsChange = {
+                                      onItemChange(cocktail.copy(ingredients = it))
+                },
+                onMeasuresChange = {
+                                   onItemChange(cocktail.copy(measures = it))
+                },
+                onAddButtonClick = {
+                                   onItemChange(
+                                       cocktail.copy(
+                                           ingredients = cocktail.ingredients.plus(""),
+                                           measures = cocktail.measures.plus("")
+                                       )
+                                   )
+                },
+                onRemoveButtonClick = {
+                    onItemChange(
+                        removeIngredientUseCase(cocktail, it)
+                    )
+                }
             )
             InstructionsBlock(
                 modifier = Modifier.padding(top = Paddings.large),
