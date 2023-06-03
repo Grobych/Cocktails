@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CocktailRedactorViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val repository: CocktailRepository,
 ): ViewModel() {
     private val _cocktailState = MutableStateFlow(Cocktail())
@@ -28,6 +28,9 @@ class CocktailRedactorViewModel @Inject constructor(
 
     private val _errorState = MutableStateFlow(ErrorFieldsState(false, listOf(),false))
     val errorState = _errorState.asStateFlow()
+
+    private val _showSaveDialog = MutableStateFlow(false)
+    val showSaveDialog = _showSaveDialog.asStateFlow()
 
     private val mode = RedactorMode.valueOf(savedStateHandle["mode"] ?: "ADD")
     private val cocktailId: String = when (mode) {
@@ -72,8 +75,18 @@ class CocktailRedactorViewModel @Inject constructor(
         return ErrorFieldsState(nameError,ingredientsError,instructionError)
     }
 
+    fun tryToSave() {
+        val state = errorState.value
+        var ingredientsError = false
+        state.isIngredientError.forEach { ingredientsError = ingredientsError || it }
+        _showSaveDialog.value = !(ingredientsError || state.isNameError || state.isInstructionsError)
+    }
+    fun saveDismiss() {
+        _showSaveDialog.value = false
+    }
     suspend fun saveCocktail() {
         if (uiState.value is CocktailRedactorUiState.Editing) {
+            _showSaveDialog.value = false
             val cocktail = (uiState.value as CocktailRedactorUiState.Editing).cocktail
             _uiState.value = CocktailRedactorUiState.Saving
             repository.saveCocktail(cocktail)

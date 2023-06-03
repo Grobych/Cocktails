@@ -2,6 +2,7 @@ package com.globa.cocktails.ui.cocktailredactor
 
 import android.content.res.Configuration
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -18,12 +19,15 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -61,10 +65,10 @@ fun CocktailRedactorScreen(
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val errorFieldsState = viewModel.errorState.collectAsState()
+    val showSaveDialog = viewModel.showSaveDialog.collectAsState()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val saveCocktail: () -> Unit = {
-        // TODO: rewrite with fields check and dialog (in vm)
+    val onSaveAccept: () -> Unit = {
         scope.launch {
             viewModel.saveCocktail()
             Toast.makeText(
@@ -75,6 +79,7 @@ fun CocktailRedactorScreen(
             onBackButtonClick()
         }
     }
+    val onSaveDismiss: () -> Unit = {viewModel.saveDismiss()}
 
     val onItemChange: (Cocktail) -> Unit = {
         viewModel.updateState(cocktail = it)
@@ -84,10 +89,14 @@ fun CocktailRedactorScreen(
             LoadingComposable()
         }
         is CocktailRedactorUiState.Editing -> {
+            if (showSaveDialog.value) SaveDialog(
+                onAccept = onSaveAccept,
+                onDismiss = onSaveDismiss
+            )
             Scaffold(
                 topBar = { RedactorScreenHeader(state.mode, onBackButtonClick) },
                 floatingActionButton = { SaveFloatingButton {
-                    saveCocktail()
+                    viewModel.tryToSave()
                 }}
             ) {
                 RedactorScreenBody(
@@ -451,6 +460,34 @@ fun SaveFloatingButton(
     }
 }
 
+@Composable
+fun SaveDialog(
+    onAccept: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        confirmButton = {
+            Button(
+                onClick = { onAccept() }
+            ) {
+                Text(text = "Yes, continue")
+            }
+        },
+        dismissButton = {
+            OutlinedButton(
+                onClick = { onDismiss() },
+                border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.onSurface)
+            ) {
+                Text(text = "No, return")
+            }
+        },
+        containerColor = MaterialTheme.colorScheme.surface,
+        title = {Text(text = "Finish editing?")},
+        text = {Text(text = "You can return to editing at any time")}
+    )
+}
+
 val testCocktail = Cocktail(
     id = "id",
     drinkNumber = 362,
@@ -498,6 +535,17 @@ fun RedactorIngredientListPreview() {
                 onAddButtonClick = {},
                 onRemoveButtonClick = {}
             )
+        }
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun SaveDialogPreview() {
+    AppTheme {
+        Surface {
+            SaveDialog({},{})
         }
     }
 }
