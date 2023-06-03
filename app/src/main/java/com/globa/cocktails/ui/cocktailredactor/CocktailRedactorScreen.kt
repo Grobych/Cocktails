@@ -1,6 +1,7 @@
 package com.globa.cocktails.ui.cocktailredactor
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -18,6 +19,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,10 +30,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,6 +51,7 @@ import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs
 import com.globa.cocktails.ui.theme.Paddings
 import com.globa.cocktails.ui.util.BackButton
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,6 +60,20 @@ fun CocktailRedactorScreen(
     onBackButtonClick: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val saveCocktail: () -> Unit = {
+        // TODO: rewrite with fields check and dialog (in vm)
+        scope.launch {
+            viewModel.saveCocktail()
+            Toast.makeText(
+                context,
+                "Cocktail Saved!",
+                Toast.LENGTH_SHORT
+            ).show()
+            onBackButtonClick()
+        }
+    }
 
     val onItemChange: (Cocktail) -> Unit = {
         viewModel.updateState(cocktail = it)
@@ -64,7 +84,10 @@ fun CocktailRedactorScreen(
         }
         is CocktailRedactorUiState.Editing -> {
             Scaffold(
-                topBar = { RedactorScreenHeader(state.mode, onBackButtonClick) }
+                topBar = { RedactorScreenHeader(state.mode, onBackButtonClick) },
+                floatingActionButton = { SaveFloatingButton {
+                    saveCocktail()
+                }}
             ) {
                 RedactorScreenBody(
                     modifier = Modifier
@@ -80,7 +103,7 @@ fun CocktailRedactorScreen(
             ErrorComposable(errorMessage = state.message)
         }
         CocktailRedactorUiState.Saving -> {
-
+            //TODO: Add saving composable
         }
     }
 }
@@ -309,6 +332,7 @@ fun EditableIngredientListScreen(
                         )
                     },
                     singleLine = true,
+                    isError = item.isBlank(),
                     shape = MaterialTheme.shapes.large
                 )
                 OutlinedTextField(
@@ -386,10 +410,35 @@ fun InstructionsBlock(
                 .fillMaxWidth()
                 .padding(top = Paddings.large),
             textStyle = MaterialTheme.typography.bodyLarge,
+            isError = text.isBlank(),
             shape = MaterialTheme.shapes.medium
         )
     }
 }
+
+@Composable
+fun SaveFloatingButton(
+    onClickButton: () -> Unit
+) {
+    FloatingActionButton(
+        onClick = {onClickButton()},
+        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+        modifier = Modifier
+            .padding(bottom = Paddings.medium, end = Paddings.largeLarge)
+            .width(92.dp)
+            .height(40.dp),
+        shape = MaterialTheme.shapes.extraLarge,
+        elevation = FloatingActionButtonDefaults.elevation()
+    ) {
+        Icon(
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_done),
+            contentDescription = "Done",
+            modifier = Modifier.size(15.dp),
+            tint = MaterialTheme.colorScheme.onSecondaryContainer
+        )
+    }
+}
+
 val testCocktail = Cocktail(
     id = "id",
     drinkNumber = 362,
