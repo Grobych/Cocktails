@@ -9,3 +9,5 @@ sealed class CocktailRedactorUiState{
     class Error(val message: String): CocktailRedactorUiState()
 }
 enum class RedactorMode {ADD, EDIT}
+data class ErrorFieldsState(val isNameError: Boolean, val isIngredientError: List<Boolean>, val isInstructionsError: Boolean)
+

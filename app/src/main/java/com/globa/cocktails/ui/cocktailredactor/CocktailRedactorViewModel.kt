@@ -6,9 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,8 +21,13 @@ class CocktailRedactorViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val repository: CocktailRepository,
 ): ViewModel() {
+    private val _cocktailState = MutableStateFlow(Cocktail())
+
     private val _uiState = MutableStateFlow<CocktailRedactorUiState>(CocktailRedactorUiState.Loading)
     val uiState = _uiState.asStateFlow()
+
+    private val _errorState = MutableStateFlow(ErrorFieldsState(false, listOf(),false))
+    val errorState = _errorState.asStateFlow()
 
     private val mode = RedactorMode.valueOf(savedStateHandle["mode"] ?: "ADD")
     private val cocktailId: String = when (mode) {
@@ -28,34 +37,39 @@ class CocktailRedactorViewModel @Inject constructor(
         }
     }
 
-
-    init {
+    private suspend fun selectFlow(mode: RedactorMode): Flow<Cocktail> = when (mode) {
+        RedactorMode.ADD -> flowOf(Cocktail())
+        RedactorMode.EDIT -> repository.getCocktail(cocktailId)
+    }
+    private fun initCocktail(mode: RedactorMode) {
         viewModelScope.launch {
-            if(cocktailId =="") {
-                _uiState.value = CocktailRedactorUiState.Editing(
-                    cocktail = Cocktail(),
-                    mode = mode
-                )
+            merge(_cocktailState, selectFlow(mode))
+                .onEach {cocktail ->
+                    _errorState.value = checkFields(cocktail.drinkName, cocktail.ingredients, cocktail.instructions)
+                }
+                .catch {
+                    _uiState.value = CocktailRedactorUiState.Error(it.message?:"Unknown error")
+                }
+                .collect{
+                    _uiState.value = CocktailRedactorUiState.Editing(it, mode)
+                }
 
-            } else {
-                repository.getCocktail(cocktailId)
-                    .catch {
-                        _uiState.value = CocktailRedactorUiState.Error(it.message?:"Unknown error")
-                    }
-                    .collect{
-                        _uiState.value = CocktailRedactorUiState.Editing(
-                                cocktail = it,
-                                mode = mode
-                            )
-                        }
-            }
         }
+    }
+    init {
+        initCocktail(mode = mode)
     }
 
     fun updateState(cocktail: Cocktail) {
-        if (_uiState.value is CocktailRedactorUiState.Editing) {
-            _uiState.value = CocktailRedactorUiState.Editing(cocktail, mode)
-        }
+        _cocktailState.value = cocktail
+    }
+
+    private fun checkFields(nameField: String, ingredientFields: List<String>, instrctionField: String
+    ): ErrorFieldsState {
+        val nameError = nameField.isBlank()
+        val ingredientsError = ingredientFields.map { it.isBlank() }
+        val instructionError = instrctionField.isBlank()
+        return ErrorFieldsState(nameError,ingredientsError,instructionError)
     }
 
     suspend fun saveCocktail() {

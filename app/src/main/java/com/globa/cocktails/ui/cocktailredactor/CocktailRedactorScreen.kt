@@ -60,6 +60,7 @@ fun CocktailRedactorScreen(
     onBackButtonClick: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
+    val errorFieldsState = viewModel.errorState.collectAsState()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val saveCocktail: () -> Unit = {
@@ -94,6 +95,9 @@ fun CocktailRedactorScreen(
                         .padding(top = it.calculateTopPadding()),
                     cocktail = state.cocktail,
                     mode = state.mode,
+                    isNameError = errorFieldsState.value.isNameError,
+                    isIngredientsError = errorFieldsState.value.isIngredientError,
+                    isInstructionError = errorFieldsState.value.isInstructionsError,
                     changeImage = { /*TODO*/ },
                     onItemChange = onItemChange
                 )
@@ -145,6 +149,9 @@ fun RedactorScreenBody(
     modifier: Modifier = Modifier,
     cocktail: Cocktail,
     mode: RedactorMode,
+    isNameError: Boolean,
+    isIngredientsError: List<Boolean>,
+    isInstructionError: Boolean,
     changeImage: ()-> Unit,
     onItemChange: (Cocktail)-> Unit
 ) {
@@ -175,6 +182,7 @@ fun RedactorScreenBody(
                     .fillMaxWidth()
                     .padding(top = Paddings.large),
                 name = cocktail.drinkName,
+                isError = isNameError,
                 onNameChanged = {onItemChange(cocktail.copy(drinkName = it))},
                 mode = mode
             )
@@ -182,6 +190,7 @@ fun RedactorScreenBody(
                 modifier.padding(top = Paddings.large),
                 ingredients = cocktail.ingredients,
                 measures = cocktail.measures,
+                isErrors = isIngredientsError,
                 onIngredientsChange = {
                                       onItemChange(cocktail.copy(ingredients = it))
                 },
@@ -205,6 +214,7 @@ fun RedactorScreenBody(
             InstructionsBlock(
                 modifier = Modifier.padding(top = Paddings.large),
                 text = cocktail.instructions,
+                isError = isInstructionError,
                 onTextChanged = {onItemChange(cocktail.copy(instructions = it))}
             )
         }
@@ -270,6 +280,7 @@ fun RedactorScreenImage(
 fun NameBlock(
     modifier: Modifier = Modifier,
     name: String,
+    isError: Boolean,
     onNameChanged: (String) -> Unit,
     mode: RedactorMode
 ) {
@@ -285,6 +296,7 @@ fun NameBlock(
                 modifier = Modifier.padding(bottom = Paddings.extraSmall)
             )
         },
+        isError = isError,
         shape = MaterialTheme.shapes.medium
     )
 }
@@ -295,13 +307,12 @@ fun EditableIngredientListScreen(
     modifier: Modifier = Modifier,
     ingredients: List<String>,
     measures: List<String>,
+    isErrors: List<Boolean>,
     onIngredientsChange: (List<String>) -> Unit,
     onMeasuresChange: (List<String>) -> Unit,
     onAddButtonClick: () -> Unit,
     onRemoveButtonClick: (Int) -> Unit
 ) {
-
-
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -332,7 +343,7 @@ fun EditableIngredientListScreen(
                         )
                     },
                     singleLine = true,
-                    isError = item.isBlank(),
+                    isError = isErrors.getOrElse(i) { false },
                     shape = MaterialTheme.shapes.large
                 )
                 OutlinedTextField(
@@ -390,6 +401,7 @@ fun EditableIngredientListScreen(
 fun InstructionsBlock(
     modifier: Modifier = Modifier,
     text: String,
+    isError: Boolean,
     onTextChanged: (String) -> Unit
 ) {
     Column(
@@ -410,7 +422,7 @@ fun InstructionsBlock(
                 .fillMaxWidth()
                 .padding(top = Paddings.large),
             textStyle = MaterialTheme.typography.bodyLarge,
-            isError = text.isBlank(),
+            isError = isError,
             shape = MaterialTheme.shapes.medium
         )
     }
@@ -459,12 +471,12 @@ fun RedactorScreenPreview() {
 
     AppTheme {
         Surface {
-            CocktailRedactorScreen {
-
-            }
             RedactorScreenBody(
                 cocktail = testCocktail,
                 mode = RedactorMode.ADD,
+                isIngredientsError = listOf(),
+                isInstructionError = false,
+                isNameError = false,
                 changeImage = {},
                 onItemChange = {})
         }
@@ -480,6 +492,7 @@ fun RedactorIngredientListPreview() {
             EditableIngredientListScreen(
                 ingredients = testCocktail.ingredients,
                 measures = testCocktail.measures,
+                isErrors = listOf(),
                 onIngredientsChange = {},
                 onMeasuresChange = {},
                 onAddButtonClick = {},
