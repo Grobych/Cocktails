@@ -12,7 +12,7 @@ class CocktailFileDataSource @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     fun getCocktails(): List<CocktailAPIModel> {
-        val json = readAsset(context, "recipes2.json")
+        val json = readAsset(context, "recipes.json")
         val typeToken = object : TypeToken<List<CocktailAPIModel>>() {}.type
         return Gson().fromJson(json, typeToken)
     }
