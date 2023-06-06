@@ -1,6 +1,7 @@
 package com.globa.cocktails.ui.cocktaillist
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -40,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
-import com.globa.cocktails.domain.RandomCocktailUseCase
+import com.globa.cocktails.domain.models.GetRandomResult
 import com.globa.cocktails.domain.models.ReceipePreview
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs
@@ -63,7 +65,7 @@ fun CocktailListScreen(
     val uiState by viewModel.uiState.collectAsState()
     val filterUiState by viewModel.filterUiState.collectAsState()
     val selectorUiState by viewModel.selectorUiState.collectAsState()
-    val randomCocktailUseCase = RandomCocktailUseCase()
+    val context = LocalContext.current
 
     val onFilterChangeAction: (TextFieldValue) -> Unit = { value ->
         val text = value.text
@@ -88,6 +90,13 @@ fun CocktailListScreen(
 //        viewModel.updateCocktail(it.copy(isFavorite = it.isFavorite.not()))
     }
 
+    val onRandomButtonAction: () -> Unit = {
+        when (val res = viewModel.getRandomReceipeId()) {
+            is GetRandomResult.Success -> onItemClickAction(res.id)
+            is GetRandomResult.Error -> Toast.makeText(context, res.message,Toast.LENGTH_SHORT).show()
+        }
+    }
+
     when (val state = uiState) {
         is CocktailListUiState.Loading -> {
             LoadingComposable()
@@ -96,9 +105,7 @@ fun CocktailListScreen(
             ErrorComposable(errorMessage = state.message)
         }
         is CocktailListUiState.Done -> {
-            val onRandomButtonAction: () -> Unit = {
-//                onItemClickAction(randomCocktailUseCase(state.list))
-            }
+
             Scaffold(
                 topBar = {
                     Header(filterUiState = filterUiState, onFilterChangeAction = onFilterChangeAction, onTagClicked = removeTagAction)

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.domain.FavoriteCocktailsUseCase
 import com.globa.cocktails.domain.FilterCocktailsUseCase
 import com.globa.cocktails.domain.GetAllReceipesUseCase
+import com.globa.cocktails.domain.GetRandomRecipeUseCase
 import com.globa.cocktails.domain.UpdateCocktailUseCase
 import com.globa.cocktails.domain.models.ReceipePreview
 import com.globa.cocktails.utils.contains
@@ -23,7 +24,8 @@ class CocktailListViewModel @Inject constructor(
     private val getAllReceipesUseCase: GetAllReceipesUseCase,
     private val updateCocktailUseCase: UpdateCocktailUseCase,
     private val favoriteCocktailsUseCase: FavoriteCocktailsUseCase,
-    private val filterCocktailsUseCase: FilterCocktailsUseCase
+    private val filterCocktailsUseCase: FilterCocktailsUseCase,
+    private val randomCocktailUseCase: GetRandomRecipeUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<CocktailListUiState>(CocktailListUiState.Loading())
     val uiState = _uiState.asStateFlow()
@@ -77,6 +79,8 @@ class CocktailListViewModel @Inject constructor(
             it.copy(tags = it.tags.minus(tag))
         }
     }
+    fun getRandomReceipeId() =
+        randomCocktailUseCase((uiState.value as CocktailListUiState.Done).list.map { it.id })
 
 //    fun updateCocktail(cocktail: Cocktail) = viewModelScope.launch {
 //        updateCocktailUseCase(cocktail)
