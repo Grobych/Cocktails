@@ -60,7 +60,7 @@ import com.globa.cocktails.ui.util.TagButton
 @Composable
 fun CocktailListScreen(
     viewModel: CocktailListViewModel = hiltViewModel(),
-    onItemClickAction: (String) -> Unit
+    onItemClickAction: (Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val filterUiState by viewModel.filterUiState.collectAsState()
@@ -174,7 +174,7 @@ fun Header(
 }
 
 @Composable
-fun CocktailList(list: List<ReceipePreview>, onItemClickAction: (String) -> Unit, onTagClicked: (String) -> Unit, onFavoriteClicked: (ReceipePreview) -> Unit) {
+fun CocktailList(list: List<ReceipePreview>, onItemClickAction: (Int) -> Unit, onTagClicked: (String) -> Unit, onFavoriteClicked: (ReceipePreview) -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(bottom = DPs.line)
     ) {
@@ -346,7 +346,7 @@ fun EmptyList() {
 @Composable
 fun CocktailListItemPreview(){
     val receipePreview = ReceipePreview(
-        id = "",
+        id = 0,
         name = "Margarita",
         imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
         tags = listOf("Tequila","Triple sec","Lime juice","Agava", "Salt", "Vodka"),

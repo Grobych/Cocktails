@@ -49,7 +49,7 @@ import com.globa.cocktails.ui.util.TagButton
 fun CocktailInfoScreen(
     viewModel: CocktailViewModel = hiltViewModel(),
     onBackButtonClick: () -> Unit,
-    navigateToRedactor: (String, RedactorMode) -> Unit
+    navigateToRedactor: (Int, RedactorMode) -> Unit
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -61,7 +61,7 @@ fun CocktailInfoScreen(
     }
     val onEditButtonClick: () -> Unit = {
         if (uiState is CocktailUiState.Success) {
-            val cocktailId = (uiState as CocktailUiState.Success).cocktail.id.toString()
+            val cocktailId = (uiState as CocktailUiState.Success).cocktail.id
             navigateToRedactor(cocktailId, RedactorMode.EDIT)
         }
     }

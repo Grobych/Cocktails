@@ -1,8 +1,8 @@
 package com.globa.cocktails.domain
 
-import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.repository.CocktailRepository
 import com.globa.cocktails.domain.models.ReceipePreview
+import com.globa.cocktails.domain.models.toReceipePreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -17,11 +17,3 @@ class GetAllReceipesUseCase @Inject constructor(
                 }
         }
 }
-
-fun Cocktail.toReceipePreview() = ReceipePreview(
-    id = this.id.toString(), //TODO: to INT
-    name = this.drinkName,
-    imageURL = this.imageURL,
-    isFavorite = this.isFavorite,
-    tags = this.ingredients
-)

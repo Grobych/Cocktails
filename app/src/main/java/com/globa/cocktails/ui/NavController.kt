@@ -15,10 +15,10 @@ import com.globa.cocktails.ui.cocktailredactor.RedactorMode
 fun NavController() {
     val navController = rememberNavController()
 
-    val navigateToCocktail: (String) -> Unit = { cocktailId ->
+    val navigateToCocktail: (Int) -> Unit = { cocktailId ->
         navController.navigate("cocktailInfo?cocktailId=${cocktailId}")
     }
-    val navigateToRedactor: (String, RedactorMode) -> Unit = { cocktailId, mode ->
+    val navigateToRedactor: (Int, RedactorMode) -> Unit = { cocktailId, mode ->
         navController.navigate("cocktailRedactor?cocktailId=${cocktailId}&mode=${mode.name}")
     }
     val navigateToBack: () -> Unit = {
