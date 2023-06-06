@@ -3,11 +3,11 @@ package com.globa.cocktails.ui.cocktaillist
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globa.cocktails.datalayer.models.Cocktail
-import com.globa.cocktails.datalayer.repository.CocktailRepository
 import com.globa.cocktails.domain.FavoriteCocktailsUseCase
 import com.globa.cocktails.domain.FilterCocktailsUseCase
+import com.globa.cocktails.domain.GetAllReceipesUseCase
 import com.globa.cocktails.domain.UpdateCocktailUseCase
+import com.globa.cocktails.domain.models.ReceipePreview
 import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CocktailListViewModel @Inject constructor(
-    private val cocktailRepository: CocktailRepository,
+    private val getAllReceipesUseCase: GetAllReceipesUseCase,
     private val updateCocktailUseCase: UpdateCocktailUseCase,
     private val favoriteCocktailsUseCase: FavoriteCocktailsUseCase,
     private val filterCocktailsUseCase: FilterCocktailsUseCase
@@ -35,20 +35,19 @@ class CocktailListViewModel @Inject constructor(
     val selectorUiState = _selectorUiState.asStateFlow()
 
     private fun initCocktailList() = viewModelScope.launch {
-        cocktailRepository
-            .getCocktails()
+        getAllReceipesUseCase()
             .catch { trowable ->
                 _uiState.update {
                     if (trowable.message != null) CocktailListUiState.Error(trowable.message!!)
                     else CocktailListUiState.Error(trowable.toString())
                 }
             }
-            .combine(selectorUiState) { cocktails: List<Cocktail>, state: CocktailSelectorUiState ->
+            .combine(selectorUiState) { cocktails: List<ReceipePreview>, state: CocktailSelectorUiState ->
                 if (state.isFavoriteSelected) favoriteCocktailsUseCase(cocktails)
                 else if (state.isMyCocktailSelected) emptyList() // TODO: myCocktailsUseCase
                     else cocktails
             }
-            .combine(filterUiState) { cocktails: List<Cocktail>, filter: CocktailFilterUiState ->
+            .combine(filterUiState) { cocktails: List<ReceipePreview>, filter: CocktailFilterUiState ->
                 if (filter.tags.isEmpty() && filter.line.text.isEmpty()) cocktails
                 else filterCocktailsUseCase(cocktails,filter.expandTags())
             }
@@ -79,9 +78,9 @@ class CocktailListViewModel @Inject constructor(
         }
     }
 
-    fun updateCocktail(cocktail: Cocktail) = viewModelScope.launch {
-        updateCocktailUseCase(cocktail)
-    }
+//    fun updateCocktail(cocktail: Cocktail) = viewModelScope.launch {
+//        updateCocktailUseCase(cocktail)
+//    }
 
     fun selectorChanged(clicked: FooterSelector) {
         when (clicked) {

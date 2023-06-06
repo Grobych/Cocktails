@@ -13,18 +13,6 @@ data class Cocktail(
     val instructions : String = "",
     val isFavorite : Boolean = false)
 
-
-fun Cocktail.createTagLine(): String {
-    val res = StringBuilder()
-        .append("$drinkName ")
-        .append("$drinkCategory ")
-        .append("$drinkGlass ")
-    ingredients.forEach {
-        res.append("$it ")
-    }
-    return res.toString()
-}
-
 fun Cocktail.asDBModel(): CocktailDBModel = CocktailDBModel(
     id = id,
     drinkNumber = drinkNumber,

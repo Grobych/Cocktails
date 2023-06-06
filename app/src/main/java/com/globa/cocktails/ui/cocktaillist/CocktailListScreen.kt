@@ -40,8 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
-import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.domain.RandomCocktailUseCase
+import com.globa.cocktails.domain.models.ReceipePreview
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs
 import com.globa.cocktails.ui.theme.DPs.headerHeight
@@ -84,8 +84,8 @@ fun CocktailListScreen(
         viewModel.addFilterTag(it)
     }
 
-    val updateCocktail: (Cocktail) -> Unit = {
-        viewModel.updateCocktail(it.copy(isFavorite = it.isFavorite.not()))
+    val updateCocktail: (ReceipePreview) -> Unit = {
+//        viewModel.updateCocktail(it.copy(isFavorite = it.isFavorite.not()))
     }
 
     when (val state = uiState) {
@@ -97,7 +97,7 @@ fun CocktailListScreen(
         }
         is CocktailListUiState.Done -> {
             val onRandomButtonAction: () -> Unit = {
-                onItemClickAction(randomCocktailUseCase(state.list))
+//                onItemClickAction(randomCocktailUseCase(state.list))
             }
             Scaffold(
                 topBar = {
@@ -167,7 +167,7 @@ fun Header(
 }
 
 @Composable
-fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTagClicked: (String) -> Unit, onFavoriteClicked: (Cocktail) -> Unit) {
+fun CocktailList(list: List<ReceipePreview>, onItemClickAction: (String) -> Unit, onTagClicked: (String) -> Unit, onFavoriteClicked: (ReceipePreview) -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(bottom = DPs.line)
     ) {
@@ -176,7 +176,7 @@ fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTa
             key = { it.id }
         ) {
             CocktailListItem(
-                cocktail = it,
+                receipePreview = it,
                 onItemClickAction = {onItemClickAction(it.id)},
                 onTagClicked = onTagClicked,
                 onFavoriteClicked = onFavoriteClicked
@@ -188,10 +188,10 @@ fun CocktailList(list: List<Cocktail>, onItemClickAction: (String) -> Unit, onTa
 
 @Composable
 fun CocktailListItem(
-    cocktail: Cocktail,
+    receipePreview: ReceipePreview,
     onItemClickAction: () -> Unit,
     onTagClicked: (String) -> Unit,
-    onFavoriteClicked: (Cocktail) -> Unit
+    onFavoriteClicked: (ReceipePreview) -> Unit
 ) {
     Row (
         modifier = Modifier
@@ -204,8 +204,8 @@ fun CocktailListItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = cocktail.imageURL,
-            contentDescription = cocktail.drinkName,
+            model = receipePreview.imageURL,
+            contentDescription = receipePreview.name,
             placeholder = painterResource(id = R.drawable.loading_img),
             error = painterResource(id = R.drawable.broken_image),
             modifier = Modifier
@@ -223,11 +223,11 @@ fun CocktailListItem(
             ) {
                 Row {
                     FavoriteButton(
-                        isFavorited = cocktail.isFavorite,
-                        onClickAction = { onFavoriteClicked(cocktail) }
+                        isFavorited = receipePreview.isFavorite,
+                        onClickAction = { onFavoriteClicked(receipePreview) }
                     )
                     Text(
-                        text = cocktail.drinkName,
+                        text = receipePreview.name,
                         modifier = Modifier.padding(start = Paddings.small),
                         style = MaterialTheme.typography.titleMedium)
                     //star
@@ -235,7 +235,7 @@ fun CocktailListItem(
                 Row(
                     modifier = Modifier.padding(top = Paddings.medium)
                 ) {
-                    TagField(list = cocktail.ingredients, onItemClickAction = onTagClicked)
+                    TagField(list = receipePreview.tags, onItemClickAction = onTagClicked)
                 }
             }
         }
@@ -338,17 +338,19 @@ fun EmptyList() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun CocktailListItemPreview(){
-    val cocktail = Cocktail(
-        drinkName = "Margarita",
+    val receipePreview = ReceipePreview(
+        id = "",
+        name = "Margarita",
         imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
-        ingredients = listOf("Tequila","Triple sec","Lime juice","Agava", "Salt", "Vodka")
+        tags = listOf("Tequila","Triple sec","Lime juice","Agava", "Salt", "Vodka"),
+        isFavorite = false
     )
 
     AppTheme {
         Surface(
             modifier = Modifier.width(480.dp)
         ) {
-            CocktailListItem(cocktail = cocktail, onTagClicked = {}, onItemClickAction = {}, onFavoriteClicked = {})
+            CocktailListItem(receipePreview = receipePreview, onTagClicked = {}, onItemClickAction = {}, onFavoriteClicked = {})
         }
     }
 }
