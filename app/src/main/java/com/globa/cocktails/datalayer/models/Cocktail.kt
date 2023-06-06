@@ -1,7 +1,7 @@
 package com.globa.cocktails.datalayer.models
 
 data class Cocktail(
-    val id : String = "",
+    val id : Int = 0,
     val drinkNumber : Int = 1,
     val drinkName : String = "",
     val alcohol : Boolean = true,
@@ -15,7 +15,6 @@ data class Cocktail(
 
 fun Cocktail.asDBModel(): CocktailDBModel = CocktailDBModel(
     id = id,
-    drinkNumber = drinkNumber,
     drinkName = drinkName,
     alcohol = alcohol,
     drinkCategory = drinkCategory,

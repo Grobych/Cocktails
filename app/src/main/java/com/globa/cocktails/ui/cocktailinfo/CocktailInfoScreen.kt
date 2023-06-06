@@ -61,7 +61,7 @@ fun CocktailInfoScreen(
     }
     val onEditButtonClick: () -> Unit = {
         if (uiState is CocktailUiState.Success) {
-            val cocktailId = (uiState as CocktailUiState.Success).cocktail.id
+            val cocktailId = (uiState as CocktailUiState.Success).cocktail.id.toString()
             navigateToRedactor(cocktailId, RedactorMode.EDIT)
         }
     }
@@ -291,7 +291,7 @@ fun CocktailError(errorMessage: String) {
 }
 
 private val testCocktail = Cocktail(
-        id = "id",
+        id = 1,
         drinkNumber = 362,
         drinkName = "Margarita",
         alcohol = true,

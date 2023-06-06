@@ -5,9 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "cocktails")
 data class CocktailDBModel(
-    val id : String,
     @PrimaryKey(autoGenerate = true)
-    val drinkNumber : Int,
+    val id : Int,
     val drinkName : String,
     val alcohol : Boolean,
     val drinkCategory : String,
@@ -21,7 +20,6 @@ data class CocktailDBModel(
     fun List<CocktailDBModel>.asDomainModel() = map {
         Cocktail(
             id = it.id,
-            drinkNumber = it.drinkNumber,
             drinkName = it.drinkName,
             alcohol = it.alcohol,
             drinkCategory = it.drinkCategory,
@@ -37,7 +35,6 @@ data class CocktailDBModel(
     fun CocktailDBModel.asDomainModel() =
         Cocktail(
             id = id,
-            drinkNumber = drinkNumber,
             drinkName = drinkName,
             alcohol = alcohol,
             drinkCategory = drinkCategory,
@@ -48,3 +45,18 @@ data class CocktailDBModel(
             instructions = instructions,
             isFavorite = isFavorite
         )
+
+fun List<CocktailAPIModel>.asDBModel() = map {
+    CocktailDBModel(
+        id = 0,
+        drinkName = it.drinkName,
+        alcohol = it.alcohol,
+        drinkCategory = it.drinkCategory,
+        imageURL = it.imageURL,
+        drinkGlass = it.drinkGlass,
+        ingredients = it.ingredients,
+        measures = it.measures,
+        instructions = it.instructions,
+        isFavorite = false
+    )
+}

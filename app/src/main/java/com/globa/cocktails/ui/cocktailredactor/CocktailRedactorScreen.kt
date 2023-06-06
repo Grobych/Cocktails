@@ -489,7 +489,7 @@ fun SaveDialog(
 }
 
 val testCocktail = Cocktail(
-    id = "id",
+    id = 1,
     drinkNumber = 362,
     drinkName = "Margarita",
     alcohol = true,

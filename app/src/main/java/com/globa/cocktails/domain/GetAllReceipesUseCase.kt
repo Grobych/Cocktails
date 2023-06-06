@@ -19,7 +19,7 @@ class GetAllReceipesUseCase @Inject constructor(
 }
 
 fun Cocktail.toReceipePreview() = ReceipePreview(
-    id = this.id,
+    id = this.id.toString(), //TODO: to INT
     name = this.drinkName,
     imageURL = this.imageURL,
     isFavorite = this.isFavorite,

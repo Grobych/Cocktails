@@ -12,7 +12,7 @@ class CocktailNetworkDataSource @Inject constructor(
 
     suspend fun getCocktails() : List<CocktailAPIModel> =
         withContext(coroutineDispatcher){
-            cocktailNetworkService.getDrinks().filter { it.drinkNumber != 0 }
+            cocktailNetworkService.getDrinks()
         }
 
 }

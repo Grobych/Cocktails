@@ -16,6 +16,7 @@ interface CocktailRepository {
     suspend fun getCocktail(id: String): Flow<Cocktail>
     suspend fun updateCocktail(cocktail: Cocktail)
     suspend fun saveCocktail(cocktail: Cocktail)
+    suspend fun loadFromFile()
 }
 
 @Singleton
@@ -27,14 +28,7 @@ class CocktailRepositoryImpl @Inject constructor (
 
     override suspend fun getCocktails(): Flow<List<Cocktail>> {
         return cocktailLocalDataSource.getCocktails()
-            .map {
-                    it
-                        .asDomainModel()
-                        .ifEmpty {
-                            cocktailLocalDataSource.putCocktails(cocktailFileDataSource.getCocktails().asDBModel())
-                            cocktailFileDataSource.getCocktails().asDomainModel()
-                    }
-            }
+            .map { it.asDomainModel() }
     }
 
     override suspend fun getCocktail(id: String): Flow<Cocktail> {
@@ -47,5 +41,9 @@ class CocktailRepositoryImpl @Inject constructor (
 
     override suspend fun saveCocktail(cocktail: Cocktail) {
         cocktailLocalDataSource.putCocktail(cocktail.asDBModel())
+    }
+
+    override suspend fun loadFromFile() {
+        cocktailLocalDataSource.putCocktails(cocktailFileDataSource.getCocktails().asDBModel())
     }
 }
