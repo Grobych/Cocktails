@@ -2,7 +2,6 @@ package com.globa.cocktails.datalayer.models
 
 data class Cocktail(
     val id : Int = 0,
-    val drinkNumber : Int = 1,
     val drinkName : String = "",
     val alcohol : Boolean = true,
     val drinkCategory : String = "",

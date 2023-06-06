@@ -292,7 +292,6 @@ fun CocktailError(errorMessage: String) {
 
 private val testCocktail = Cocktail(
         id = 1,
-        drinkNumber = 362,
         drinkName = "Margarita",
         alcohol = true,
         drinkCategory = "Ordinary drinks",
