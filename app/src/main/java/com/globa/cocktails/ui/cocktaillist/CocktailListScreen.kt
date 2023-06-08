@@ -43,7 +43,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.domain.models.GetRandomResult
-import com.globa.cocktails.domain.models.ReceipePreview
+import com.globa.cocktails.domain.models.RecipePreview
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs
 import com.globa.cocktails.ui.theme.DPs.headerHeight
@@ -86,7 +86,7 @@ fun CocktailListScreen(
         viewModel.addFilterTag(it)
     }
 
-    val updateCocktail: (ReceipePreview) -> Unit = {
+    val updateCocktail: (RecipePreview) -> Unit = {
 //        viewModel.updateCocktail(it.copy(isFavorite = it.isFavorite.not()))
     }
 
@@ -174,7 +174,7 @@ fun Header(
 }
 
 @Composable
-fun CocktailList(list: List<ReceipePreview>, onItemClickAction: (Int) -> Unit, onTagClicked: (String) -> Unit, onFavoriteClicked: (ReceipePreview) -> Unit) {
+fun CocktailList(list: List<RecipePreview>, onItemClickAction: (Int) -> Unit, onTagClicked: (String) -> Unit, onFavoriteClicked: (RecipePreview) -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(bottom = DPs.line)
     ) {
@@ -195,10 +195,10 @@ fun CocktailList(list: List<ReceipePreview>, onItemClickAction: (Int) -> Unit, o
 
 @Composable
 fun CocktailListItem(
-    receipePreview: ReceipePreview,
+    receipePreview: RecipePreview,
     onItemClickAction: () -> Unit,
     onTagClicked: (String) -> Unit,
-    onFavoriteClicked: (ReceipePreview) -> Unit
+    onFavoriteClicked: (RecipePreview) -> Unit
 ) {
     Row (
         modifier = Modifier
@@ -345,7 +345,7 @@ fun EmptyList() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun CocktailListItemPreview(){
-    val receipePreview = ReceipePreview(
+    val receipePreview = RecipePreview(
         id = 0,
         name = "Margarita",
         imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",

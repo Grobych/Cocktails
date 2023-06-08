@@ -1,13 +1,13 @@
 package com.globa.cocktails.domain
 
-import com.globa.cocktails.domain.models.ReceipePreview
+import com.globa.cocktails.domain.models.RecipePreview
 import javax.inject.Inject
 
 class FilterCocktailsUseCase @Inject constructor(){
-    operator fun invoke(cocktails: List<ReceipePreview>, tags: List<String>): List<ReceipePreview> =
+    operator fun invoke(cocktails: List<RecipePreview>, tags: List<String>): List<RecipePreview> =
         cocktails.filter { it.contains(tags) }
 
-    fun ReceipePreview.contains(tags: List<String>): Boolean {
+    fun RecipePreview.contains(tags: List<String>): Boolean {
         val cocktailTagsLine = this.createTagLine()
         tags.forEach { tag ->
             if (!cocktailTagsLine.contains(tag, ignoreCase = true)) return false
@@ -16,7 +16,7 @@ class FilterCocktailsUseCase @Inject constructor(){
     }
 }
 
-fun ReceipePreview.createTagLine(): String {
+fun RecipePreview.createTagLine(): String {
     val res = StringBuilder()
         .append("$name ")
     tags.forEach {

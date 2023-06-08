@@ -2,7 +2,7 @@ package com.globa.cocktails.domain.models
 
 import com.globa.cocktails.datalayer.models.Cocktail
 
-data class ReceipePreview(
+data class RecipePreview(
     val id: Int,
     val name: String,
     val imageURL: String,
@@ -10,7 +10,7 @@ data class ReceipePreview(
     val tags: List<String>
 )
 
-fun Cocktail.toReceipePreview() = ReceipePreview(
+fun Cocktail.toReceipePreview() = RecipePreview(
     id = this.id,
     name = this.drinkName,
     imageURL = this.imageURL,

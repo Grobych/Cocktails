@@ -8,7 +8,7 @@ import com.globa.cocktails.domain.FilterCocktailsUseCase
 import com.globa.cocktails.domain.GetAllReceipesUseCase
 import com.globa.cocktails.domain.GetRandomRecipeUseCase
 import com.globa.cocktails.domain.UpdateCocktailUseCase
-import com.globa.cocktails.domain.models.ReceipePreview
+import com.globa.cocktails.domain.models.RecipePreview
 import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,12 +44,12 @@ class CocktailListViewModel @Inject constructor(
                     else CocktailListUiState.Error(trowable.toString())
                 }
             }
-            .combine(selectorUiState) { cocktails: List<ReceipePreview>, state: CocktailSelectorUiState ->
+            .combine(selectorUiState) { cocktails: List<RecipePreview>, state: CocktailSelectorUiState ->
                 if (state.isFavoriteSelected) favoriteCocktailsUseCase(cocktails)
                 else if (state.isMyCocktailSelected) emptyList() // TODO: myCocktailsUseCase
                     else cocktails
             }
-            .combine(filterUiState) { cocktails: List<ReceipePreview>, filter: CocktailFilterUiState ->
+            .combine(filterUiState) { cocktails: List<RecipePreview>, filter: CocktailFilterUiState ->
                 if (filter.tags.isEmpty() && filter.line.text.isEmpty()) cocktails
                 else filterCocktailsUseCase(cocktails,filter.expandTags())
             }
