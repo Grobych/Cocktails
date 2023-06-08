@@ -13,7 +13,7 @@ interface CocktailDao{
     @Query("select * from cocktails")
     fun getCocktails() : Flow<List<CocktailDBModel>>
     @Query("select * from cocktails where id = :id")
-    fun getCocktailById(id: String): Flow<CocktailDBModel>
+    fun getCocktailById(id: Int): Flow<CocktailDBModel>
     @Insert(onConflict = REPLACE)
     fun insert(cocktail: CocktailDBModel)
     @Insert(onConflict = REPLACE)

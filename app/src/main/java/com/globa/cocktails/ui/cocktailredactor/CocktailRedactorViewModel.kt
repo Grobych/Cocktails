@@ -33,11 +33,9 @@ class CocktailRedactorViewModel @Inject constructor(
     val showSaveDialog = _showSaveDialog.asStateFlow()
 
     private val mode = RedactorMode.valueOf(savedStateHandle["mode"] ?: "ADD")
-    private val cocktailId: String = when (mode) {
-        RedactorMode.ADD -> {""}
-        RedactorMode.EDIT -> {
-            savedStateHandle.get<String>("cocktailId") ?: ""
-        }
+    private val cocktailId: Int = when (mode) {
+        RedactorMode.ADD -> 0
+        RedactorMode.EDIT -> savedStateHandle.get<Int>("cocktailId") ?: 0
     }
 
     private suspend fun selectFlow(mode: RedactorMode): Flow<Cocktail> = when (mode) {

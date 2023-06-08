@@ -33,7 +33,7 @@ fun NavController() {
         }
         composable(
             route = "cocktailInfo?cocktailId={cocktailId}",
-            arguments = listOf(navArgument("cocktailId") { type = NavType.StringType })
+            arguments = listOf(navArgument("cocktailId") { type = NavType.IntType })
         ) {
             CocktailInfoScreen(
                 onBackButtonClick = navigateToBack,
@@ -43,7 +43,7 @@ fun NavController() {
         composable(
             route = "cocktailRedactor?cocktailId={cocktailId}&mode={mode}",
             arguments = listOf(
-                navArgument("cocktailId") { type = NavType.StringType},
+                navArgument("cocktailId") { type = NavType.IntType},
                 navArgument("mode") {type = NavType.StringType}
             )
         ) {

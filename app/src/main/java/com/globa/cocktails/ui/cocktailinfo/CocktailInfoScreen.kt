@@ -33,7 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
-import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.domain.models.RecipeDetails
+import com.globa.cocktails.domain.models.RecipeDetailsTagType
 import com.globa.cocktails.ui.cocktailredactor.RedactorMode
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs.headerHeight
@@ -55,8 +56,8 @@ fun CocktailInfoScreen(
     val uiState by viewModel.uiState.collectAsState()
     val onFavoriteButtonClick: () -> Unit = {
         if (uiState is CocktailUiState.Success) {
-            val cocktail = (uiState as CocktailUiState.Success).cocktail
-            viewModel.updateCocktail(cocktail.copy(isFavorite = cocktail.isFavorite.not()))
+//            val cocktail = (uiState as CocktailUiState.Success).cocktail
+//            viewModel.updateCocktail(cocktail.copy(isFavorite = cocktail.isFavorite.not()))
         }
     }
     val onEditButtonClick: () -> Unit = {
@@ -92,14 +93,14 @@ fun CocktailLoading() {
 
 @Composable
 fun CocktailInfo(
-    cocktail: Cocktail,
+    cocktail: RecipeDetails,
     onFavoriteButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
     onEditButtonClick: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         Header(
-            cocktailName = cocktail.drinkName,
+            cocktailName = cocktail.name,
             onFavoriteButtonClick = onFavoriteButtonClick,
             onBackButtonClick = onBackButtonClick,
             onEditButtonClick = onEditButtonClick,
@@ -121,7 +122,7 @@ fun CocktailInfo(
             )
             AsyncImage(
                 model = cocktail.imageURL,
-                contentDescription = cocktail.drinkName,
+                contentDescription = cocktail.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .height(287.dp)
@@ -140,8 +141,12 @@ fun CocktailInfo(
                 .padding(start = Paddings.large)
                 .background(color = MaterialTheme.colorScheme.surface)
         ) {
-            listOf(cocktail.drinkGlass, cocktail.drinkCategory).forEach {
-                TagButton(text = it, modifier = Modifier.padding(end = Paddings.medium)) {
+            cocktail.tags.keys.forEach {
+                TagButton(
+                    text = it,
+                    modifier = Modifier
+                        .padding(end = Paddings.medium)
+                ) {
                     //TODO: onClick
                 }
             }
@@ -290,13 +295,14 @@ fun CocktailError(errorMessage: String) {
     }
 }
 
-private val testCocktail = Cocktail(
+private val testCocktail = RecipeDetails(
         id = 1,
-        drinkName = "Margarita",
-        alcohol = true,
-        drinkCategory = "Ordinary drinks",
+        name = "Margarita",
+        tags = mapOf(
+            "Ordinary drinks" to RecipeDetailsTagType.CATEGORY,
+            "Cocktail glass" to RecipeDetailsTagType.GLASS
+        ),
         imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
-        drinkGlass = "Cocktail glass",
         ingredients = listOf("Tequila","Triple sec","Lime juice","Salt"),
         measures = listOf("1 1/2 oz","1/2 oz","1 oz"),
         instructions = "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten only the outer rim and sprinkle the salt on it. The salt should present to the lips of the imbiber and never mix into the cocktail. Shake the other ingredients with ice, then carefully pour into the glass."
@@ -306,7 +312,7 @@ private val testCocktail = Cocktail(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview
 fun HeaderPreview() {
-    val name = testCocktail.drinkName
+    val name = testCocktail.name
     AppTheme {
         Surface {
             Header(cocktailName = name, modifier = Modifier.width(420.dp), onFavoriteButtonClick = {}, onBackButtonClick = {}, onEditButtonClick = {}, isFavorited = false)

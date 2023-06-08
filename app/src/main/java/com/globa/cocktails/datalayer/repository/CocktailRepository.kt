@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 interface CocktailRepository {
     suspend fun getCocktails(): Flow<List<Cocktail>>
-    suspend fun getCocktail(id: String): Flow<Cocktail>
+    suspend fun getCocktail(id: Int): Flow<Cocktail>
     suspend fun updateCocktail(cocktail: Cocktail)
     suspend fun saveCocktail(cocktail: Cocktail)
     suspend fun loadFromFile()
@@ -31,7 +31,7 @@ class CocktailRepositoryImpl @Inject constructor (
             .map { it.asDomainModel() }
     }
 
-    override suspend fun getCocktail(id: String): Flow<Cocktail> {
+    override suspend fun getCocktail(id: Int): Flow<Cocktail> {
         return cocktailLocalDataSource.getCocktailById(id).map { it.asDomainModel() }
     }
 
