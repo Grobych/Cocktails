@@ -1,8 +1,6 @@
-package com.globa.cocktails.domain
+package com.globa.cocktails.domain.getreceipes
 
 import com.globa.cocktails.datalayer.repository.CocktailRepository
-import com.globa.cocktails.domain.models.RecipePreview
-import com.globa.cocktails.domain.models.toReceipePreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

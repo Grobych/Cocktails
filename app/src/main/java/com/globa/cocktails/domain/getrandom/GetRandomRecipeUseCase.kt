@@ -1,6 +1,5 @@
-package com.globa.cocktails.domain
+package com.globa.cocktails.domain.getrandom
 
-import com.globa.cocktails.domain.models.GetRandomResult
 import javax.inject.Inject
 import kotlin.random.Random
 

@@ -1,4 +1,6 @@
-package com.globa.cocktails.datalayer.models
+package com.globa.cocktails.domain
+
+import com.globa.cocktails.datalayer.models.CocktailDBModel
 
 data class Cocktail(
     val id : Int = 0,

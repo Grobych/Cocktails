@@ -47,8 +47,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
-import com.globa.cocktails.domain.RemoveIngredientUseCase
-import com.globa.cocktails.domain.models.RecipeEditable
+import com.globa.cocktails.domain.editrecipe.RecipeEditable
+import com.globa.cocktails.domain.editrecipe.RemoveIngredientUseCase
 import com.globa.cocktails.ui.cocktaillist.ErrorComposable
 import com.globa.cocktails.ui.cocktaillist.LoadingComposable
 import com.globa.cocktails.ui.theme.AppTheme

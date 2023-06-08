@@ -3,8 +3,8 @@ package com.globa.cocktails.ui.cocktailinfo
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globa.cocktails.domain.GetRecipeDetailsUseCase
-import com.globa.cocktails.domain.SetIsFavoriteUseCase
+import com.globa.cocktails.domain.getrecipesdetails.GetRecipeDetailsUseCase
+import com.globa.cocktails.domain.setfavorite.SetIsFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

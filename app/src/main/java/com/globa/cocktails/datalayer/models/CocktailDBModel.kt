@@ -2,6 +2,7 @@ package com.globa.cocktails.datalayer.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.globa.cocktails.domain.Cocktail
 
 @Entity(tableName = "cocktails")
 data class CocktailDBModel(

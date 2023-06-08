@@ -1,6 +1,6 @@
-package com.globa.cocktails.domain.models
+package com.globa.cocktails.domain.getreceipes
 
-import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.domain.Cocktail
 
 data class RecipePreview(
     val id: Int,

@@ -3,12 +3,12 @@ package com.globa.cocktails.ui.cocktaillist
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globa.cocktails.domain.FavoriteCocktailsUseCase
-import com.globa.cocktails.domain.FilterCocktailsUseCase
-import com.globa.cocktails.domain.GetAllReceipesUseCase
-import com.globa.cocktails.domain.GetRandomRecipeUseCase
-import com.globa.cocktails.domain.SetIsFavoriteUseCase
-import com.globa.cocktails.domain.models.RecipePreview
+import com.globa.cocktails.domain.getreceipes.GetFavoriteCocktailsUseCase
+import com.globa.cocktails.domain.setfavorite.SetIsFavoriteUseCase
+import com.globa.cocktails.domain.getrandom.GetRandomRecipeUseCase
+import com.globa.cocktails.domain.getreceipes.FilterCocktailsUseCase
+import com.globa.cocktails.domain.getreceipes.GetAllReceipesUseCase
+import com.globa.cocktails.domain.getreceipes.RecipePreview
 import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +23,7 @@ import javax.inject.Inject
 class CocktailListViewModel @Inject constructor(
     private val getAllReceipesUseCase: GetAllReceipesUseCase,
     private val setIsFavoriteUseCase: SetIsFavoriteUseCase,
-    private val favoriteCocktailsUseCase: FavoriteCocktailsUseCase,
+    private val favoriteCocktailsUseCase: GetFavoriteCocktailsUseCase,
     private val filterCocktailsUseCase: FilterCocktailsUseCase,
     private val randomCocktailUseCase: GetRandomRecipeUseCase
 ) : ViewModel() {

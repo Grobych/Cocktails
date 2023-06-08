@@ -33,8 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
-import com.globa.cocktails.domain.models.RecipeDetails
-import com.globa.cocktails.domain.models.RecipeDetailsTagType
+import com.globa.cocktails.domain.getrecipesdetails.RecipeDetails
+import com.globa.cocktails.domain.getrecipesdetails.RecipeDetailsTagType
 import com.globa.cocktails.ui.cocktailredactor.RedactorMode
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs.headerHeight

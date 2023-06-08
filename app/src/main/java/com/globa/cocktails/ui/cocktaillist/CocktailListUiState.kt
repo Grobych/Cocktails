@@ -1,6 +1,7 @@
 package com.globa.cocktails.ui.cocktaillist
 
-import com.globa.cocktails.domain.models.RecipePreview
+import com.globa.cocktails.domain.getreceipes.RecipePreview
+
 
 sealed class CocktailListUiState() {
     class Loading(): CocktailListUiState()

@@ -1,7 +1,7 @@
-package com.globa.cocktails.domain
+package com.globa.cocktails.domain.editrecipe
 
 import com.globa.cocktails.datalayer.repository.CocktailRepository
-import com.globa.cocktails.domain.models.RecipeEditable
+import com.globa.cocktails.domain.GetCocktailByIdUseCase
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 

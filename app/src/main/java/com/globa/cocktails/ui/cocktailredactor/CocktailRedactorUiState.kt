@@ -1,6 +1,7 @@
 package com.globa.cocktails.ui.cocktailredactor
 
-import com.globa.cocktails.domain.models.RecipeEditable
+import com.globa.cocktails.domain.editrecipe.RecipeEditable
+
 
 sealed class CocktailRedactorUiState{
     object Loading: CocktailRedactorUiState()

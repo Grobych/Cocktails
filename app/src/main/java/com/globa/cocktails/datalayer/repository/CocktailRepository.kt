@@ -1,10 +1,11 @@
 package com.globa.cocktails.datalayer.repository
 
 import com.globa.cocktails.datalayer.database.CocktailLocalDataSource
-import com.globa.cocktails.datalayer.models.Cocktail
 import com.globa.cocktails.datalayer.models.asDBModel
 import com.globa.cocktails.datalayer.models.asDomainModel
 import com.globa.cocktails.datalayer.storage.CocktailFileDataSource
+import com.globa.cocktails.domain.Cocktail
+import com.globa.cocktails.domain.asDBModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

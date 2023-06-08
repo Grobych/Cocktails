@@ -1,4 +1,6 @@
-package com.globa.cocktails.domain.models
+package com.globa.cocktails.domain.editrecipe
+
+import com.globa.cocktails.domain.getrecipesdetails.RecipeDetails
 
 data class RecipeEditable(
     val id: Int = 0,

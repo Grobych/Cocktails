@@ -1,7 +1,6 @@
-package com.globa.cocktails.domain
+package com.globa.cocktails.domain.getrecipesdetails
 
-import com.globa.cocktails.domain.models.RecipeDetails
-import com.globa.cocktails.domain.models.RecipeDetailsTagType
+import com.globa.cocktails.domain.GetCocktailByIdUseCase
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.globa.cocktails.domain.models
+package com.globa.cocktails.domain.getrandom
 
 sealed class GetRandomResult() {
     data class Success(val id: Int): GetRandomResult()

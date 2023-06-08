@@ -3,10 +3,10 @@ package com.globa.cocktails.ui.cocktailredactor
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globa.cocktails.domain.GetRecipeDetailsUseCase
-import com.globa.cocktails.domain.UpdateCocktailUseCase
-import com.globa.cocktails.domain.models.RecipeEditable
-import com.globa.cocktails.domain.models.toReceipeEditable
+import com.globa.cocktails.domain.editrecipe.RecipeEditable
+import com.globa.cocktails.domain.editrecipe.UpdateCocktailUseCase
+import com.globa.cocktails.domain.editrecipe.toReceipeEditable
+import com.globa.cocktails.domain.getrecipesdetails.GetRecipeDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

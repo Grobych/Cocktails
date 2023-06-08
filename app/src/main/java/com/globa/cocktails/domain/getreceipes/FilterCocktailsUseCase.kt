@@ -1,6 +1,6 @@
-package com.globa.cocktails.domain
+package com.globa.cocktails.domain.getreceipes
 
-import com.globa.cocktails.domain.models.RecipePreview
+import com.globa.cocktails.domain.getreceipes.RecipePreview
 import javax.inject.Inject
 
 class FilterCocktailsUseCase @Inject constructor(){
