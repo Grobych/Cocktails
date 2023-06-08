@@ -1,9 +1,9 @@
 package com.globa.cocktails.domain
 
-import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.domain.models.RecipeEditable
 
 class RemoveIngredientUseCase {
-    operator fun invoke(cocktail: Cocktail, i: Int): Cocktail {
+    operator fun invoke(cocktail: RecipeEditable, i: Int): RecipeEditable {
         val ingredients = cocktail.ingredients
         val measures = cocktail.measures
         return if (i in ingredients.indices) {

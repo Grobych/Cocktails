@@ -1,10 +1,10 @@
 package com.globa.cocktails.ui.cocktailredactor
 
-import com.globa.cocktails.datalayer.models.Cocktail
+import com.globa.cocktails.domain.models.RecipeEditable
 
 sealed class CocktailRedactorUiState{
     object Loading: CocktailRedactorUiState()
-    class Editing(val cocktail: Cocktail, val mode: RedactorMode): CocktailRedactorUiState()
+    class Editing(val cocktail: RecipeEditable, val mode: RedactorMode): CocktailRedactorUiState()
     object Saving: CocktailRedactorUiState()
     class Error(val message: String): CocktailRedactorUiState()
 }
