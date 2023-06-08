@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.domain.GetRecipeDetailsUseCase
-import com.globa.cocktails.domain.UpdateCocktailUseCase
+import com.globa.cocktails.domain.SetIsFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class CocktailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getRecipeDetailsUseCase: GetRecipeDetailsUseCase,
-    private val updateCocktailUseCase: UpdateCocktailUseCase
+    private val setIsFavoriteUseCase: SetIsFavoriteUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<CocktailUiState>(CocktailUiState.Loading())
@@ -50,7 +50,7 @@ class CocktailViewModel @Inject constructor(
         }
     }
 
-//    fun updateCocktail(cocktail: Cocktail) = viewModelScope.launch {
-//        updateCocktailUseCase(cocktail)
-//    }
+    fun changeIsFavorite(value: Boolean) = viewModelScope.launch {
+        setIsFavoriteUseCase(cocktailId!!,value)
+    }
 }

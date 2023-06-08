@@ -7,7 +7,7 @@ import com.globa.cocktails.domain.FavoriteCocktailsUseCase
 import com.globa.cocktails.domain.FilterCocktailsUseCase
 import com.globa.cocktails.domain.GetAllReceipesUseCase
 import com.globa.cocktails.domain.GetRandomRecipeUseCase
-import com.globa.cocktails.domain.UpdateCocktailUseCase
+import com.globa.cocktails.domain.SetIsFavoriteUseCase
 import com.globa.cocktails.domain.models.RecipePreview
 import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CocktailListViewModel @Inject constructor(
     private val getAllReceipesUseCase: GetAllReceipesUseCase,
-    private val updateCocktailUseCase: UpdateCocktailUseCase,
+    private val setIsFavoriteUseCase: SetIsFavoriteUseCase,
     private val favoriteCocktailsUseCase: FavoriteCocktailsUseCase,
     private val filterCocktailsUseCase: FilterCocktailsUseCase,
     private val randomCocktailUseCase: GetRandomRecipeUseCase
@@ -82,9 +82,9 @@ class CocktailListViewModel @Inject constructor(
     fun getRandomReceipeId() =
         randomCocktailUseCase((uiState.value as CocktailListUiState.Done).list.map { it.id })
 
-//    fun updateCocktail(cocktail: Cocktail) = viewModelScope.launch {
-//        updateCocktailUseCase(cocktail)
-//    }
+    fun changeIsFavorite(id: Int, value: Boolean) = viewModelScope.launch {
+        setIsFavoriteUseCase(id, value)
+    }
 
     fun selectorChanged(clicked: FooterSelector) {
         when (clicked) {

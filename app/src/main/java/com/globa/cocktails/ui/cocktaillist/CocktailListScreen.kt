@@ -86,8 +86,8 @@ fun CocktailListScreen(
         viewModel.addFilterTag(it)
     }
 
-    val updateCocktail: (RecipePreview) -> Unit = {
-//        viewModel.updateCocktail(it.copy(isFavorite = it.isFavorite.not()))
+    val changeIsFavorite: (RecipePreview) -> Unit = {
+        viewModel.changeIsFavorite(it.id,it.isFavorite.not())
     }
 
     val onRandomButtonAction: () -> Unit = {
@@ -129,7 +129,7 @@ fun CocktailListScreen(
                             )
                     ) {
                         if (state.list.isNotEmpty())
-                            CocktailList(list = state.list, onItemClickAction = onItemClickAction, onTagClicked = addTagAction, onFavoriteClicked = updateCocktail)
+                            CocktailList(list = state.list, onItemClickAction = onItemClickAction, onTagClicked = addTagAction, onFavoriteClicked = changeIsFavorite)
                         else EmptyList()
                     }
                 }
