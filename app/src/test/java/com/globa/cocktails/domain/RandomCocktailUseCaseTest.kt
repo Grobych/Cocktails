@@ -1,7 +1,7 @@
 package com.globa.cocktails.domain
 
-import com.globa.cocktails.datalayer.models.Cocktail
-import com.globa.cocktails.domain.models.GetRandomResult
+import com.globa.cocktails.domain.getrandom.GetRandomRecipeUseCase
+import com.globa.cocktails.domain.getrandom.GetRandomResult
 import org.junit.Test
 
 class RandomCocktailUseCaseTest {
@@ -10,7 +10,7 @@ class RandomCocktailUseCaseTest {
 
     @Test
     fun randomCocktailUseCaseTest() {
-        val ids = listOf("1","2","3","4","5")
+        val ids = listOf(1,2,3,4,5)
         val cocktails = ids.map { Cocktail(id = it) }
         val res = randomCocktailUseCase(ids)
 
@@ -23,7 +23,7 @@ class RandomCocktailUseCaseTest {
 
     @Test
     fun getRandomIfListIsEmpty() {
-        val ids = emptyList<String>()
+        val ids = emptyList<Int>()
         val res = randomCocktailUseCase(ids)
         assert(res is GetRandomResult.Error)
     }
