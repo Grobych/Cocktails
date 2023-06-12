@@ -37,6 +37,7 @@ fun CustomSearchField(
     onTextChanged: (String) -> Unit,
     onTagClicked: (String) -> Unit
 ) {
+    val scrollState = rememberScrollState()
     Box(
         modifier = modifier
             .height(36.dp)
@@ -47,9 +48,9 @@ fun CustomSearchField(
             ),
         contentAlignment = Alignment.CenterStart
     ) {
-        FlowRow(
+        Row(
             modifier = Modifier
-                .horizontalScroll(state = ScrollState(0)),
+                .horizontalScroll(state = scrollState),
             verticalAlignment = Alignment.CenterVertically
         ) {
             tags.forEach {
