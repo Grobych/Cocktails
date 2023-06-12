@@ -1,12 +1,10 @@
 package com.globa.cocktails.ui.cocktaillist
 
-import androidx.compose.ui.text.input.TextFieldValue
-
 data class CocktailFilterUiState(
-    val line: TextFieldValue = TextFieldValue(""),
+    val line: String = "",
     val tags: List<String> = emptyList()
 )
 
 fun CocktailFilterUiState.expandTags(): List<String> {
-    return tags.plus(line.text)
+    return tags.plus(line)
 }

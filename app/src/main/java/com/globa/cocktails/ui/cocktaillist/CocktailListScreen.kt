@@ -36,7 +36,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -67,12 +66,11 @@ fun CocktailListScreen(
     val selectorUiState by viewModel.selectorUiState.collectAsState()
     val context = LocalContext.current
 
-    val onFilterChangeAction: (TextFieldValue) -> Unit = { value ->
-        val text = value.text
-        if (text.takeLast(1) == " ") {
-            val tag = text.take(text.length - 1)
+    val onFilterChangeAction: (String) -> Unit = { value ->
+        if (value.takeLast(1) == " ") {
+            val tag = value.take(value.length - 1)
             viewModel.addFilterTag(tag)
-            viewModel.updateFilterLine(TextFieldValue(""))
+            viewModel.updateFilterLine("")
         } else {
             viewModel.updateFilterLine(value)
         }
@@ -141,7 +139,7 @@ fun CocktailListScreen(
 @Composable
 fun Header(
     filterUiState: CocktailFilterUiState,
-    onFilterChangeAction: (TextFieldValue) -> Unit,
+    onFilterChangeAction: (String) -> Unit,
     onTagClicked: (String) -> Unit
 ) {
     Row(
@@ -367,7 +365,7 @@ fun CocktailListItemPreview(){
 @Composable
 fun HeaderPreview() {
     val filterUiState = CocktailFilterUiState(
-        TextFieldValue(""),
+        "",
         emptyList()
     )
     AppTheme {

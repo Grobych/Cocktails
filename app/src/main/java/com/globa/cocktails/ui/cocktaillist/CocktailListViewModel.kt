@@ -1,14 +1,13 @@
 package com.globa.cocktails.ui.cocktaillist
 
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globa.cocktails.domain.getreceipes.GetFavoriteCocktailsUseCase
-import com.globa.cocktails.domain.setfavorite.SetIsFavoriteUseCase
 import com.globa.cocktails.domain.getrandom.GetRandomRecipeUseCase
 import com.globa.cocktails.domain.getreceipes.FilterCocktailsUseCase
 import com.globa.cocktails.domain.getreceipes.GetAllReceipesUseCase
+import com.globa.cocktails.domain.getreceipes.GetFavoriteCocktailsUseCase
 import com.globa.cocktails.domain.getreceipes.RecipePreview
+import com.globa.cocktails.domain.setfavorite.SetIsFavoriteUseCase
 import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,7 +49,7 @@ class CocktailListViewModel @Inject constructor(
                     else cocktails
             }
             .combine(filterUiState) { cocktails: List<RecipePreview>, filter: CocktailFilterUiState ->
-                if (filter.tags.isEmpty() && filter.line.text.isEmpty()) cocktails
+                if (filter.tags.isEmpty() && filter.line.isEmpty()) cocktails
                 else filterCocktailsUseCase(cocktails,filter.expandTags())
             }
             .collect { list ->
@@ -64,7 +63,7 @@ class CocktailListViewModel @Inject constructor(
         initCocktailList()
     }
 
-    fun updateFilterLine(line: TextFieldValue) {
+    fun updateFilterLine(line: String) {
         _filterUiState.update { it.copy(line = line) }
     }
     fun addFilterTag(tag: String) {
