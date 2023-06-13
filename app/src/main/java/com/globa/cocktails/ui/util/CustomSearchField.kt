@@ -69,10 +69,10 @@ fun CustomSearchField(
                 singleLine = true,
                 modifier = Modifier.requiredWidth(300.dp)
             ) { innerTextField ->
-                Row(
+                Box(
                     modifier = Modifier
                         .padding(start = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    contentAlignment = Alignment.CenterStart
                 ) {
                     if (text.isEmpty() && tags.isEmpty()) {
                         Text(
@@ -80,7 +80,8 @@ fun CustomSearchField(
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             style = MaterialTheme.typography.labelLarge
                         )
-                    } else innerTextField()
+                    }
+                    innerTextField()
                 }
             }
         }
