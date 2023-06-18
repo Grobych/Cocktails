@@ -33,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -216,7 +217,8 @@ fun CocktailListItem(
             modifier = Modifier
                 .size(106.dp)
                 .align(Alignment.CenterVertically)
-                .clip(MaterialTheme.shapes.large)
+                .clip(MaterialTheme.shapes.large),
+            contentScale = ContentScale.Crop
         )
         Box(modifier = Modifier.padding(start = Paddings.small)){
             Column(
