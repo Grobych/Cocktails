@@ -3,12 +3,18 @@ package com.globa.cocktails.ui.cocktailinfo
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.globa.cocktails.domain.favorites.Favorited
+import com.globa.cocktails.domain.favorites.GetFavoritesUseCase
+import com.globa.cocktails.domain.favorites.IsFavoriteCocktailUseCase
+import com.globa.cocktails.domain.favorites.SetIsFavoriteUseCase
 import com.globa.cocktails.domain.getrecipesdetails.GetRecipeDetailsUseCase
-import com.globa.cocktails.domain.setfavorite.SetIsFavoriteUseCase
+import com.globa.cocktails.domain.getrecipesdetails.RecipeDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.flow.update
@@ -19,6 +25,8 @@ import javax.inject.Inject
 class CocktailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getRecipeDetailsUseCase: GetRecipeDetailsUseCase,
+    private val isFavoriteUseCase: IsFavoriteCocktailUseCase,
+    private val getFavoritesUseCase: GetFavoritesUseCase,
     private val setIsFavoriteUseCase: SetIsFavoriteUseCase
 ) : ViewModel() {
 
@@ -33,6 +41,9 @@ class CocktailViewModel @Inject constructor(
     private fun fetchCocktail() = viewModelScope.launch {
         if (cocktailId != null) {
             getRecipeDetailsUseCase(id = cocktailId)
+                .combine(getFavoritesUseCase()) { recipeDetails: RecipeDetails, _: List<Favorited> ->
+                    recipeDetails.copy(isFavorite = isFavoriteUseCase(recipeDetails.name).first()) //TODO: rewrite
+                }
                 .onEach {cocktail ->
                     _uiState.update {
                         CocktailUiState.Success(cocktail)
@@ -50,7 +61,7 @@ class CocktailViewModel @Inject constructor(
         }
     }
 
-    fun changeIsFavorite(value: Boolean) = viewModelScope.launch {
-        setIsFavoriteUseCase(cocktailId!!,value)
+    fun changeIsFavorite(name: String, value: Boolean) = viewModelScope.launch {
+        setIsFavoriteUseCase(name,value)
     }
 }

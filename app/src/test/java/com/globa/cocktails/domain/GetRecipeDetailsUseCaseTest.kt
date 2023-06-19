@@ -23,14 +23,12 @@ class GetRecipeDetailsUseCaseTest {
         val testCocktail = Cocktail(
             id = id,
             drinkName = "Test",
-            isFavorite = true,
             instructions = "Some instructions"
         )
         coEvery { repository.getCocktail(id) } returns flowOf(testCocktail)
         val result = getRecipeDetailsUseCase(id).first()
 
         assert(result.id == testCocktail.id)
-        assert(result.isFavorite == testCocktail.isFavorite)
         assert(result.instructions == testCocktail.instructions)
         assert(result.name == testCocktail.drinkName)
     }

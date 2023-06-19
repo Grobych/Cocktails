@@ -11,8 +11,7 @@ data class Cocktail(
     val drinkGlass : String = "",
     val ingredients : List<String> = listOf(),
     val measures : List<String> = listOf(),
-    val instructions : String = "",
-    val isFavorite : Boolean = false)
+    val instructions : String = "")
 
 fun Cocktail.asDBModel(): CocktailDBModel = CocktailDBModel(
     id = id,
@@ -23,6 +22,5 @@ fun Cocktail.asDBModel(): CocktailDBModel = CocktailDBModel(
     drinkGlass = drinkGlass,
     ingredients = ingredients,
     measures = measures,
-    instructions = instructions,
-    isFavorite = isFavorite
+    instructions = instructions
 )

@@ -86,7 +86,7 @@ fun CocktailListScreen(
     }
 
     val changeIsFavorite: (RecipePreview) -> Unit = {
-        viewModel.changeIsFavorite(it.id,it.isFavorite.not())
+        viewModel.changeIsFavorite(it.name,it.isFavorite.not())
     }
 
     val onRandomButtonAction: () -> Unit = {

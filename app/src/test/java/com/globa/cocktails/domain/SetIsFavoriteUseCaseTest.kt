@@ -1,33 +1,30 @@
 package com.globa.cocktails.domain
 
-import com.globa.cocktails.datalayer.repository.CocktailRepository
-import com.globa.cocktails.domain.setfavorite.SetIsFavoriteUseCase
+import com.globa.cocktails.datalayer.repository.FavoritedCocktailRepository
+import com.globa.cocktails.domain.favorites.Favorited
+import com.globa.cocktails.domain.favorites.SetIsFavoriteUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 class SetIsFavoriteUseCaseTest {
-    private val repository = mockk<CocktailRepository>()
-    private val getCocktailByIdUseCase = GetCocktailByIdUseCase(repository)
-
-    private val setIsFavoriteUseCase = SetIsFavoriteUseCase(repository, getCocktailByIdUseCase)
+    private val repository = mockk<FavoritedCocktailRepository>()
+    private val setIsFavoriteUseCase = SetIsFavoriteUseCase(repository)
 
     @Test
     @OptIn(ExperimentalCoroutinesApi::class)
     fun setIsFavoriteTest() = runTest {
-    val id = 1
+        val id = 1
+        val name = "Test"
         val testCocktail = Cocktail(
             id = id,
-            drinkName = "Test",
-            isFavorite = false
+            drinkName = name
         )
-        coEvery { repository.getCocktail(id) } returns flowOf(testCocktail)
-        coEvery { repository.updateCocktail(any()) } returns Unit
-        setIsFavoriteUseCase(id, value = true)
-        coVerify { repository.updateCocktail(testCocktail.copy(isFavorite = true)) }
+        coEvery { repository.add(any()) } returns Unit
+        setIsFavoriteUseCase(name, value = true)
+        coVerify { repository.add(Favorited(testCocktail.drinkName)) }
     }
 }

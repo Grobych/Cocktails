@@ -19,8 +19,7 @@ class GetRecipeDetailsUseCase @Inject constructor(
                     it.drinkGlass to RecipeDetailsTagType.GLASS
                 ),
                 instructions = it.instructions,
-                imageURL = it.imageURL,
-                isFavorite = it.isFavorite
+                imageURL = it.imageURL
             )
         }
 }

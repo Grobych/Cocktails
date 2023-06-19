@@ -2,18 +2,22 @@ package com.globa.cocktails.ui.cocktaillist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.globa.cocktails.domain.favorites.Favorited
+import com.globa.cocktails.domain.favorites.GetFavoritesUseCase
+import com.globa.cocktails.domain.favorites.IsFavoriteCocktailUseCase
+import com.globa.cocktails.domain.favorites.SetIsFavoriteUseCase
 import com.globa.cocktails.domain.getrandom.GetRandomRecipeUseCase
 import com.globa.cocktails.domain.getreceipes.FilterCocktailsUseCase
 import com.globa.cocktails.domain.getreceipes.GetAllReceipesUseCase
 import com.globa.cocktails.domain.getreceipes.GetFavoriteCocktailsUseCase
 import com.globa.cocktails.domain.getreceipes.RecipePreview
-import com.globa.cocktails.domain.setfavorite.SetIsFavoriteUseCase
 import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +28,9 @@ class CocktailListViewModel @Inject constructor(
     private val setIsFavoriteUseCase: SetIsFavoriteUseCase,
     private val favoriteCocktailsUseCase: GetFavoriteCocktailsUseCase,
     private val filterCocktailsUseCase: FilterCocktailsUseCase,
-    private val randomCocktailUseCase: GetRandomRecipeUseCase
+    private val randomCocktailUseCase: GetRandomRecipeUseCase,
+    private val isFavoriteUseCase: IsFavoriteCocktailUseCase,
+    private val getFavoritesUseCase: GetFavoritesUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<CocktailListUiState>(CocktailListUiState.Loading())
     val uiState = _uiState.asStateFlow()
@@ -42,6 +48,9 @@ class CocktailListViewModel @Inject constructor(
                     if (trowable.message != null) CocktailListUiState.Error(trowable.message!!)
                     else CocktailListUiState.Error(trowable.toString())
                 }
+            }
+            .combine(getFavoritesUseCase()) { cocktails: List<RecipePreview>, _: List<Favorited> ->
+                cocktails.map { it.copy(isFavorite = isFavoriteUseCase(it.name).first())}
             }
             .combine(selectorUiState) { cocktails: List<RecipePreview>, state: CocktailSelectorUiState ->
                 if (state.isFavoriteSelected) favoriteCocktailsUseCase(cocktails)
@@ -81,8 +90,8 @@ class CocktailListViewModel @Inject constructor(
     fun getRandomReceipeId() =
         randomCocktailUseCase((uiState.value as CocktailListUiState.Done).list.map { it.id })
 
-    fun changeIsFavorite(id: Int, value: Boolean) = viewModelScope.launch {
-        setIsFavoriteUseCase(id, value)
+    fun changeIsFavorite(name: String, value: Boolean) = viewModelScope.launch {
+        setIsFavoriteUseCase(name, value)
     }
 
     fun selectorChanged(clicked: FooterSelector) {

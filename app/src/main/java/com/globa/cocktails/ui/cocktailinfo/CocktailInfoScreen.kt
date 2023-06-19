@@ -57,7 +57,7 @@ fun CocktailInfoScreen(
     val onFavoriteButtonClick: () -> Unit = {
         if (uiState is CocktailUiState.Success) {
             val cocktail = (uiState as CocktailUiState.Success).cocktail
-            viewModel.changeIsFavorite(cocktail.isFavorite.not())
+            viewModel.changeIsFavorite(cocktail.name, cocktail.isFavorite.not())
         }
     }
     val onEditButtonClick: () -> Unit = {
