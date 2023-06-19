@@ -2,6 +2,8 @@ package com.globa.cocktails.di.modules
 
 import com.globa.cocktails.datalayer.repository.CocktailRepository
 import com.globa.cocktails.datalayer.repository.CocktailRepositoryImpl
+import com.globa.cocktails.datalayer.repository.EditLogRepository
+import com.globa.cocktails.datalayer.repository.EditLogRepositoryImpl
 import com.globa.cocktails.datalayer.repository.FavoritedCocktailRepository
 import com.globa.cocktails.datalayer.repository.FavoritedCocktailRepositoryImpl
 import dagger.Binds
@@ -17,4 +19,7 @@ interface BindsModule {
 
     @Binds
     fun bindFavoritesRepository(favoritedCocktailRepositoryImpl: FavoritedCocktailRepositoryImpl): FavoritedCocktailRepository
+
+    @Binds
+    fun bindEditLogRepository(editLogRepositoryImpl: EditLogRepositoryImpl): EditLogRepository
 }
