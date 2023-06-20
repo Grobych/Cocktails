@@ -1,7 +1,7 @@
 package com.globa.cocktails
 
 import android.app.Application
-import com.globa.cocktails.domain.repo.CocktailRepository
+import com.globa.cocktails.data.api.CocktailRepository
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -1,6 +1,6 @@
 package com.globa.cocktails.domain
 
-import com.globa.cocktails.domain.repo.CocktailRepository
+import com.globa.cocktails.data.api.Cocktail
 import com.globa.cocktails.domain.getreceipes.GetAllReceipesUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -11,7 +11,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 class GetAllRecipesUseCaseTest {
-    private val repository = mockk<CocktailRepository>()
+    private val repository = mockk<com.globa.cocktails.data.api.CocktailRepository>()
     private val getAllReceipesUseCase = GetAllReceipesUseCase(repository)
 
     @OptIn(ExperimentalCoroutinesApi::class)

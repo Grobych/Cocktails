@@ -19,4 +19,4 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keepclassmembers class com.globa.cocktails.datalayer.network.CocktailAPIModel { *; }
+-keepclassmembers class com.globa.cocktails.data.internal.network.CocktailAPIModel { *; }

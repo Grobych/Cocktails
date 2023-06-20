@@ -2,7 +2,7 @@ package com.globa.cocktails.ui.cocktaillist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globa.cocktails.domain.favorites.Favorited
+import com.globa.cocktails.data.api.Favorited
 import com.globa.cocktails.domain.favorites.GetFavoritesUseCase
 import com.globa.cocktails.domain.favorites.IsFavoriteCocktailUseCase
 import com.globa.cocktails.domain.favorites.SetIsFavoriteUseCase
