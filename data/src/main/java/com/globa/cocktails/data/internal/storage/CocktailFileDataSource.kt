@@ -1,28 +1,18 @@
 package com.globa.cocktails.data.internal.storage
 
-import android.content.Context
-import com.globa.cocktails.data.internal.network.CocktailAPIModel
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.globa.cocktails.common.IoDispatcher
+import com.globa.cocktails.filestorage.api.CocktailAPIModel
+import com.globa.cocktails.filestorage.api.FileStorage
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import java.io.BufferedReader
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CocktailFileDataSource @Inject constructor(
-    @ApplicationContext private val context: Context
+    private val fileStorage: FileStorage,
+    @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) {
-    fun getCocktails(): Flow<List<CocktailAPIModel>> {
-        val json = readAsset(context, "recipes.json")
-        val typeToken = object : TypeToken<List<CocktailAPIModel>>() {}.type
-        return flowOf(Gson().fromJson(json, typeToken))
+    suspend fun getCocktails(): Flow<List<CocktailAPIModel>> = withContext(coroutineDispatcher) {
+        fileStorage.getCocktails()
     }
-
-    private fun readAsset(context: Context, fileName: String): String =
-        context
-            .assets
-            .open(fileName)
-            .bufferedReader()
-            .use(BufferedReader::readText)
 }

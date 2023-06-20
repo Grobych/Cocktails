@@ -1,6 +1,6 @@
 package com.globa.cocktails.data.api
 
-import com.globa.cocktails.data.internal.database.favorite.FavoritedDBModel
+import com.globa.cocktails.database.internal.favorite.FavoritedDBModel
 
 data class Favorited(
     val name: String

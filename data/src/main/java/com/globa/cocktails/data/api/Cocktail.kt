@@ -1,6 +1,6 @@
 package com.globa.cocktails.data.api
 
-import com.globa.cocktails.data.internal.database.cocktail.CocktailDBModel
+import com.globa.cocktails.database.internal.cocktail.CocktailDBModel
 
 data class Cocktail(
     val id : Int = 0,
@@ -13,14 +13,15 @@ data class Cocktail(
     val measures : List<String> = listOf(),
     val instructions : String = "")
 
-fun Cocktail.asDBModel(): CocktailDBModel = CocktailDBModel(
-    id = id,
-    drinkName = drinkName,
-    alcohol = alcohol,
-    drinkCategory = drinkCategory,
-    imageURL = imageURL,
-    drinkGlass = drinkGlass,
-    ingredients = ingredients,
-    measures = measures,
-    instructions = instructions
-)
+fun Cocktail.asDBModel(): CocktailDBModel =
+    CocktailDBModel(
+        id = id,
+        drinkName = drinkName,
+        alcohol = alcohol,
+        drinkCategory = drinkCategory,
+        imageURL = imageURL,
+        drinkGlass = drinkGlass,
+        ingredients = ingredients,
+        measures = measures,
+        instructions = instructions
+    )

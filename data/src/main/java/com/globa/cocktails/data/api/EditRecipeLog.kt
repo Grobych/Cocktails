@@ -5,13 +5,13 @@ data class EditRecipeLog(
     val dateTime: Long
 )
 
-fun com.globa.cocktails.data.internal.database.editlog.EditRecipeLogDBModel.toDomainModel() = EditRecipeLog(
+fun com.globa.cocktails.database.internal.editlog.EditRecipeLogDBModel.toDomainModel() = EditRecipeLog(
     name = name,
     dateTime = dateTime
 )
 
 fun EditRecipeLog.toDBModel() =
-    com.globa.cocktails.data.internal.database.editlog.EditRecipeLogDBModel(
+    com.globa.cocktails.database.internal.editlog.EditRecipeLogDBModel(
         name = name,
         dateTime = dateTime
     )

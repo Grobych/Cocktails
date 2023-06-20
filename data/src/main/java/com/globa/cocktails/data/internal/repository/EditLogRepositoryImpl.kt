@@ -3,7 +3,7 @@ package com.globa.cocktails.data.internal.repository
 import com.globa.cocktails.data.api.EditRecipeLog
 import com.globa.cocktails.data.api.toDBModel
 import com.globa.cocktails.data.api.toDomainModel
-import com.globa.cocktails.data.internal.database.editlog.EditRecipeLogDataSource
+import com.globa.cocktails.database.internal.editlog.EditRecipeLogDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

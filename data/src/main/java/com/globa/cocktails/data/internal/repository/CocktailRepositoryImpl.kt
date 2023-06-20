@@ -6,11 +6,9 @@ import com.globa.cocktails.data.api.EditLogRepository
 import com.globa.cocktails.data.api.EditRecipeLog
 import com.globa.cocktails.data.api.asDBModel
 import com.globa.cocktails.data.api.contains
-import com.globa.cocktails.data.internal.database.cocktail.CocktailLocalDataSource
-import com.globa.cocktails.data.internal.database.cocktail.asDBModel
-import com.globa.cocktails.data.internal.database.cocktail.asDomainModel
-import com.globa.cocktails.data.internal.network.CocktailAPIModel
 import com.globa.cocktails.data.internal.storage.CocktailFileDataSource
+import com.globa.cocktails.database.internal.cocktail.CocktailDBModel
+import com.globa.cocktails.database.internal.cocktail.CocktailLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -50,7 +48,7 @@ class CocktailRepositoryImpl @Inject constructor (
     override suspend fun loadRecipes() {
         cocktailFileDataSource
             .getCocktails()
-            .combine(editLogRepository.getLogs()) { recipes: List<CocktailAPIModel>, edites: List<EditRecipeLog> ->
+            .combine(editLogRepository.getLogs()) { recipes: List<com.globa.cocktails.filestorage.api.CocktailAPIModel>, edites: List<EditRecipeLog> ->
                 recipes.filter { recipe ->
                     !edites.contains(recipe.drinkName)
                     // edge case: if cocktail has been edided, but later was removed from cocktails
@@ -61,3 +59,44 @@ class CocktailRepositoryImpl @Inject constructor (
             }
     }
 }
+
+fun List<com.globa.cocktails.filestorage.api.CocktailAPIModel>.asDBModel() = map {
+    CocktailDBModel(
+        id = 0,
+        drinkName = it.drinkName,
+        alcohol = it.alcohol,
+        drinkCategory = it.drinkCategory,
+        imageURL = it.imageURL,
+        drinkGlass = it.drinkGlass,
+        ingredients = it.ingredients,
+        measures = it.measures,
+        instructions = it.instructions
+    )
+}
+
+fun List<CocktailDBModel>.asDomainModel() = map {
+    Cocktail(
+        id = it.id,
+        drinkName = it.drinkName,
+        alcohol = it.alcohol,
+        drinkCategory = it.drinkCategory,
+        imageURL = it.imageURL,
+        drinkGlass = it.drinkGlass,
+        ingredients = it.ingredients,
+        measures = it.measures,
+        instructions = it.instructions
+    )
+}
+
+fun CocktailDBModel.asDomainModel() =
+    Cocktail(
+        id = id,
+        drinkName = drinkName,
+        alcohol = alcohol,
+        drinkCategory = drinkCategory,
+        imageURL = imageURL,
+        drinkGlass = drinkGlass,
+        ingredients = ingredients,
+        measures = measures,
+        instructions = instructions
+    )
