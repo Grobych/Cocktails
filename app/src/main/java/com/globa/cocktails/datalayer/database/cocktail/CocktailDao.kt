@@ -1,11 +1,10 @@
-package com.globa.cocktails.datalayer.database
+package com.globa.cocktails.datalayer.database.cocktail
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import androidx.room.Update
-import com.globa.cocktails.datalayer.models.CocktailDBModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

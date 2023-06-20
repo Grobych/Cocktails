@@ -1,4 +1,4 @@
-package com.globa.cocktails.datalayer.models
+package com.globa.cocktails.datalayer.database.editlog
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

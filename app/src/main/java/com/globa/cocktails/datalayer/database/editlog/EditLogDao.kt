@@ -1,10 +1,9 @@
-package com.globa.cocktails.datalayer.database
+package com.globa.cocktails.datalayer.database.editlog
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.globa.cocktails.datalayer.models.EditRecipeLogDBModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

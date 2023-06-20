@@ -1,11 +1,10 @@
-package com.globa.cocktails.datalayer.database
+package com.globa.cocktails.datalayer.database.favorite
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.globa.cocktails.datalayer.models.FavoritedDBModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

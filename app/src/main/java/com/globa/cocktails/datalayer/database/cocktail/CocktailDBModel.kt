@@ -1,9 +1,10 @@
-package com.globa.cocktails.datalayer.models
+package com.globa.cocktails.datalayer.database.cocktail
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.globa.cocktails.datalayer.network.CocktailAPIModel
 import com.globa.cocktails.domain.Cocktail
 
 @Entity(tableName = "cocktails", indices = [Index(value = ["drinkName"], unique = true)])

@@ -1,8 +1,8 @@
 package com.globa.cocktails.domain
 
 import com.globa.cocktails.MainDispatcherRule
-import com.globa.cocktails.datalayer.repository.CocktailRepository
-import com.globa.cocktails.datalayer.repository.EditLogRepository
+import com.globa.cocktails.domain.repo.CocktailRepository
+import com.globa.cocktails.domain.repo.EditLogRepository
 import com.globa.cocktails.domain.editlog.AddEditLogUseCase
 import com.globa.cocktails.domain.editrecipe.RecipeEditable
 import com.globa.cocktails.domain.editrecipe.UpdateCocktailUseCase

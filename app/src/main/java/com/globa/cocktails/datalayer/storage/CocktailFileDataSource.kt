@@ -1,7 +1,7 @@
 package com.globa.cocktails.datalayer.storage
 
 import android.content.Context
-import com.globa.cocktails.datalayer.models.CocktailAPIModel
+import com.globa.cocktails.datalayer.network.CocktailAPIModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.qualifiers.ApplicationContext

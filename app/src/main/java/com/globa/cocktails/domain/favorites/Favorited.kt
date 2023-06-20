@@ -1,6 +1,6 @@
 package com.globa.cocktails.domain.favorites
 
-import com.globa.cocktails.datalayer.models.FavoritedDBModel
+import com.globa.cocktails.datalayer.database.favorite.FavoritedDBModel
 
 data class Favorited(
     val name: String

@@ -1,6 +1,6 @@
 package com.globa.cocktails.domain
 
-import com.globa.cocktails.datalayer.repository.FavoritedCocktailRepository
+import com.globa.cocktails.domain.repo.FavoritedCocktailRepository
 import com.globa.cocktails.domain.favorites.Favorited
 import com.globa.cocktails.domain.favorites.GetFavoritesUseCase
 import com.globa.cocktails.domain.favorites.IsFavoriteCocktailUseCase

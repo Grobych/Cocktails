@@ -1,28 +1,22 @@
 package com.globa.cocktails.datalayer.repository
 
-import com.globa.cocktails.datalayer.database.CocktailLocalDataSource
-import com.globa.cocktails.datalayer.models.CocktailAPIModel
-import com.globa.cocktails.datalayer.models.asDBModel
-import com.globa.cocktails.datalayer.models.asDomainModel
+import com.globa.cocktails.datalayer.database.cocktail.CocktailLocalDataSource
+import com.globa.cocktails.datalayer.database.cocktail.asDBModel
+import com.globa.cocktails.datalayer.database.cocktail.asDomainModel
+import com.globa.cocktails.datalayer.network.CocktailAPIModel
 import com.globa.cocktails.datalayer.storage.CocktailFileDataSource
 import com.globa.cocktails.domain.Cocktail
 import com.globa.cocktails.domain.asDBModel
 import com.globa.cocktails.domain.editlog.EditRecipeLog
 import com.globa.cocktails.domain.editlog.contains
+import com.globa.cocktails.domain.repo.CocktailRepository
+import com.globa.cocktails.domain.repo.EditLogRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
-interface CocktailRepository {
-    suspend fun getCocktails(): Flow<List<Cocktail>>
-    suspend fun getCocktail(id: Int): Flow<Cocktail>
-    suspend fun updateCocktail(cocktail: Cocktail)
-    suspend fun saveCocktail(cocktail: Cocktail)
-    suspend fun loadRecipes()
-}
 
 @Singleton
 class CocktailRepositoryImpl @Inject constructor (

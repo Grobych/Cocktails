@@ -1,6 +1,6 @@
-package com.globa.cocktails.datalayer.database
+package com.globa.cocktails.datalayer.database.editlog
 
-import com.globa.cocktails.datalayer.models.EditRecipeLogDBModel
+import com.globa.cocktails.datalayer.database.CocktailDatabase
 import com.globa.cocktails.di.modules.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

@@ -1,6 +1,6 @@
 package com.globa.cocktails.domain
 
-import com.globa.cocktails.datalayer.repository.CocktailRepository
+import com.globa.cocktails.domain.repo.CocktailRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

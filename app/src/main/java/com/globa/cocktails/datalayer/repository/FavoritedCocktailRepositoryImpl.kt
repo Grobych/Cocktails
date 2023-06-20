@@ -1,19 +1,14 @@
 package com.globa.cocktails.datalayer.repository
 
-import com.globa.cocktails.datalayer.database.FavoritedCocktailDataSource
+import com.globa.cocktails.datalayer.database.favorite.FavoritedCocktailDataSource
 import com.globa.cocktails.domain.favorites.Favorited
 import com.globa.cocktails.domain.favorites.asDBModel
 import com.globa.cocktails.domain.favorites.asDomainModel
+import com.globa.cocktails.domain.repo.FavoritedCocktailRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
-
-interface FavoritedCocktailRepository {
-    suspend fun getFavorites(): Flow<List<Favorited>>
-    suspend fun add(favorited: Favorited)
-    suspend fun remove(favorited: Favorited)
-}
 
 @Singleton
 class FavoritedCocktailRepositoryImpl @Inject constructor(

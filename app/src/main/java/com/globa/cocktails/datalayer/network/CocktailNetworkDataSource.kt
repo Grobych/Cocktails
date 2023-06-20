@@ -1,6 +1,5 @@
 package com.globa.cocktails.datalayer.network
 
-import com.globa.cocktails.datalayer.models.CocktailAPIModel
 import com.globa.cocktails.di.modules.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

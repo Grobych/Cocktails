@@ -1,9 +1,12 @@
 package com.globa.cocktails.datalayer.database
 
 import androidx.room.*
-import com.globa.cocktails.datalayer.models.CocktailDBModel
-import com.globa.cocktails.datalayer.models.EditRecipeLogDBModel
-import com.globa.cocktails.datalayer.models.FavoritedDBModel
+import com.globa.cocktails.datalayer.database.cocktail.CocktailDBModel
+import com.globa.cocktails.datalayer.database.cocktail.CocktailDao
+import com.globa.cocktails.datalayer.database.editlog.EditLogDao
+import com.globa.cocktails.datalayer.database.editlog.EditRecipeLogDBModel
+import com.globa.cocktails.datalayer.database.favorite.FavoritedDBModel
+import com.globa.cocktails.datalayer.database.favorite.FavoritedDao
 import com.google.gson.Gson
 
 @Database(

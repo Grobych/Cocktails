@@ -1,6 +1,6 @@
-package com.globa.cocktails.datalayer.database
+package com.globa.cocktails.datalayer.database.favorite
 
-import com.globa.cocktails.datalayer.models.FavoritedDBModel
+import com.globa.cocktails.datalayer.database.CocktailDatabase
 import com.globa.cocktails.di.modules.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

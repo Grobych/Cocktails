@@ -1,9 +1,9 @@
 package com.globa.cocktails.domain.editrecipe
 
-import com.globa.cocktails.datalayer.repository.CocktailRepository
 import com.globa.cocktails.domain.GetCocktailByIdUseCase
 import com.globa.cocktails.domain.editlog.AddEditLogUseCase
 import com.globa.cocktails.domain.editlog.EditRecipeLog
+import com.globa.cocktails.domain.repo.CocktailRepository
 import kotlinx.coroutines.flow.first
 import java.util.Calendar
 import javax.inject.Inject

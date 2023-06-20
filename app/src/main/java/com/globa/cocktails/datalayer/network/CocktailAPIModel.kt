@@ -1,4 +1,4 @@
-package com.globa.cocktails.datalayer.models
+package com.globa.cocktails.datalayer.network
 
 import com.google.gson.annotations.SerializedName
 

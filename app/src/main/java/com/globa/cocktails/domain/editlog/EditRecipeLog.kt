@@ -1,6 +1,6 @@
 package com.globa.cocktails.domain.editlog
 
-import com.globa.cocktails.datalayer.models.EditRecipeLogDBModel
+import com.globa.cocktails.datalayer.database.editlog.EditRecipeLogDBModel
 
 data class EditRecipeLog(
     val name: String,
