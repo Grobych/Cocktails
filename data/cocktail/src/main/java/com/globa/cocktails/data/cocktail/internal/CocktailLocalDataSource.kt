@@ -1,4 +1,4 @@
-package com.globa.cocktails.database.internal.cocktail
+package com.globa.cocktails.data.cocktail.internal
 
 import com.globa.cocktails.common.IoDispatcher
 import com.globa.cocktails.database.api.CocktailDatabase
@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class CocktailLocalDataSource @Inject constructor(
+internal class CocktailLocalDataSource @Inject constructor(
     private val db : CocktailDatabase,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) {

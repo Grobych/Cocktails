@@ -1,5 +1,6 @@
 package com.globa.cocktails.domain.editrecipe
 
+import com.globa.cocktails.data.cocktail.api.CocktailRepository
 import com.globa.cocktails.data.editlog.api.EditRecipeLog
 import com.globa.cocktails.domain.GetCocktailByIdUseCase
 import com.globa.cocktails.domain.editlog.AddEditLogUseCase
@@ -8,7 +9,7 @@ import java.util.Calendar
 import javax.inject.Inject
 
 class UpdateCocktailUseCase @Inject constructor(
-    private val cocktailRepository: com.globa.cocktails.data.api.CocktailRepository,
+    private val cocktailRepository: CocktailRepository,
     private val addEditLogUseCase: AddEditLogUseCase,
     private val getCocktailByIdUseCase: GetCocktailByIdUseCase
 ) {

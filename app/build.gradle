@@ -66,6 +66,7 @@ dependencies {
     implementation project(path: ':data')
     implementation project(path: ':data:favorite')
     implementation project(path: ':data:editlog')
+    implementation project(path: ':data:cocktail')
 
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

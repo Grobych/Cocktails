@@ -1,4 +1,4 @@
-package com.globa.cocktails.data.api
+package com.globa.cocktails.data.cocktail.api
 
 import kotlinx.coroutines.flow.Flow
 

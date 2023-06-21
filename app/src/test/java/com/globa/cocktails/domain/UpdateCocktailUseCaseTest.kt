@@ -1,8 +1,8 @@
 package com.globa.cocktails.domain
 
 import com.globa.cocktails.MainDispatcherRule
-import com.globa.cocktails.data.api.Cocktail
-import com.globa.cocktails.data.api.CocktailRepository
+import com.globa.cocktails.data.cocktail.api.Cocktail
+import com.globa.cocktails.data.cocktail.api.CocktailRepository
 import com.globa.cocktails.data.editlog.api.EditLogRepository
 import com.globa.cocktails.domain.editlog.AddEditLogUseCase
 import com.globa.cocktails.domain.editrecipe.RecipeEditable
@@ -31,7 +31,12 @@ class UpdateCocktailUseCaseTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun updateCocktailUseCaseTest() = runTest {
-        val repoFlow = flowOf(Cocktail(id = 1, drinkName = "Test"))
+        val repoFlow = flowOf(
+            Cocktail(
+                id = 1,
+                drinkName = "Test"
+            )
+        )
         coEvery { cocktailRepository.updateCocktail(any()) } returns Unit
         coEvery { editLogRepository.addLog(any()) } returns Unit
         coEvery { cocktailRepository.getCocktail(1) } returns repoFlow

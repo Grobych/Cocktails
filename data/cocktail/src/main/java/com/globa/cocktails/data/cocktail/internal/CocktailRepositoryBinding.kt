@@ -1,7 +1,6 @@
-package com.globa.cocktails.data.internal.di
+package com.globa.cocktails.data.cocktail.internal
 
-import com.globa.cocktails.data.api.CocktailRepository
-import com.globa.cocktails.data.internal.repository.CocktailRepositoryImpl
+import com.globa.cocktails.data.cocktail.api.CocktailRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -9,7 +8,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface RepositoryBinding {
+internal interface CocktailRepositoryBinding {
     @Binds
     fun bindCocktailRepository(cocktailRepositoryImpl: CocktailRepositoryImpl): CocktailRepository
 }

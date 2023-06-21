@@ -1,11 +1,9 @@
-package com.globa.cocktails.data.internal.repository
+package com.globa.cocktails.data.cocktail.internal
 
-import com.globa.cocktails.data.api.Cocktail
-import com.globa.cocktails.data.api.CocktailRepository
-import com.globa.cocktails.data.api.asDBModel
-import com.globa.cocktails.data.internal.storage.CocktailFileDataSource
+import com.globa.cocktails.data.cocktail.api.Cocktail
+import com.globa.cocktails.data.cocktail.api.CocktailRepository
+import com.globa.cocktails.data.cocktail.api.asDBModel
 import com.globa.cocktails.database.api.model.CocktailDBModel
-import com.globa.cocktails.database.internal.cocktail.CocktailLocalDataSource
 import com.globa.cocktails.filestorage.api.CocktailAPIModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -14,7 +12,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class CocktailRepositoryImpl @Inject constructor (
+internal class CocktailRepositoryImpl @Inject constructor (
     private val cocktailLocalDataSource: CocktailLocalDataSource,
     private val cocktailFileDataSource: CocktailFileDataSource
 ): CocktailRepository {

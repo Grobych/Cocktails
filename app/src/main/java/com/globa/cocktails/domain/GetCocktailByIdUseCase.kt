@@ -1,9 +1,10 @@
 package com.globa.cocktails.domain
 
+import com.globa.cocktails.data.cocktail.api.CocktailRepository
 import javax.inject.Inject
 
 class GetCocktailByIdUseCase @Inject constructor(
-    private val repository: com.globa.cocktails.data.api.CocktailRepository
+    private val repository: CocktailRepository
 ) { //TODO: catch not such id error?
     suspend operator fun invoke(id: Int) = repository.getCocktail(id)
 }
