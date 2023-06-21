@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-object DatabaseModule{
+internal object DatabaseModule{
     @Singleton
     @Provides
     fun getDatabase(@ApplicationContext applicationContext: Context) : CocktailDatabase =

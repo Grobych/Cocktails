@@ -1,18 +1,18 @@
-package com.globa.cocktails.data.internal.repository
+package com.globa.cocktails.data.favorite.internal
 
-import com.globa.cocktails.data.api.Favorited
-import com.globa.cocktails.data.api.asDBModel
-import com.globa.cocktails.data.api.asDomainModel
-import com.globa.cocktails.database.internal.favorite.FavoritedCocktailDataSource
+import com.globa.cocktails.data.favorite.api.Favorited
+import com.globa.cocktails.data.favorite.api.FavoritedCocktailRepository
+import com.globa.cocktails.data.favorite.api.asDBModel
+import com.globa.cocktails.data.favorite.api.asDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FavoritedCocktailRepositoryImpl @Inject constructor(
+internal class FavoritedCocktailRepositoryImpl @Inject constructor(
     private val favoritedCocktailDataSource: FavoritedCocktailDataSource
-): com.globa.cocktails.data.api.FavoritedCocktailRepository {
+): FavoritedCocktailRepository {
     override suspend fun getFavorites(): Flow<List<Favorited>> =
         favoritedCocktailDataSource.getFavorites().map { list -> list.map { it.asDomainModel() } }
 

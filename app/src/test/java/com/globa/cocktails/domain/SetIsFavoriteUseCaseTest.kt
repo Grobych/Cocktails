@@ -1,8 +1,8 @@
 package com.globa.cocktails.domain
 
 import com.globa.cocktails.data.api.Cocktail
-import com.globa.cocktails.data.api.Favorited
-import com.globa.cocktails.data.api.FavoritedCocktailRepository
+import com.globa.cocktails.data.favorite.api.Favorited
+import com.globa.cocktails.data.favorite.api.FavoritedCocktailRepository
 import com.globa.cocktails.domain.favorites.SetIsFavoriteUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify

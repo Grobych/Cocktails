@@ -1,6 +1,6 @@
 package com.globa.cocktails.data.api
 
-import com.globa.cocktails.database.internal.cocktail.CocktailDBModel
+import com.globa.cocktails.database.api.model.CocktailDBModel
 
 data class Cocktail(
     val id : Int = 0,

@@ -1,6 +1,6 @@
 package com.globa.cocktails.domain
 
-import com.globa.cocktails.data.api.Favorited
+import com.globa.cocktails.data.favorite.api.Favorited
 import com.globa.cocktails.domain.favorites.GetFavoritesUseCase
 import com.globa.cocktails.domain.favorites.IsFavoriteCocktailUseCase
 import io.mockk.coEvery
@@ -12,10 +12,13 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 class IsFavoriteCocktailUseCaseTest {
-    private val repository = mockk<com.globa.cocktails.data.api.FavoritedCocktailRepository>()
+    private val repository = mockk<com.globa.cocktails.data.favorite.api.FavoritedCocktailRepository>()
     private val getFavoritesUseCase = GetFavoritesUseCase(repository)
     private val isFavoriteCocktailUseCase = IsFavoriteCocktailUseCase(getFavoritesUseCase)
-    private val repoList = listOf(Favorited("1"), Favorited("2"))
+    private val repoList = listOf(
+        Favorited("1"),
+        Favorited("2")
+    )
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test

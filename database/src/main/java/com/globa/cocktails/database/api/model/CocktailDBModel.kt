@@ -1,4 +1,4 @@
-package com.globa.cocktails.database.internal.cocktail
+package com.globa.cocktails.database.api.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

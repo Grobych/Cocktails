@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import androidx.room.Update
+import com.globa.cocktails.database.api.model.CocktailDBModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

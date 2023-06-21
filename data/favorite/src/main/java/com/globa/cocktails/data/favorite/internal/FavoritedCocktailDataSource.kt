@@ -1,12 +1,13 @@
-package com.globa.cocktails.database.internal.favorite
+package com.globa.cocktails.data.favorite.internal
 
 import com.globa.cocktails.common.IoDispatcher
 import com.globa.cocktails.database.api.CocktailDatabase
+import com.globa.cocktails.database.api.model.FavoritedDBModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class FavoritedCocktailDataSource @Inject constructor(
+internal class FavoritedCocktailDataSource @Inject constructor(
     private val db: CocktailDatabase,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) {

@@ -1,11 +1,11 @@
 package com.globa.cocktails.database.api
 
 import androidx.room.*
-import com.globa.cocktails.database.internal.cocktail.CocktailDBModel
+import com.globa.cocktails.database.api.model.CocktailDBModel
+import com.globa.cocktails.database.api.model.EditRecipeLogDBModel
+import com.globa.cocktails.database.api.model.FavoritedDBModel
 import com.globa.cocktails.database.internal.cocktail.CocktailDao
 import com.globa.cocktails.database.internal.editlog.EditLogDao
-import com.globa.cocktails.database.internal.editlog.EditRecipeLogDBModel
-import com.globa.cocktails.database.internal.favorite.FavoritedDBModel
 import com.globa.cocktails.database.internal.favorite.FavoritedDao
 import com.google.gson.Gson
 
@@ -24,7 +24,7 @@ import com.google.gson.Gson
         abstract val editLogDao: EditLogDao
     }
 
-class Converters {
+internal class Converters {
 
         @TypeConverter
         fun listToJson(value: List<String>?): String = Gson().toJson(value)

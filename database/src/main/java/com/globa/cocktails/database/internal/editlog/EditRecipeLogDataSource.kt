@@ -2,6 +2,7 @@ package com.globa.cocktails.database.internal.editlog
 
 import com.globa.cocktails.common.IoDispatcher
 import com.globa.cocktails.database.api.CocktailDatabase
+import com.globa.cocktails.database.api.model.EditRecipeLogDBModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

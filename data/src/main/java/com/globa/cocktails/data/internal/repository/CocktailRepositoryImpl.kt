@@ -7,7 +7,7 @@ import com.globa.cocktails.data.api.EditRecipeLog
 import com.globa.cocktails.data.api.asDBModel
 import com.globa.cocktails.data.api.contains
 import com.globa.cocktails.data.internal.storage.CocktailFileDataSource
-import com.globa.cocktails.database.internal.cocktail.CocktailDBModel
+import com.globa.cocktails.database.api.model.CocktailDBModel
 import com.globa.cocktails.database.internal.cocktail.CocktailLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

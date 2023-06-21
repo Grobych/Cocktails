@@ -1,17 +1,19 @@
 package com.globa.cocktails.data.api
 
+import com.globa.cocktails.database.api.model.EditRecipeLogDBModel
+
 data class EditRecipeLog(
     val name: String,
     val dateTime: Long
 )
 
-fun com.globa.cocktails.database.internal.editlog.EditRecipeLogDBModel.toDomainModel() = EditRecipeLog(
+fun EditRecipeLogDBModel.toDomainModel() = EditRecipeLog(
     name = name,
     dateTime = dateTime
 )
 
 fun EditRecipeLog.toDBModel() =
-    com.globa.cocktails.database.internal.editlog.EditRecipeLogDBModel(
+    EditRecipeLogDBModel(
         name = name,
         dateTime = dateTime
     )

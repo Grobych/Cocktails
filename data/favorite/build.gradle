@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.globa.cocktails.database'
+    namespace 'com.globa.cocktails.data.favorite'
     compileSdk 33
 
     defaultConfig {
@@ -33,16 +33,12 @@ android {
 
 dependencies {
     implementation project(path: ':common')
-
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation project(path: ':database')
 
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
-    implementation 'com.google.code.gson:gson:2.9.0'
-    api 'androidx.room:room-runtime:2.5.1'
-    kapt 'androidx.room:room-compiler:2.5.1'
-    implementation 'androidx.room:room-ktx:2.5.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }

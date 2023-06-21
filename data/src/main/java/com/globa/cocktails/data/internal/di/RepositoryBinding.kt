@@ -1,5 +1,9 @@
 package com.globa.cocktails.data.internal.di
 
+import com.globa.cocktails.data.api.CocktailRepository
+import com.globa.cocktails.data.api.EditLogRepository
+import com.globa.cocktails.data.internal.repository.CocktailRepositoryImpl
+import com.globa.cocktails.data.internal.repository.EditLogRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -9,11 +13,7 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface RepositoryBinding {
     @Binds
-    fun bindCocktailRepository(cocktailRepositoryImpl: com.globa.cocktails.data.internal.repository.CocktailRepositoryImpl): com.globa.cocktails.data.api.CocktailRepository
-
+    fun bindCocktailRepository(cocktailRepositoryImpl: CocktailRepositoryImpl): CocktailRepository
     @Binds
-    fun bindFavoritesRepository(favoritedCocktailRepositoryImpl: com.globa.cocktails.data.internal.repository.FavoritedCocktailRepositoryImpl): com.globa.cocktails.data.api.FavoritedCocktailRepository
-
-    @Binds
-    fun bindEditLogRepository(editLogRepositoryImpl: com.globa.cocktails.data.internal.repository.EditLogRepositoryImpl): com.globa.cocktails.data.api.EditLogRepository
+    fun bindEditLogRepository(editLogRepositoryImpl: EditLogRepositoryImpl): EditLogRepository
 }
