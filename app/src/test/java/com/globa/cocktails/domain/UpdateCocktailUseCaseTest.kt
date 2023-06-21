@@ -3,7 +3,7 @@ package com.globa.cocktails.domain
 import com.globa.cocktails.MainDispatcherRule
 import com.globa.cocktails.data.api.Cocktail
 import com.globa.cocktails.data.api.CocktailRepository
-import com.globa.cocktails.data.api.EditLogRepository
+import com.globa.cocktails.data.editlog.api.EditLogRepository
 import com.globa.cocktails.domain.editlog.AddEditLogUseCase
 import com.globa.cocktails.domain.editrecipe.RecipeEditable
 import com.globa.cocktails.domain.editrecipe.UpdateCocktailUseCase

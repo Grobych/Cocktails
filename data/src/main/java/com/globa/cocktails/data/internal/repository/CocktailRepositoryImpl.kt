@@ -2,15 +2,12 @@ package com.globa.cocktails.data.internal.repository
 
 import com.globa.cocktails.data.api.Cocktail
 import com.globa.cocktails.data.api.CocktailRepository
-import com.globa.cocktails.data.api.EditLogRepository
-import com.globa.cocktails.data.api.EditRecipeLog
 import com.globa.cocktails.data.api.asDBModel
-import com.globa.cocktails.data.api.contains
 import com.globa.cocktails.data.internal.storage.CocktailFileDataSource
 import com.globa.cocktails.database.api.model.CocktailDBModel
 import com.globa.cocktails.database.internal.cocktail.CocktailLocalDataSource
+import com.globa.cocktails.filestorage.api.CocktailAPIModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,8 +16,7 @@ import javax.inject.Singleton
 @Singleton
 class CocktailRepositoryImpl @Inject constructor (
     private val cocktailLocalDataSource: CocktailLocalDataSource,
-    private val cocktailFileDataSource: CocktailFileDataSource,
-    private val editLogRepository: EditLogRepository
+    private val cocktailFileDataSource: CocktailFileDataSource
 ): CocktailRepository {
 
 
@@ -45,13 +41,12 @@ class CocktailRepositoryImpl @Inject constructor (
         cocktailLocalDataSource.putCocktail(cocktail.asDBModel())
     }
 
-    override suspend fun loadRecipes() {
+    override suspend fun loadRecipes(excluded: List<String>) {
         cocktailFileDataSource
             .getCocktails()
-            .combine(editLogRepository.getLogs()) { recipes: List<com.globa.cocktails.filestorage.api.CocktailAPIModel>, edites: List<EditRecipeLog> ->
-                recipes.filter { recipe ->
-                    !edites.contains(recipe.drinkName)
-                    // edge case: if cocktail has been edided, but later was removed from cocktails
+            .map { list ->
+                list.filter {
+                    excluded.contains(it.drinkName)
                 }
             }
             .collect {
@@ -60,7 +55,7 @@ class CocktailRepositoryImpl @Inject constructor (
     }
 }
 
-fun List<com.globa.cocktails.filestorage.api.CocktailAPIModel>.asDBModel() = map {
+fun List<CocktailAPIModel>.asDBModel() = map {
     CocktailDBModel(
         id = 0,
         drinkName = it.drinkName,

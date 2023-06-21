@@ -1,7 +1,7 @@
 package com.globa.cocktails
 
 import android.app.Application
-import com.globa.cocktails.data.api.CocktailRepository
+import com.globa.cocktails.domain.LoadCocktailsUseCase
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,12 +13,12 @@ import javax.inject.Inject
 class App : Application() {
 
     @Inject
-    lateinit var repository: CocktailRepository
+    lateinit var loadCocktailsUseCase: LoadCocktailsUseCase
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override fun onCreate() {
         super.onCreate()
-        scope.launch { repository.loadRecipes() }
+        scope.launch { loadCocktailsUseCase() }
     }
 }

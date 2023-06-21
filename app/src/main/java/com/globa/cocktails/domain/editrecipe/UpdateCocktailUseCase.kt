@@ -1,6 +1,6 @@
 package com.globa.cocktails.domain.editrecipe
 
-import com.globa.cocktails.data.api.EditRecipeLog
+import com.globa.cocktails.data.editlog.api.EditRecipeLog
 import com.globa.cocktails.domain.GetCocktailByIdUseCase
 import com.globa.cocktails.domain.editlog.AddEditLogUseCase
 import kotlinx.coroutines.flow.first
@@ -23,9 +23,9 @@ class UpdateCocktailUseCase @Inject constructor(
         ))
         addEditLogUseCase(
             EditRecipeLog(
-            name = cocktail.drinkName,
-            dateTime = Calendar.getInstance().timeInMillis
-        )
+                name = cocktail.drinkName,
+                dateTime = Calendar.getInstance().timeInMillis
+            )
         )
     }
 }
