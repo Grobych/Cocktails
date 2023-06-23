@@ -33,8 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
-import com.globa.cocktails.domain.getrecipesdetails.RecipeDetails
-import com.globa.cocktails.domain.getrecipesdetails.RecipeDetailsTagType
+import com.globa.cocktails.domain.recipedetails.RecipeDetailsTagType
 import com.globa.cocktails.ui.cocktailredactor.RedactorMode
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs.headerHeight
@@ -93,7 +92,7 @@ fun CocktailLoading() {
 
 @Composable
 fun CocktailInfo(
-    cocktail: RecipeDetails,
+    cocktail: com.globa.cocktails.domain.recipedetails.RecipeDetails,
     onFavoriteButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
     onEditButtonClick: () -> Unit
@@ -295,18 +294,18 @@ fun CocktailError(errorMessage: String) {
     }
 }
 
-private val testCocktail = RecipeDetails(
-        id = 1,
-        name = "Margarita",
-        tags = mapOf(
-            "Ordinary drinks" to RecipeDetailsTagType.CATEGORY,
-            "Cocktail glass" to RecipeDetailsTagType.GLASS
-        ),
-        imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
-        ingredients = listOf("Tequila","Triple sec","Lime juice","Salt"),
-        measures = listOf("1 1/2 oz","1/2 oz","1 oz"),
-        instructions = "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten only the outer rim and sprinkle the salt on it. The salt should present to the lips of the imbiber and never mix into the cocktail. Shake the other ingredients with ice, then carefully pour into the glass."
-    )
+private val testCocktail = com.globa.cocktails.domain.recipedetails.RecipeDetails(
+    id = 1,
+    name = "Margarita",
+    tags = mapOf(
+        "Ordinary drinks" to RecipeDetailsTagType.CATEGORY,
+        "Cocktail glass" to RecipeDetailsTagType.GLASS
+    ),
+    imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
+    ingredients = listOf("Tequila", "Triple sec", "Lime juice", "Salt"),
+    measures = listOf("1 1/2 oz", "1/2 oz", "1 oz"),
+    instructions = "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten only the outer rim and sprinkle the salt on it. The salt should present to the lips of the imbiber and never mix into the cocktail. Shake the other ingredients with ice, then carefully pour into the glass."
+)
 
 @Composable
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)

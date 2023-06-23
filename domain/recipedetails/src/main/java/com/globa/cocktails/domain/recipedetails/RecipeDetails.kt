@@ -1,4 +1,4 @@
-package com.globa.cocktails.domain.getrecipesdetails
+package com.globa.cocktails.domain.recipedetails
 
 data class RecipeDetails(
     val id: Int = 0,

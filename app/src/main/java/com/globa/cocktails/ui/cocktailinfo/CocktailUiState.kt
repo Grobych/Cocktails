@@ -1,6 +1,6 @@
 package com.globa.cocktails.ui.cocktailinfo
 
-import com.globa.cocktails.domain.getrecipesdetails.RecipeDetails
+import com.globa.cocktails.domain.recipedetails.RecipeDetails
 
 //data class CocktailUiState(
 //    val cocktail: Cocktail

@@ -7,8 +7,7 @@ import com.globa.cocktails.data.favorite.api.Favorited
 import com.globa.cocktails.domain.favorite.GetFavoritesUseCase
 import com.globa.cocktails.domain.favorite.IsFavoriteCocktailUseCase
 import com.globa.cocktails.domain.favorite.SetIsFavoriteUseCase
-import com.globa.cocktails.domain.getrecipesdetails.GetRecipeDetailsUseCase
-import com.globa.cocktails.domain.getrecipesdetails.RecipeDetails
+import com.globa.cocktails.domain.recipedetails.GetRecipeDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -41,7 +40,7 @@ class CocktailViewModel @Inject constructor(
     private fun fetchCocktail() = viewModelScope.launch {
         if (cocktailId != null) {
             getRecipeDetailsUseCase(id = cocktailId)
-                .combine(getFavoritesUseCase()) { recipeDetails: RecipeDetails, _: List<Favorited> ->
+                .combine(getFavoritesUseCase()) { recipeDetails: com.globa.cocktails.domain.recipedetails.RecipeDetails, _: List<Favorited> ->
                     recipeDetails.copy(isFavorite = isFavoriteUseCase(recipeDetails.name).first()) //TODO: rewrite
                 }
                 .onEach {cocktail ->

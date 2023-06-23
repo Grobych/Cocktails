@@ -1,4 +1,4 @@
-package com.globa.cocktails.domain.getrecipesdetails
+package com.globa.cocktails.domain.recipedetails
 
 import com.globa.cocktails.data.cocktail.api.CocktailRepository
 import kotlinx.coroutines.flow.map

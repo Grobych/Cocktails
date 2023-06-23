@@ -1,8 +1,7 @@
-package com.globa.cocktails.domain
+package com.globa.cocktails.domain.recipedetails
 
 import com.globa.cocktails.data.cocktail.api.Cocktail
 import com.globa.cocktails.data.cocktail.api.CocktailRepository
-import com.globa.cocktails.domain.getrecipesdetails.GetRecipeDetailsUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

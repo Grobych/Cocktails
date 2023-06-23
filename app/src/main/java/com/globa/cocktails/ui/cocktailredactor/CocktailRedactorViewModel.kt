@@ -4,8 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.domain.edit.RecipeEditable
-import com.globa.cocktails.domain.getrecipesdetails.GetRecipeDetailsUseCase
-import com.globa.cocktails.domain.getrecipesdetails.RecipeDetails
+import com.globa.cocktails.domain.recipedetails.GetRecipeDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -95,7 +94,7 @@ class CocktailRedactorViewModel @Inject constructor(
     }
 }
 
-fun RecipeDetails.toReceipeEditable() = RecipeEditable(
+fun com.globa.cocktails.domain.recipedetails.RecipeDetails.toReceipeEditable() = RecipeEditable(
     id = id,
     name = name,
     ingredients = ingredients,
