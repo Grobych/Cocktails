@@ -1,12 +1,8 @@
-package com.globa.cocktails.domain
+package com.globa.cocktails.domain.edit
 
-import com.globa.cocktails.MainDispatcherRule
 import com.globa.cocktails.data.cocktail.api.Cocktail
 import com.globa.cocktails.data.cocktail.api.CocktailRepository
 import com.globa.cocktails.data.editlog.api.EditLogRepository
-import com.globa.cocktails.domain.editrecipe.AddEditLogUseCase
-import com.globa.cocktails.domain.editrecipe.RecipeEditable
-import com.globa.cocktails.domain.editrecipe.UpdateCocktailUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -14,13 +10,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Rule
 import org.junit.Test
 
 class UpdateCocktailUseCaseTest {
-
-    @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
 
     private val cocktailRepository = mockk<CocktailRepository>()
     private val editLogRepository = mockk<EditLogRepository>()

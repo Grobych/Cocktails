@@ -1,4 +1,4 @@
-package com.globa.cocktails.domain.editrecipe
+package com.globa.cocktails.domain.edit
 
 import com.globa.cocktails.data.cocktail.api.CocktailRepository
 import com.globa.cocktails.data.editlog.api.EditRecipeLog

@@ -1,6 +1,6 @@
 package com.globa.cocktails.ui.cocktailredactor
 
-import com.globa.cocktails.domain.editrecipe.RecipeEditable
+import com.globa.cocktails.domain.edit.RecipeEditable
 
 
 sealed class CocktailRedactorUiState{

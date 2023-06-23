@@ -1,7 +1,5 @@
-package com.globa.cocktails.domain
+package com.globa.cocktails.domain.edit
 
-import com.globa.cocktails.domain.editrecipe.RecipeEditable
-import com.globa.cocktails.domain.editrecipe.RemoveIngredientUseCase
 import org.junit.Test
 
 class RemoveIngredientUseCaseTest {

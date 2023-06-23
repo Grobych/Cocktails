@@ -47,8 +47,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
-import com.globa.cocktails.domain.editrecipe.RecipeEditable
-import com.globa.cocktails.domain.editrecipe.RemoveIngredientUseCase
+import com.globa.cocktails.domain.edit.RecipeEditable
+import com.globa.cocktails.domain.edit.RemoveIngredientUseCase
 import com.globa.cocktails.ui.cocktaillist.ErrorComposable
 import com.globa.cocktails.ui.cocktaillist.LoadingComposable
 import com.globa.cocktails.ui.theme.AppTheme
@@ -492,8 +492,8 @@ val testCocktail = RecipeEditable(
     id = 1,
     name = "Margarita",
     imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
-    ingredients = listOf("Tequila","Triple sec","Lime juice","Salt"),
-    measures = listOf("1 1/2 oz","1/2 oz","1 oz"),
+    ingredients = listOf("Tequila", "Triple sec", "Lime juice", "Salt"),
+    measures = listOf("1 1/2 oz", "1/2 oz", "1 oz"),
     instructions = "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten only the outer rim and sprinkle the salt on it. The salt should present to the lips of the imbiber and never mix into the cocktail. Shake the other ingredients with ice, then carefully pour into the glass."
 )
 

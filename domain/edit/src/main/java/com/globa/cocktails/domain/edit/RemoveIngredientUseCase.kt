@@ -1,4 +1,4 @@
-package com.globa.cocktails.domain.editrecipe
+package com.globa.cocktails.domain.edit
 
 class RemoveIngredientUseCase {
     operator fun invoke(cocktail: RecipeEditable, i: Int): RecipeEditable {
