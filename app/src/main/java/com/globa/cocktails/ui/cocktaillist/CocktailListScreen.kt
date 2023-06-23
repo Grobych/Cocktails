@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
-import com.globa.cocktails.domain.getrandom.GetRandomResult
+import com.globa.cocktails.domain.random.GetRandomResult
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs
 import com.globa.cocktails.ui.theme.DPs.headerHeight

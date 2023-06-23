@@ -1,7 +1,5 @@
-package com.globa.cocktails.domain
+package com.globa.cocktails.domain.random
 
-import com.globa.cocktails.domain.getrandom.GetRandomRecipeUseCase
-import com.globa.cocktails.domain.getrandom.GetRandomResult
 import org.junit.Test
 
 class RandomCocktailUseCaseTest {
@@ -11,14 +9,13 @@ class RandomCocktailUseCaseTest {
     @Test
     fun randomCocktailUseCaseTest() {
         val ids = listOf(1,2,3,4,5)
-        val cocktails = ids.map { Cocktail(id = it) }
         val res = randomCocktailUseCase(ids)
 
         assert(res is GetRandomResult.Success)
         val randomId = (res as GetRandomResult.Success).id
         assert(ids.contains(randomId))
-        val cocktail = cocktails.find { it.id == randomId }
-        assert(cocktails.contains(cocktail))
+        val cocktail = ids.find { it == randomId }
+        assert(ids.contains(cocktail))
     }
 
     @Test

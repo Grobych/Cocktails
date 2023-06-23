@@ -22,6 +22,9 @@
             <option value="$PROJECT_DIR$/domain/edit" />
             <option value="$PROJECT_DIR$/domain/favorite" />
             <option value="$PROJECT_DIR$/domain/getcocktails" />
+            <option value="$PROJECT_DIR$/domain/random" />
+            <option value="$PROJECT_DIR$/domain/recipedetails" />
+            <option value="$PROJECT_DIR$/domain/update" />
             <option value="$PROJECT_DIR$/filestorage" />
           </set>
         </option>

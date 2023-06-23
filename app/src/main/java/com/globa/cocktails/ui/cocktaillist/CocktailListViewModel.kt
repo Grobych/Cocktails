@@ -10,7 +10,7 @@ import com.globa.cocktails.domain.getcocktails.FilterCocktailsUseCase
 import com.globa.cocktails.domain.getcocktails.GetAllReceipesUseCase
 import com.globa.cocktails.domain.getcocktails.GetFavoriteCocktailsUseCase
 import com.globa.cocktails.domain.getcocktails.RecipePreview
-import com.globa.cocktails.domain.getrandom.GetRandomRecipeUseCase
+import com.globa.cocktails.domain.random.GetRandomRecipeUseCase
 import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
