@@ -1,9 +1,7 @@
-package com.globa.cocktails.domain
+package com.globa.cocktails.domain.favorite
 
-import com.globa.cocktails.data.cocktail.api.Cocktail
 import com.globa.cocktails.data.favorite.api.Favorited
 import com.globa.cocktails.data.favorite.api.FavoritedCocktailRepository
-import com.globa.cocktails.domain.favorites.SetIsFavoriteUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -18,14 +16,10 @@ class SetIsFavoriteUseCaseTest {
     @Test
     @OptIn(ExperimentalCoroutinesApi::class)
     fun setIsFavoriteTest() = runTest {
-        val id = 1
         val name = "Test"
-        val testCocktail = Cocktail(
-            id = id,
-            drinkName = name
-        )
+
         coEvery { repository.add(any()) } returns Unit
         setIsFavoriteUseCase(name, value = true)
-        coVerify { repository.add(Favorited(testCocktail.drinkName)) }
+        coVerify { repository.add(Favorited(name)) }
     }
 }

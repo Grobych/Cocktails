@@ -13,9 +13,8 @@ import org.junit.Test
 
 class GetRecipeDetailsUseCaseTest {
     private val repository = mockk<CocktailRepository>()
-    private val getCocktailByIdUseCase = GetCocktailByIdUseCase(repository)
 
-    private val getRecipeDetailsUseCase = GetRecipeDetailsUseCase(getCocktailByIdUseCase)
+    private val getRecipeDetailsUseCase = GetRecipeDetailsUseCase(repository)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test

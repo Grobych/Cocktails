@@ -3,9 +3,9 @@ package com.globa.cocktails.ui.cocktaillist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.data.favorite.api.Favorited
-import com.globa.cocktails.domain.favorites.GetFavoritesUseCase
-import com.globa.cocktails.domain.favorites.IsFavoriteCocktailUseCase
-import com.globa.cocktails.domain.favorites.SetIsFavoriteUseCase
+import com.globa.cocktails.domain.favorite.GetFavoritesUseCase
+import com.globa.cocktails.domain.favorite.IsFavoriteCocktailUseCase
+import com.globa.cocktails.domain.favorite.SetIsFavoriteUseCase
 import com.globa.cocktails.domain.getrandom.GetRandomRecipeUseCase
 import com.globa.cocktails.domain.getreceipes.FilterCocktailsUseCase
 import com.globa.cocktails.domain.getreceipes.GetAllReceipesUseCase

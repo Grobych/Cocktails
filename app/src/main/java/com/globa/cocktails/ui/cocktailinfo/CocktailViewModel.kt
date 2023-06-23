@@ -4,9 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globa.cocktails.data.favorite.api.Favorited
-import com.globa.cocktails.domain.favorites.GetFavoritesUseCase
-import com.globa.cocktails.domain.favorites.IsFavoriteCocktailUseCase
-import com.globa.cocktails.domain.favorites.SetIsFavoriteUseCase
+import com.globa.cocktails.domain.favorite.GetFavoritesUseCase
+import com.globa.cocktails.domain.favorite.IsFavoriteCocktailUseCase
+import com.globa.cocktails.domain.favorite.SetIsFavoriteUseCase
 import com.globa.cocktails.domain.getrecipesdetails.GetRecipeDetailsUseCase
 import com.globa.cocktails.domain.getrecipesdetails.RecipeDetails
 import dagger.hilt.android.lifecycle.HiltViewModel

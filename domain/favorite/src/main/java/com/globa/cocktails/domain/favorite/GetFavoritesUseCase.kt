@@ -1,4 +1,4 @@
-package com.globa.cocktails.domain.favorites
+package com.globa.cocktails.domain.favorite
 
 import com.globa.cocktails.data.favorite.api.FavoritedCocktailRepository
 import javax.inject.Inject

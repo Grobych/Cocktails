@@ -1,10 +1,11 @@
-package com.globa.cocktails.domain.favorites
+package com.globa.cocktails.domain.favorite
 
 import com.globa.cocktails.data.favorite.api.Favorited
+import com.globa.cocktails.data.favorite.api.FavoritedCocktailRepository
 import javax.inject.Inject
 
 class SetIsFavoriteUseCase @Inject constructor(
-    private val favoriteRepository: com.globa.cocktails.data.favorite.api.FavoritedCocktailRepository
+    private val favoriteRepository: FavoritedCocktailRepository
 ) {
     suspend operator fun invoke(name: String, value: Boolean) {
         if (value) favoriteRepository.add(Favorited(name = name))

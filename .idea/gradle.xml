@@ -18,6 +18,8 @@
             <option value="$PROJECT_DIR$/data/editlog" />
             <option value="$PROJECT_DIR$/data/favorite" />
             <option value="$PROJECT_DIR$/database" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/domain/favorite" />
             <option value="$PROJECT_DIR$/filestorage" />
           </set>
         </option>

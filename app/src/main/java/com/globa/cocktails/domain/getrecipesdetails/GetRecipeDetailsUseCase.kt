@@ -1,13 +1,14 @@
 package com.globa.cocktails.domain.getrecipesdetails
 
-import com.globa.cocktails.domain.GetCocktailByIdUseCase
+import com.globa.cocktails.data.cocktail.api.CocktailRepository
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetRecipeDetailsUseCase @Inject constructor(
-    private val getCocktailByIdUseCase: GetCocktailByIdUseCase
+    private val repository: CocktailRepository
+
 ) {
-    suspend operator fun invoke(id: Int) = getCocktailByIdUseCase(id)
+    suspend operator fun invoke(id: Int) = repository.getCocktail(id)
         .map {
             RecipeDetails(
                 id = it.id,

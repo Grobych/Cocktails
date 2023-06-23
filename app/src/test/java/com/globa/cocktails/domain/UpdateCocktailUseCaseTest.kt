@@ -4,7 +4,7 @@ import com.globa.cocktails.MainDispatcherRule
 import com.globa.cocktails.data.cocktail.api.Cocktail
 import com.globa.cocktails.data.cocktail.api.CocktailRepository
 import com.globa.cocktails.data.editlog.api.EditLogRepository
-import com.globa.cocktails.domain.editlog.AddEditLogUseCase
+import com.globa.cocktails.domain.editrecipe.AddEditLogUseCase
 import com.globa.cocktails.domain.editrecipe.RecipeEditable
 import com.globa.cocktails.domain.editrecipe.UpdateCocktailUseCase
 import io.mockk.coEvery
@@ -25,8 +25,7 @@ class UpdateCocktailUseCaseTest {
     private val cocktailRepository = mockk<CocktailRepository>()
     private val editLogRepository = mockk<EditLogRepository>()
     private val addEditLogUseCase = AddEditLogUseCase(editLogRepository)
-    private val getCocktailByIdUseCase = GetCocktailByIdUseCase(cocktailRepository)
-    private val updateCocktailUseCase = UpdateCocktailUseCase(cocktailRepository, addEditLogUseCase, getCocktailByIdUseCase)
+    private val updateCocktailUseCase = UpdateCocktailUseCase(cocktailRepository, addEditLogUseCase)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
