@@ -25,6 +25,8 @@ class GetFavoritesUseCaseTest {
         coEvery { repository.getFavorites() } returns flowOf(repoFavorited)
 
         val res = getFavoritesUseCase()
-        assert(res.first() == repoFavorited)
+        assert(res.first()[0] == "1")
+        assert(res.first()[1] == "3")
+        assert(res.first()[2] == "5")
     }
 }

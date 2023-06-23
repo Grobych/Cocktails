@@ -3,17 +3,15 @@ package com.globa.cocktails.ui.cocktailinfo
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globa.cocktails.data.favorite.api.Favorited
 import com.globa.cocktails.domain.favorite.GetFavoritesUseCase
-import com.globa.cocktails.domain.favorite.IsFavoriteCocktailUseCase
 import com.globa.cocktails.domain.favorite.SetIsFavoriteUseCase
 import com.globa.cocktails.domain.recipedetails.GetRecipeDetailsUseCase
+import com.globa.cocktails.domain.recipedetails.RecipeDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.flow.update
@@ -24,7 +22,6 @@ import javax.inject.Inject
 class CocktailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getRecipeDetailsUseCase: GetRecipeDetailsUseCase,
-    private val isFavoriteUseCase: IsFavoriteCocktailUseCase,
     private val getFavoritesUseCase: GetFavoritesUseCase,
     private val setIsFavoriteUseCase: SetIsFavoriteUseCase
 ) : ViewModel() {
@@ -40,8 +37,8 @@ class CocktailViewModel @Inject constructor(
     private fun fetchCocktail() = viewModelScope.launch {
         if (cocktailId != null) {
             getRecipeDetailsUseCase(id = cocktailId)
-                .combine(getFavoritesUseCase()) { recipeDetails: com.globa.cocktails.domain.recipedetails.RecipeDetails, _: List<Favorited> ->
-                    recipeDetails.copy(isFavorite = isFavoriteUseCase(recipeDetails.name).first()) //TODO: rewrite
+                .combine(getFavoritesUseCase()) { recipeDetails: RecipeDetails, favorites: List<String> ->
+                    recipeDetails.copy(isFavorite = favorites.contains(recipeDetails.name))
                 }
                 .onEach {cocktail ->
                     _uiState.update {

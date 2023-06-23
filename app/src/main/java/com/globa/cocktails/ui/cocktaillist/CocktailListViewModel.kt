@@ -2,7 +2,6 @@ package com.globa.cocktails.ui.cocktaillist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globa.cocktails.data.favorite.api.Favorited
 import com.globa.cocktails.domain.favorite.GetFavoritesUseCase
 import com.globa.cocktails.domain.favorite.IsFavoriteCocktailUseCase
 import com.globa.cocktails.domain.favorite.SetIsFavoriteUseCase
@@ -49,7 +48,7 @@ class CocktailListViewModel @Inject constructor(
                     else CocktailListUiState.Error(trowable.toString())
                 }
             }
-            .combine(getFavoritesUseCase()) { cocktails: List<RecipePreview>, _: List<Favorited> ->
+            .combine(getFavoritesUseCase()) { cocktails: List<RecipePreview>, _: List<String> ->
                 cocktails.map { it.copy(isFavorite = isFavoriteUseCase(it.name).first())}
             }
             .combine(selectorUiState) { cocktails: List<RecipePreview>, state: CocktailSelectorUiState ->
