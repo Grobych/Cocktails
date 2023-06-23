@@ -1,7 +1,7 @@
 package com.globa.cocktails
 
 import android.app.Application
-import com.globa.cocktails.domain.LoadCocktailsUseCase
+import com.globa.cocktails.domain.update.LoadCocktailsUseCase
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
