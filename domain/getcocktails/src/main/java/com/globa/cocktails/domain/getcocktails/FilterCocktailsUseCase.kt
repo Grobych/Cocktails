@@ -1,4 +1,4 @@
-package com.globa.cocktails.domain.getreceipes
+package com.globa.cocktails.domain.getcocktails
 
 import javax.inject.Inject
 

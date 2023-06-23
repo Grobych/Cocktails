@@ -1,8 +1,7 @@
-package com.globa.cocktails.domain
+package com.globa.cocktails.domain.favorite
 
 import com.globa.cocktails.data.favorite.api.Favorited
 import com.globa.cocktails.data.favorite.api.FavoritedCocktailRepository
-import com.globa.cocktails.domain.favorite.IsFavoriteCocktailUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

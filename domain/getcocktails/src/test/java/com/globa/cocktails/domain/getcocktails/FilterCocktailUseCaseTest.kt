@@ -1,17 +1,25 @@
-package com.globa.cocktails.domain
+package com.globa.cocktails.domain.getcocktails
 
-import com.globa.cocktails.domain.getreceipes.FilterCocktailsUseCase
-import com.globa.cocktails.domain.getreceipes.RecipePreview
 import org.junit.Test
 
 class FilterCocktailUseCaseTest {
 
-    private val filterCocktailsUseCase = FilterCocktailsUseCase()
+    private val filterCocktailsUseCase =
+        FilterCocktailsUseCase()
 
     private val cocktails = listOf(
-        RecipePreview(name = "Test", tags = listOf("Rum", "Cola")),
-        RecipePreview(name = "Some", tags = listOf("Vodka")),
-        RecipePreview(name = "Another", tags = listOf("Cream","Sugar","Rum"))
+        RecipePreview(
+            name = "Test",
+            tags = listOf("Rum", "Cola")
+        ),
+        RecipePreview(
+            name = "Some",
+            tags = listOf("Vodka")
+        ),
+        RecipePreview(
+            name = "Another",
+            tags = listOf("Cream", "Sugar", "Rum")
+        )
     )
 
     @Test

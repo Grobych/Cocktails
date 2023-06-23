@@ -1,7 +1,8 @@
-package com.globa.cocktails.domain.getreceipes
+package com.globa.cocktails.domain.getcocktails
 
 import com.globa.cocktails.data.cocktail.api.Cocktail
 
+//TODO: remove isFavorite
 data class RecipePreview(
     val id: Int = 0,
     val name: String = "",

@@ -6,11 +6,11 @@ import com.globa.cocktails.data.favorite.api.Favorited
 import com.globa.cocktails.domain.favorite.GetFavoritesUseCase
 import com.globa.cocktails.domain.favorite.IsFavoriteCocktailUseCase
 import com.globa.cocktails.domain.favorite.SetIsFavoriteUseCase
+import com.globa.cocktails.domain.getcocktails.FilterCocktailsUseCase
+import com.globa.cocktails.domain.getcocktails.GetAllReceipesUseCase
+import com.globa.cocktails.domain.getcocktails.GetFavoriteCocktailsUseCase
+import com.globa.cocktails.domain.getcocktails.RecipePreview
 import com.globa.cocktails.domain.getrandom.GetRandomRecipeUseCase
-import com.globa.cocktails.domain.getreceipes.FilterCocktailsUseCase
-import com.globa.cocktails.domain.getreceipes.GetAllReceipesUseCase
-import com.globa.cocktails.domain.getreceipes.GetFavoriteCocktailsUseCase
-import com.globa.cocktails.domain.getreceipes.RecipePreview
 import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

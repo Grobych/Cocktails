@@ -43,7 +43,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.domain.getrandom.GetRandomResult
-import com.globa.cocktails.domain.getreceipes.RecipePreview
 import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs
 import com.globa.cocktails.ui.theme.DPs.headerHeight
@@ -85,7 +84,7 @@ fun CocktailListScreen(
         viewModel.addFilterTag(it)
     }
 
-    val changeIsFavorite: (RecipePreview) -> Unit = {
+    val changeIsFavorite: (com.globa.cocktails.domain.getcocktails.RecipePreview) -> Unit = {
         viewModel.changeIsFavorite(it.name,it.isFavorite.not())
     }
 
@@ -173,7 +172,7 @@ fun Header(
 }
 
 @Composable
-fun CocktailList(list: List<RecipePreview>, onItemClickAction: (Int) -> Unit, onTagClicked: (String) -> Unit, onFavoriteClicked: (RecipePreview) -> Unit) {
+fun CocktailList(list: List<com.globa.cocktails.domain.getcocktails.RecipePreview>, onItemClickAction: (Int) -> Unit, onTagClicked: (String) -> Unit, onFavoriteClicked: (com.globa.cocktails.domain.getcocktails.RecipePreview) -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(bottom = DPs.line)
     ) {
@@ -194,10 +193,10 @@ fun CocktailList(list: List<RecipePreview>, onItemClickAction: (Int) -> Unit, on
 
 @Composable
 fun CocktailListItem(
-    receipePreview: RecipePreview,
+    receipePreview: com.globa.cocktails.domain.getcocktails.RecipePreview,
     onItemClickAction: () -> Unit,
     onTagClicked: (String) -> Unit,
-    onFavoriteClicked: (RecipePreview) -> Unit
+    onFavoriteClicked: (com.globa.cocktails.domain.getcocktails.RecipePreview) -> Unit
 ) {
     Row (
         modifier = Modifier
@@ -345,11 +344,11 @@ fun EmptyList() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun CocktailListItemPreview(){
-    val receipePreview = RecipePreview(
+    val receipePreview = com.globa.cocktails.domain.getcocktails.RecipePreview(
         id = 0,
         name = "Margarita",
         imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
-        tags = listOf("Tequila","Triple sec","Lime juice","Agava", "Salt", "Vodka"),
+        tags = listOf("Tequila", "Triple sec", "Lime juice", "Agava", "Salt", "Vodka"),
         isFavorite = false
     )
 
