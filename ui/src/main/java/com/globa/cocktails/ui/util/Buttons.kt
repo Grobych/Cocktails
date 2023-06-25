@@ -18,8 +18,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.globa.cocktails.R
-import com.globa.cocktails.ui.theme.AppTheme
+import com.globa.cocktails.ui.R
 import com.globa.cocktails.ui.theme.DPs.iconButtonSize
 
 @Composable
@@ -158,7 +157,7 @@ fun FooterButton(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview
 fun AddButtonPreview() {
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface(Modifier.size(45.dp)) {
             AddButton(onClickAction = {})
         }
@@ -169,7 +168,7 @@ fun AddButtonPreview() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview
 fun MenuButtonPreview() {
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface(Modifier.size(45.dp)) {
             MenuButton(onClickAction = {})
         }
@@ -180,7 +179,7 @@ fun MenuButtonPreview() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview
 fun NotFavoriteButtonPreview() {
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface(Modifier.size(45.dp)) {
             FavoriteButton(isFavorited = false, onClickAction = {})
         }
@@ -191,7 +190,7 @@ fun NotFavoriteButtonPreview() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview
 fun FavoriteButtonPreview() {
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface(Modifier.size(45.dp)) {
             FavoriteButton(isFavorited = true, onClickAction = {})
         }

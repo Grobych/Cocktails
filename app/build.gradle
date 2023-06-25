@@ -64,6 +64,7 @@ android {
 
 dependencies {
 
+    implementation project(path: ':ui')
     implementation project(path: ':domain:favorite')
     implementation project(path: ':domain:edit')
     implementation project(path: ':domain:getcocktails')

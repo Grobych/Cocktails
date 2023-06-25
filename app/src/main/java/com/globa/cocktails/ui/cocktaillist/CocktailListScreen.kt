@@ -43,8 +43,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.domain.random.GetRandomResult
-import com.globa.cocktails.ui.theme.AppTheme
-import com.globa.cocktails.ui.theme.DPs
 import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.Paddings
 import com.globa.cocktails.ui.util.AddButton
@@ -174,7 +172,7 @@ fun Header(
 @Composable
 fun CocktailList(list: List<com.globa.cocktails.domain.getcocktails.RecipePreview>, onItemClickAction: (Int) -> Unit, onTagClicked: (String) -> Unit, onFavoriteClicked: (com.globa.cocktails.domain.getcocktails.RecipePreview) -> Unit) {
     LazyColumn(
-        contentPadding = PaddingValues(bottom = DPs.line)
+        contentPadding = PaddingValues(bottom = com.globa.cocktails.ui.theme.DPs.line)
     ) {
         items(
             items = list,
@@ -186,7 +184,7 @@ fun CocktailList(list: List<com.globa.cocktails.domain.getcocktails.RecipePrevie
                 onTagClicked = onTagClicked,
                 onFavoriteClicked = onFavoriteClicked
             )
-            Divider(modifier = Modifier.padding(start = Paddings.large, end = Paddings.large), thickness = DPs.line)
+            Divider(modifier = Modifier.padding(start = Paddings.large, end = Paddings.large), thickness = com.globa.cocktails.ui.theme.DPs.line)
         }
     }
 }
@@ -352,11 +350,15 @@ fun CocktailListItemPreview(){
         isFavorite = false
     )
 
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface(
             modifier = Modifier.width(480.dp)
         ) {
-            CocktailListItem(receipePreview = receipePreview, onTagClicked = {}, onItemClickAction = {}, onFavoriteClicked = {})
+            CocktailListItem(
+                receipePreview = receipePreview,
+                onTagClicked = {},
+                onItemClickAction = {},
+                onFavoriteClicked = {})
         }
     }
 }
@@ -369,7 +371,7 @@ fun HeaderPreview() {
         "",
         emptyList()
     )
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface(
             modifier = Modifier.width(480.dp)
         ) {
@@ -387,7 +389,7 @@ fun HeaderPreview() {
 @Composable
 fun FooterPreview() {
     val selectorUiState = CocktailSelectorUiState()
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface {
             Footer(
                 selectorUiState = selectorUiState,

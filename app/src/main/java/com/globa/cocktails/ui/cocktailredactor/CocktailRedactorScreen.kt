@@ -51,9 +51,7 @@ import com.globa.cocktails.domain.edit.RecipeEditable
 import com.globa.cocktails.domain.edit.RemoveIngredientUseCase
 import com.globa.cocktails.ui.cocktaillist.ErrorComposable
 import com.globa.cocktails.ui.cocktaillist.LoadingComposable
-import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs
-import com.globa.cocktails.ui.theme.Paddings
 import com.globa.cocktails.ui.util.BackButton
 import kotlinx.coroutines.launch
 
@@ -134,7 +132,7 @@ fun RedactorScreenHeader(
             .background(
                 color = MaterialTheme.colorScheme.background
             )
-            .padding(start = Paddings.large, end = Paddings.large),
+            .padding(start = com.globa.cocktails.ui.theme.Paddings.large, end = com.globa.cocktails.ui.theme.Paddings.large),
     ) {
         BackButton(
             modifier = Modifier.align(Alignment.CenterStart),
@@ -172,10 +170,10 @@ fun RedactorScreenBody(
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.surface)
                 .padding(
-                    top = Paddings.largeLarge,
-                    bottom = Paddings.largeLarge,
-                    start = Paddings.large,
-                    end = Paddings.large
+                    top = com.globa.cocktails.ui.theme.Paddings.largeLarge,
+                    bottom = com.globa.cocktails.ui.theme.Paddings.largeLarge,
+                    start = com.globa.cocktails.ui.theme.Paddings.large,
+                    end = com.globa.cocktails.ui.theme.Paddings.large
                 )
                 .verticalScroll(scrollState)
             ,
@@ -189,14 +187,14 @@ fun RedactorScreenBody(
             NameBlock(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = Paddings.large),
+                    .padding(top = com.globa.cocktails.ui.theme.Paddings.large),
                 name = cocktail.name,
                 isError = isNameError,
                 onNameChanged = {onItemChange(cocktail.copy(name = it))},
                 mode = mode
             )
             EditableIngredientListScreen(
-                modifier.padding(top = Paddings.large),
+                modifier.padding(top = com.globa.cocktails.ui.theme.Paddings.large),
                 ingredients = cocktail.ingredients,
                 measures = cocktail.measures,
                 isErrors = isIngredientsError,
@@ -221,7 +219,7 @@ fun RedactorScreenBody(
                 }
             )
             InstructionsBlock(
-                modifier = Modifier.padding(top = Paddings.large),
+                modifier = Modifier.padding(top = com.globa.cocktails.ui.theme.Paddings.large),
                 text = cocktail.instructions,
                 isError = isInstructionError,
                 onTextChanged = {onItemChange(cocktail.copy(instructions = it))}
@@ -258,7 +256,7 @@ fun RedactorScreenImage(
                             bottomStart = DPs.largeImageRound
                         )
                     )
-                    .padding(top = Paddings.large)
+                    .padding(top = com.globa.cocktails.ui.theme.Paddings.large)
             )
         }
         RedactorMode.ADD-> {
@@ -272,7 +270,7 @@ fun RedactorScreenImage(
                         )
                     )
                     .background(color = MaterialTheme.colorScheme.background)
-                    .padding(top = Paddings.large)
+                    .padding(top = com.globa.cocktails.ui.theme.Paddings.large)
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_add_2),
@@ -302,7 +300,7 @@ fun NameBlock(
         label = {
             Text(
                 text = "Name",
-                modifier = Modifier.padding(bottom = Paddings.extraSmall)
+                modifier = Modifier.padding(bottom = com.globa.cocktails.ui.theme.Paddings.extraSmall)
             )
         },
         isError = isError,
@@ -332,7 +330,7 @@ fun EditableIngredientListScreen(
         ingredients.forEachIndexed {i, item ->
             Row(
                 modifier = Modifier
-                    .padding(top = Paddings.large)
+                    .padding(top = com.globa.cocktails.ui.theme.Paddings.large)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -348,7 +346,7 @@ fun EditableIngredientListScreen(
                     label = {
                         Text(
                             text = "Ingredient $i",
-                            modifier = Modifier.padding(bottom = Paddings.small)
+                            modifier = Modifier.padding(bottom = com.globa.cocktails.ui.theme.Paddings.small)
                         )
                     },
                     singleLine = true,
@@ -365,13 +363,13 @@ fun EditableIngredientListScreen(
                     modifier = Modifier
                         .width(100.dp)
                         .padding(
-                            start = Paddings.large,
+                            start = com.globa.cocktails.ui.theme.Paddings.large,
                         )
                     ,
                     label = {
                         Text(
                             text = "Amount",
-                            modifier = Modifier.padding(bottom = Paddings.small),
+                            modifier = Modifier.padding(bottom = com.globa.cocktails.ui.theme.Paddings.small),
                             maxLines = 1
                         )
                     },
@@ -381,7 +379,7 @@ fun EditableIngredientListScreen(
                 IconButton(
                     onClick = { onRemoveButtonClick(i) },
                     modifier = Modifier
-                        .padding(start = Paddings.large, end = 4.dp)
+                        .padding(start = com.globa.cocktails.ui.theme.Paddings.large, end = 4.dp)
                         .size(24.dp)
                 ) {
                     Icon(
@@ -400,7 +398,7 @@ fun EditableIngredientListScreen(
             ),
             modifier = Modifier
                 .clickable { onAddButtonClick() }
-                .padding(top = Paddings.large)
+                .padding(top = com.globa.cocktails.ui.theme.Paddings.large)
         )
     }
 }
@@ -419,7 +417,7 @@ fun InstructionsBlock(
     ) {
         Text(
             text = "Receipe descryption",
-            modifier = Modifier.padding(top = Paddings.large),
+            modifier = Modifier.padding(top = com.globa.cocktails.ui.theme.Paddings.large),
             style = MaterialTheme.typography.titleMedium.plus(
                 TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
             )
@@ -429,7 +427,7 @@ fun InstructionsBlock(
             onValueChange = {onTextChanged(it)},
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = Paddings.large),
+                .padding(top = com.globa.cocktails.ui.theme.Paddings.large),
             textStyle = MaterialTheme.typography.bodyLarge,
             isError = isError,
             shape = MaterialTheme.shapes.medium
@@ -445,7 +443,7 @@ fun SaveFloatingButton(
         onClick = {onClickButton()},
         containerColor = MaterialTheme.colorScheme.secondaryContainer,
         modifier = Modifier
-            .padding(bottom = Paddings.medium, end = Paddings.largeLarge)
+            .padding(bottom = com.globa.cocktails.ui.theme.Paddings.medium, end = com.globa.cocktails.ui.theme.Paddings.largeLarge)
             .width(92.dp)
             .height(40.dp),
         shape = MaterialTheme.shapes.extraLarge,
@@ -502,7 +500,7 @@ val testCocktail = RecipeEditable(
 @Composable
 fun RedactorScreenPreview() {
 
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface {
             RedactorScreenBody(
                 cocktail = testCocktail,
@@ -520,7 +518,7 @@ fun RedactorScreenPreview() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun RedactorIngredientListPreview() {
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface {
             EditableIngredientListScreen(
                 ingredients = testCocktail.ingredients,
@@ -539,9 +537,9 @@ fun RedactorIngredientListPreview() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun SaveDialogPreview() {
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface {
-            SaveDialog({},{})
+            SaveDialog({}, {})
         }
     }
 }

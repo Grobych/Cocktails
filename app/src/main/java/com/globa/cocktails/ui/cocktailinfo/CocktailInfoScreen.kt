@@ -35,7 +35,6 @@ import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.domain.recipedetails.RecipeDetailsTagType
 import com.globa.cocktails.ui.cocktailredactor.RedactorMode
-import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.DPs.largeImageRound
 import com.globa.cocktails.ui.theme.Paddings
@@ -312,9 +311,16 @@ private val testCocktail = com.globa.cocktails.domain.recipedetails.RecipeDetail
 @Preview
 fun HeaderPreview() {
     val name = testCocktail.name
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface {
-            Header(cocktailName = name, modifier = Modifier.width(420.dp), onFavoriteButtonClick = {}, onBackButtonClick = {}, onEditButtonClick = {}, isFavorited = false)
+            Header(
+                cocktailName = name,
+                modifier = Modifier.width(420.dp),
+                onFavoriteButtonClick = {},
+                onBackButtonClick = {},
+                onEditButtonClick = {},
+                isFavorited = false
+            )
         }
     }
 }
@@ -324,7 +330,7 @@ fun HeaderPreview() {
 @Preview
 fun InstructionsPreview() {
     val instructions = testCocktail.instructions
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface {
             Instructions(instructions = instructions, modifier = Modifier.padding(16.dp))
         }
@@ -337,7 +343,7 @@ fun InstructionsPreview() {
 fun IngredientsPreview() {
     val ingredients = testCocktail.ingredients
     val measures = testCocktail.measures
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface {
             Ingredients(
                 ingredients = ingredients, measures = measures,
@@ -352,9 +358,13 @@ fun IngredientsPreview() {
 @Composable
 @Preview
 fun CocktailInfoPreview() {
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface {
-            CocktailInfo(cocktail = testCocktail, onFavoriteButtonClick = {}, onBackButtonClick = {}, onEditButtonClick = {})
+            CocktailInfo(
+                cocktail = testCocktail,
+                onFavoriteButtonClick = {},
+                onBackButtonClick = {},
+                onEditButtonClick = {})
         }
     }
 }

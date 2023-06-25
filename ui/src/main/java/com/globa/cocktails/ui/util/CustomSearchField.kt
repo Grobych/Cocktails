@@ -26,8 +26,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.globa.cocktails.R
-import com.globa.cocktails.ui.theme.AppTheme
+import com.globa.cocktails.ui.R
 
 @Composable
 fun CustomSearchField(
@@ -109,7 +108,7 @@ fun CustomSearchFieldPreview() {
         println(line)
     }
     val onTagClicked: (String) -> Unit = {}
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface {
             CustomSearchField(
                 modifier = Modifier.width(300.dp),
@@ -132,7 +131,7 @@ fun CustomSearchFieldPreviewWithTags() {
         println(line)
     }
     val onTagClicked: (String) -> Unit = {}
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface {
             CustomSearchField(
                 modifier = Modifier.width(300.dp),

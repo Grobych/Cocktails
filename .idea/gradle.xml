@@ -26,6 +26,7 @@
             <option value="$PROJECT_DIR$/domain/recipedetails" />
             <option value="$PROJECT_DIR$/domain/update" />
             <option value="$PROJECT_DIR$/filestorage" />
+            <option value="$PROJECT_DIR$/ui" />
           </set>
         </option>
       </GradleProjectSettings>

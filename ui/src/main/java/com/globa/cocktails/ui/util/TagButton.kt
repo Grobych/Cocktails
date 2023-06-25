@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.globa.cocktails.ui.theme.AppTheme
 
 @Composable
 fun TagButton(
@@ -45,7 +44,7 @@ fun TagButton(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun TagButtonPreviewLight() {
-    AppTheme {
+    com.globa.cocktails.ui.theme.AppTheme {
         Surface {
             TagButton(text = "SomeTag", modifier = Modifier) {
 

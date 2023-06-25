@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.globa.cocktails.R
+import com.globa.cocktails.ui.R
 
 val roboto = FontFamily(
     Font(R.font.roboto_medium, weight = FontWeight.Medium),
