@@ -2,6 +2,7 @@ package com.globa.cocktails.ui.cocktaillist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.globa.cocktails.common.contains
 import com.globa.cocktails.domain.favorite.GetFavoritesUseCase
 import com.globa.cocktails.domain.favorite.IsFavoriteCocktailUseCase
 import com.globa.cocktails.domain.favorite.SetIsFavoriteUseCase
@@ -10,7 +11,6 @@ import com.globa.cocktails.domain.getcocktails.GetAllReceipesUseCase
 import com.globa.cocktails.domain.getcocktails.GetFavoriteCocktailsUseCase
 import com.globa.cocktails.domain.getcocktails.RecipePreview
 import com.globa.cocktails.domain.random.GetRandomRecipeUseCase
-import com.globa.cocktails.utils.contains
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
