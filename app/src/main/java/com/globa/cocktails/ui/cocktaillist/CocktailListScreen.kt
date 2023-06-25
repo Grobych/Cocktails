@@ -47,9 +47,10 @@ import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.Paddings
 import com.globa.cocktails.ui.util.AddButton
 import com.globa.cocktails.ui.util.CustomSearchField
+import com.globa.cocktails.ui.util.ErrorComposable
 import com.globa.cocktails.ui.util.FavoriteButton
 import com.globa.cocktails.ui.util.FooterButton
-import com.globa.cocktails.ui.util.LoadingAnimation
+import com.globa.cocktails.ui.util.LoadingComposable
 import com.globa.cocktails.ui.util.MenuButton
 import com.globa.cocktails.ui.util.TagButton
 
@@ -306,26 +307,6 @@ fun Footer(
             icon = R.drawable.ic_random_receipe,
             text = "Random"
         )
-    }
-}
-
-@Composable
-fun LoadingComposable() {
-    Row(
-        modifier = Modifier.fillMaxSize(),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        LoadingAnimation()
-    }
-}
-
-@Composable
-fun ErrorComposable(errorMessage: String) {
-    Row (
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text(text = "ERROR: $errorMessage")
     }
 }
 

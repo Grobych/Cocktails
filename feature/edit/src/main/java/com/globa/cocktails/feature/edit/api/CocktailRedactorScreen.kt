@@ -1,4 +1,4 @@
-package com.globa.cocktails.ui.cocktailredactor
+package com.globa.cocktails.feature.edit.api
 
 import android.content.res.Configuration
 import android.widget.Toast
@@ -46,13 +46,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.globa.cocktails.R
 import com.globa.cocktails.domain.edit.RecipeEditable
 import com.globa.cocktails.domain.edit.RemoveIngredientUseCase
-import com.globa.cocktails.ui.cocktaillist.ErrorComposable
-import com.globa.cocktails.ui.cocktaillist.LoadingComposable
+import com.globa.cocktails.feature.edit.R
+import com.globa.cocktails.feature.edit.internal.CocktailRedactorUiState
+import com.globa.cocktails.feature.edit.internal.CocktailRedactorViewModel
+import com.globa.cocktails.feature.edit.internal.RedactorMode
 import com.globa.cocktails.ui.theme.DPs
 import com.globa.cocktails.ui.util.BackButton
+import com.globa.cocktails.ui.util.ErrorComposable
+import com.globa.cocktails.ui.util.LoadingComposable
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -95,7 +98,8 @@ fun CocktailRedactorScreen(
                 topBar = { RedactorScreenHeader(state.mode, onBackButtonClick) },
                 floatingActionButton = { SaveFloatingButton {
                     viewModel.tryToSave()
-                }}
+                }
+                }
             ) {
                 RedactorScreenBody(
                     modifier = Modifier

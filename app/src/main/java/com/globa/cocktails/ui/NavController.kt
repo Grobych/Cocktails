@@ -6,10 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.globa.cocktails.feature.edit.api.CocktailRedactorScreen
 import com.globa.cocktails.ui.cocktailinfo.CocktailInfoScreen
 import com.globa.cocktails.ui.cocktaillist.CocktailListScreen
-import com.globa.cocktails.ui.cocktailredactor.CocktailRedactorScreen
-import com.globa.cocktails.ui.cocktailredactor.RedactorMode
 
 @Composable
 fun NavController() {
@@ -18,8 +17,8 @@ fun NavController() {
     val navigateToCocktail: (Int) -> Unit = { cocktailId ->
         navController.navigate("cocktailInfo?cocktailId=${cocktailId}")
     }
-    val navigateToRedactor: (Int, RedactorMode) -> Unit = { cocktailId, mode ->
-        navController.navigate("cocktailRedactor?cocktailId=${cocktailId}&mode=${mode.name}")
+    val navigateToRedactor: (Int, String) -> Unit = { cocktailId, mode ->
+        navController.navigate("cocktailRedactor?cocktailId=${cocktailId}&mode=${mode}")
     }
     val navigateToBack: () -> Unit = {
         navController.popBackStack()

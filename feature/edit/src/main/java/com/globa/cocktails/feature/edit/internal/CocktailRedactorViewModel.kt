@@ -1,4 +1,4 @@
-package com.globa.cocktails.ui.cocktailredactor
+package com.globa.cocktails.feature.edit.internal
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

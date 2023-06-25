@@ -34,7 +34,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.R
 import com.globa.cocktails.domain.recipedetails.RecipeDetailsTagType
-import com.globa.cocktails.ui.cocktailredactor.RedactorMode
 import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.DPs.largeImageRound
 import com.globa.cocktails.ui.theme.Paddings
@@ -48,7 +47,7 @@ import com.globa.cocktails.ui.util.TagButton
 fun CocktailInfoScreen(
     viewModel: CocktailViewModel = hiltViewModel(),
     onBackButtonClick: () -> Unit,
-    navigateToRedactor: (Int, RedactorMode) -> Unit
+    navigateToRedactor: (Int, String) -> Unit
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -61,7 +60,7 @@ fun CocktailInfoScreen(
     val onEditButtonClick: () -> Unit = {
         if (uiState is CocktailUiState.Success) {
             val cocktailId = (uiState as CocktailUiState.Success).cocktail.id
-            navigateToRedactor(cocktailId, RedactorMode.EDIT)
+            navigateToRedactor(cocktailId, "EDIT") //TODO: expand to constant
         }
     }
 
