@@ -1,4 +1,4 @@
-package com.globa.cocktails.ui.cocktaillist
+package com.globa.cocktails.feature.cocktails.api
 
 import android.content.res.Configuration
 import android.widget.Toast
@@ -41,8 +41,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.globa.cocktails.R
+import com.globa.cocktails.domain.getcocktails.RecipePreview
 import com.globa.cocktails.domain.random.GetRandomResult
+import com.globa.cocktails.feature.cocktails.R
+import com.globa.cocktails.feature.cocktails.internal.FooterSelector
 import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.Paddings
 import com.globa.cocktails.ui.util.AddButton
@@ -57,7 +59,7 @@ import com.globa.cocktails.ui.util.TagButton
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CocktailListScreen(
-    viewModel: CocktailListViewModel = hiltViewModel(),
+    viewModel: com.globa.cocktails.feature.cocktails.internal.CocktailListViewModel = hiltViewModel(),
     onItemClickAction: (Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -83,7 +85,7 @@ fun CocktailListScreen(
         viewModel.addFilterTag(it)
     }
 
-    val changeIsFavorite: (com.globa.cocktails.domain.getcocktails.RecipePreview) -> Unit = {
+    val changeIsFavorite: (RecipePreview) -> Unit = {
         viewModel.changeIsFavorite(it.name,it.isFavorite.not())
     }
 
@@ -95,13 +97,13 @@ fun CocktailListScreen(
     }
 
     when (val state = uiState) {
-        is CocktailListUiState.Loading -> {
+        is com.globa.cocktails.feature.cocktails.internal.CocktailListUiState.Loading -> {
             LoadingComposable()
         }
-        is CocktailListUiState.Error -> {
+        is com.globa.cocktails.feature.cocktails.internal.CocktailListUiState.Error -> {
             ErrorComposable(errorMessage = state.message)
         }
-        is CocktailListUiState.Done -> {
+        is com.globa.cocktails.feature.cocktails.internal.CocktailListUiState.Done -> {
 
             Scaffold(
                 topBar = {
@@ -137,7 +139,7 @@ fun CocktailListScreen(
 
 @Composable
 fun Header(
-    filterUiState: CocktailFilterUiState,
+    filterUiState: com.globa.cocktails.feature.cocktails.internal.CocktailFilterUiState,
     onFilterChangeAction: (String) -> Unit,
     onTagClicked: (String) -> Unit
 ) {
@@ -171,7 +173,7 @@ fun Header(
 }
 
 @Composable
-fun CocktailList(list: List<com.globa.cocktails.domain.getcocktails.RecipePreview>, onItemClickAction: (Int) -> Unit, onTagClicked: (String) -> Unit, onFavoriteClicked: (com.globa.cocktails.domain.getcocktails.RecipePreview) -> Unit) {
+fun CocktailList(list: List<RecipePreview>, onItemClickAction: (Int) -> Unit, onTagClicked: (String) -> Unit, onFavoriteClicked: (RecipePreview) -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(bottom = com.globa.cocktails.ui.theme.DPs.line)
     ) {
@@ -192,10 +194,10 @@ fun CocktailList(list: List<com.globa.cocktails.domain.getcocktails.RecipePrevie
 
 @Composable
 fun CocktailListItem(
-    receipePreview: com.globa.cocktails.domain.getcocktails.RecipePreview,
+    receipePreview: RecipePreview,
     onItemClickAction: () -> Unit,
     onTagClicked: (String) -> Unit,
-    onFavoriteClicked: (com.globa.cocktails.domain.getcocktails.RecipePreview) -> Unit
+    onFavoriteClicked: (RecipePreview) -> Unit
 ) {
     Row (
         modifier = Modifier
@@ -268,7 +270,7 @@ fun TagField(
 
 @Composable
 fun Footer(
-    selectorUiState: CocktailSelectorUiState,
+    selectorUiState: com.globa.cocktails.feature.cocktails.internal.CocktailSelectorUiState,
     onAllReceipesClicked: () -> Unit,
     onMyReceipesClicked: () -> Unit,
     onFavoriteReceipesClicked: () -> Unit,
@@ -323,7 +325,7 @@ fun EmptyList() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun CocktailListItemPreview(){
-    val receipePreview = com.globa.cocktails.domain.getcocktails.RecipePreview(
+    val receipePreview = RecipePreview(
         id = 0,
         name = "Margarita",
         imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
@@ -348,7 +350,7 @@ fun CocktailListItemPreview(){
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun HeaderPreview() {
-    val filterUiState = CocktailFilterUiState(
+    val filterUiState = com.globa.cocktails.feature.cocktails.internal.CocktailFilterUiState(
         "",
         emptyList()
     )
@@ -369,7 +371,7 @@ fun HeaderPreview() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun FooterPreview() {
-    val selectorUiState = CocktailSelectorUiState()
+    val selectorUiState = com.globa.cocktails.feature.cocktails.internal.CocktailSelectorUiState()
     com.globa.cocktails.ui.theme.AppTheme {
         Surface {
             Footer(

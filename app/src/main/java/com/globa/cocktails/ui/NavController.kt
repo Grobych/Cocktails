@@ -6,9 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.globa.cocktails.feature.cocktails.api.CocktailListScreen
 import com.globa.cocktails.feature.details.api.CocktailInfoScreen
 import com.globa.cocktails.feature.edit.api.CocktailRedactorScreen
-import com.globa.cocktails.ui.cocktaillist.CocktailListScreen
 
 @Composable
 fun NavController() {

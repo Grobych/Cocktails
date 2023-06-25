@@ -1,4 +1,4 @@
-package com.globa.cocktails.ui.cocktaillist
+package com.globa.cocktails.feature.cocktails.internal
 
 data class CocktailFilterUiState(
     val line: String = "",
