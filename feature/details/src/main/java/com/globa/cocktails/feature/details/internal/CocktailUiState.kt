@@ -1,10 +1,6 @@
-package com.globa.cocktails.ui.cocktailinfo
+package com.globa.cocktails.feature.details.internal
 
 import com.globa.cocktails.domain.recipedetails.RecipeDetails
-
-//data class CocktailUiState(
-//    val cocktail: Cocktail
-//)
 
 sealed class CocktailUiState() {
     class Loading(): CocktailUiState()

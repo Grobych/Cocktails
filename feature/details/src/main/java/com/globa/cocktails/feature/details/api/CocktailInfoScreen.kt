@@ -1,4 +1,4 @@
-package com.globa.cocktails.ui.cocktailinfo
+package com.globa.cocktails.feature.details.api
 
 import android.content.res.Configuration
 import androidx.compose.foundation.ScrollState
@@ -32,8 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.globa.cocktails.R
 import com.globa.cocktails.domain.recipedetails.RecipeDetailsTagType
+import com.globa.cocktails.feature.details.R
 import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.DPs.largeImageRound
 import com.globa.cocktails.ui.theme.Paddings
@@ -45,21 +45,21 @@ import com.globa.cocktails.ui.util.TagButton
 
 @Composable
 fun CocktailInfoScreen(
-    viewModel: CocktailViewModel = hiltViewModel(),
+    viewModel: com.globa.cocktails.feature.details.internal.CocktailViewModel = hiltViewModel(),
     onBackButtonClick: () -> Unit,
     navigateToRedactor: (Int, String) -> Unit
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
     val onFavoriteButtonClick: () -> Unit = {
-        if (uiState is CocktailUiState.Success) {
-            val cocktail = (uiState as CocktailUiState.Success).cocktail
+        if (uiState is com.globa.cocktails.feature.details.internal.CocktailUiState.Success) {
+            val cocktail = (uiState as com.globa.cocktails.feature.details.internal.CocktailUiState.Success).cocktail
             viewModel.changeIsFavorite(cocktail.name, cocktail.isFavorite.not())
         }
     }
     val onEditButtonClick: () -> Unit = {
-        if (uiState is CocktailUiState.Success) {
-            val cocktailId = (uiState as CocktailUiState.Success).cocktail.id
+        if (uiState is com.globa.cocktails.feature.details.internal.CocktailUiState.Success) {
+            val cocktailId = (uiState as com.globa.cocktails.feature.details.internal.CocktailUiState.Success).cocktail.id
             navigateToRedactor(cocktailId, "EDIT") //TODO: expand to constant
         }
     }
@@ -69,15 +69,15 @@ fun CocktailInfoScreen(
 
 @Composable
 fun CocktailScreenSelect(
-    uiState: CocktailUiState,
+    uiState: com.globa.cocktails.feature.details.internal.CocktailUiState,
     onFavoriteButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
     onEditButtonClick: () -> Unit
 ) {
     when (uiState) {
-        is CocktailUiState.Loading -> CocktailLoading()
-        is CocktailUiState.Success -> CocktailInfo(cocktail = uiState.cocktail, onFavoriteButtonClick = onFavoriteButtonClick, onBackButtonClick = onBackButtonClick, onEditButtonClick = onEditButtonClick)
-        is CocktailUiState.Error -> CocktailError(errorMessage = uiState.message)
+        is com.globa.cocktails.feature.details.internal.CocktailUiState.Loading -> CocktailLoading()
+        is com.globa.cocktails.feature.details.internal.CocktailUiState.Success -> CocktailInfo(cocktail = uiState.cocktail, onFavoriteButtonClick = onFavoriteButtonClick, onBackButtonClick = onBackButtonClick, onEditButtonClick = onEditButtonClick)
+        is com.globa.cocktails.feature.details.internal.CocktailUiState.Error -> CocktailError(errorMessage = uiState.message)
     }
 }
 
