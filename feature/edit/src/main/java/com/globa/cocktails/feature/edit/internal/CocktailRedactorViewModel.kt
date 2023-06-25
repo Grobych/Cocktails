@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+//TODO: investigate way to make ViewModel and uiState internal/private
 @HiltViewModel
 class CocktailRedactorViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
