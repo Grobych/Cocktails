@@ -71,7 +71,7 @@ fun CocktailRedactorScreen(
     val context = LocalContext.current
     val onSaveAccept: () -> Unit = {
         scope.launch {
-            viewModel.saveCocktail()
+            viewModel.saveApply()
             Toast.makeText(
                 context,
                 "Cocktail Saved!",
@@ -83,7 +83,7 @@ fun CocktailRedactorScreen(
     val onSaveDismiss: () -> Unit = {viewModel.saveDismiss()}
 
     val onItemChange: (RecipeEditable) -> Unit = {
-        viewModel.updateState(cocktail = it)
+        viewModel.updateEditable(editable = it)
     }
     when (val state = uiState.value) {
         is CocktailRedactorUiState.Loading -> {
@@ -97,7 +97,7 @@ fun CocktailRedactorScreen(
             Scaffold(
                 topBar = { RedactorScreenHeader(state.mode, onBackButtonClick) },
                 floatingActionButton = { SaveFloatingButton {
-                    viewModel.tryToSave()
+                    viewModel.requestToSaveRecipe()
                 }
                 }
             ) {

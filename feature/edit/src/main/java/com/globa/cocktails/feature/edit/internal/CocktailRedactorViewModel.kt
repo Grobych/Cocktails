@@ -8,6 +8,7 @@ import com.globa.cocktails.domain.recipedetails.GetRecipeDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
@@ -18,22 +19,32 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 //TODO: investigate way to make ViewModel and uiState internal/private
+
+abstract class CocktailRedactorViewModel: ViewModel() {
+    abstract val uiState: StateFlow<CocktailRedactorUiState>
+    abstract val errorState: StateFlow<ErrorFieldsState>
+    abstract val showSaveDialog: StateFlow<Boolean>
+    abstract fun updateEditable(editable: RecipeEditable)
+    abstract fun requestToSaveRecipe()
+    abstract fun saveDismiss()
+    abstract suspend fun saveApply()
+}
 @HiltViewModel
-class CocktailRedactorViewModel @Inject constructor(
+internal class CocktailRedactorViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getRecipeDetailsUseCase: GetRecipeDetailsUseCase,
     private val updateCocktailUseCase: com.globa.cocktails.domain.edit.UpdateCocktailUseCase
-): ViewModel() {
-    private val _cocktailState = MutableStateFlow(RecipeEditable())
+): CocktailRedactorViewModel() {
+    private val _editable = MutableStateFlow(RecipeEditable())
 
     private val _uiState = MutableStateFlow<CocktailRedactorUiState>(CocktailRedactorUiState.Loading)
-    val uiState = _uiState.asStateFlow()
+    override val uiState = _uiState.asStateFlow()
 
     private val _errorState = MutableStateFlow(ErrorFieldsState(false, listOf(),false))
-    val errorState = _errorState.asStateFlow()
+    override val errorState = _errorState.asStateFlow()
 
     private val _showSaveDialog = MutableStateFlow(false)
-    val showSaveDialog = _showSaveDialog.asStateFlow()
+    override val showSaveDialog = _showSaveDialog.asStateFlow()
 
     private val mode = RedactorMode.valueOf(savedStateHandle["mode"] ?: "ADD")
     private val cocktailId: Int = when (mode) {
@@ -47,7 +58,7 @@ class CocktailRedactorViewModel @Inject constructor(
     }
     private fun initCocktail(mode: RedactorMode) {
         viewModelScope.launch {
-            merge(_cocktailState, selectFlow(mode))
+            merge(_editable, selectFlow(mode))
                 .onEach {cocktail ->
                     _errorState.value = checkFields(cocktail.name, cocktail.ingredients, cocktail.instructions)
                 }
@@ -64,8 +75,8 @@ class CocktailRedactorViewModel @Inject constructor(
         initCocktail(mode = mode)
     }
 
-    fun updateState(cocktail: RecipeEditable) {
-        _cocktailState.value = cocktail
+    override fun updateEditable(editable: RecipeEditable) {
+        _editable.value = editable
     }
 
     private fun checkFields(nameField: String, ingredientFields: List<String>, instrctionField: String
@@ -76,16 +87,16 @@ class CocktailRedactorViewModel @Inject constructor(
         return ErrorFieldsState(nameError,ingredientsError,instructionError)
     }
 
-    fun tryToSave() {
+    override fun requestToSaveRecipe() {
         val state = errorState.value
         var ingredientsError = false
         state.isIngredientError.forEach { ingredientsError = ingredientsError || it }
         _showSaveDialog.value = !(ingredientsError || state.isNameError || state.isInstructionsError)
     }
-    fun saveDismiss() {
+    override fun saveDismiss() {
         _showSaveDialog.value = false
     }
-    suspend fun saveCocktail() {
+    override suspend fun saveApply() {
         if (uiState.value is CocktailRedactorUiState.Editing) {
             _showSaveDialog.value = false
             val cocktail = (uiState.value as CocktailRedactorUiState.Editing).cocktail
