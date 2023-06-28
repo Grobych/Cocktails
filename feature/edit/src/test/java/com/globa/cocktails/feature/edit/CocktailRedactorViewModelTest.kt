@@ -5,7 +5,7 @@ import com.globa.cocktails.domain.edit.UpdateCocktailUseCase
 import com.globa.cocktails.domain.recipedetails.GetRecipeDetailsUseCase
 import com.globa.cocktails.domain.recipedetails.RecipeDetails
 import com.globa.cocktails.feature.edit.internal.CocktailRedactorUiState
-import com.globa.cocktails.feature.edit.internal.CocktailRedactorViewModelImpl
+import com.globa.cocktails.feature.edit.internal.CocktailRedactorViewModel
 import com.globa.cocktails.feature.edit.internal.RedactorMode
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -58,7 +58,7 @@ class CocktailRedactorViewModelTest {
 
     @Test
     fun cocktailRedactorViewModelInitTest() = runTest {
-        val viewModel = CocktailRedactorViewModelImpl(
+        val viewModel = CocktailRedactorViewModel(
             savedStateHandle,
             getRecipeDetailsUseCase,
             updateCocktailUseCase
@@ -75,7 +75,7 @@ class CocktailRedactorViewModelTest {
         coEvery { savedStateHandle.get<String>("mode") } returns RedactorMode.EDIT.name
         coEvery { savedStateHandle.get<Int>("cocktailId") } returns cocktailId
         coEvery { getRecipeDetailsUseCase(cocktailId) } returns flow
-        val viewModel = CocktailRedactorViewModelImpl(
+        val viewModel = CocktailRedactorViewModel(
             savedStateHandle,
             getRecipeDetailsUseCase,
             updateCocktailUseCase
@@ -96,7 +96,7 @@ class CocktailRedactorViewModelTest {
         coEvery { savedStateHandle.get<String>("mode") } returns RedactorMode.EDIT.name
         coEvery { savedStateHandle.get<Int>("cocktailId") } returns cocktailId
         coEvery { getRecipeDetailsUseCase(cocktailId) } returns flow
-        val viewModel = CocktailRedactorViewModelImpl(
+        val viewModel = CocktailRedactorViewModel(
             savedStateHandle,
             getRecipeDetailsUseCase,
             updateCocktailUseCase
@@ -136,7 +136,7 @@ class CocktailRedactorViewModelTest {
         coEvery { savedStateHandle.get<String>("mode") } returns RedactorMode.EDIT.name
         coEvery { savedStateHandle.get<Int>("cocktailId") } returns cocktailId
         coEvery { getRecipeDetailsUseCase(cocktailId) } returns flow
-        val viewModel = CocktailRedactorViewModelImpl(
+        val viewModel = CocktailRedactorViewModel(
             savedStateHandle,
             getRecipeDetailsUseCase,
             updateCocktailUseCase
@@ -154,7 +154,7 @@ class CocktailRedactorViewModelTest {
         coEvery { savedStateHandle.get<String>("mode") } returns RedactorMode.EDIT.name
         coEvery { savedStateHandle.get<Int>("cocktailId") } returns cocktailId
         coEvery { getRecipeDetailsUseCase(cocktailId) } returns flow.map { it.copy(name = "") }
-        val viewModel = CocktailRedactorViewModelImpl(
+        val viewModel = CocktailRedactorViewModel(
             savedStateHandle,
             getRecipeDetailsUseCase,
             updateCocktailUseCase
@@ -173,7 +173,7 @@ class CocktailRedactorViewModelTest {
         coEvery { savedStateHandle.get<Int>("cocktailId") } returns cocktailId
         coEvery { getRecipeDetailsUseCase(cocktailId) } returns flow
         coEvery { updateCocktailUseCase(any()) } returns Unit
-        val viewModel = CocktailRedactorViewModelImpl(
+        val viewModel = CocktailRedactorViewModel(
             savedStateHandle,
             getRecipeDetailsUseCase,
             updateCocktailUseCase
@@ -197,7 +197,7 @@ class CocktailRedactorViewModelTest {
         coEvery { savedStateHandle.get<Int>("cocktailId") } returns cocktailId
         coEvery { getRecipeDetailsUseCase(cocktailId) } returns flow
         coEvery { updateCocktailUseCase(any()) } returns Unit
-        val viewModel = CocktailRedactorViewModelImpl(
+        val viewModel = CocktailRedactorViewModel(
             savedStateHandle,
             getRecipeDetailsUseCase,
             updateCocktailUseCase
