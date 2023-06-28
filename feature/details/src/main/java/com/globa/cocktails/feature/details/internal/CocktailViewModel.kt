@@ -9,7 +9,6 @@ import com.globa.cocktails.domain.recipedetails.GetRecipeDetailsUseCase
 import com.globa.cocktails.domain.recipedetails.RecipeDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
@@ -19,20 +18,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-abstract class CocktailViewModel: ViewModel() {
-    abstract val uiState: StateFlow<CocktailUiState>
-    abstract fun changeIsFavorite(isFavorite: Boolean)
-}
 @HiltViewModel
-class CocktailViewModelImpl @Inject constructor(
+class CocktailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getRecipeDetailsUseCase: GetRecipeDetailsUseCase,
     private val getFavoritesUseCase: GetFavoritesUseCase,
     private val setIsFavoriteUseCase: SetIsFavoriteUseCase
-) : CocktailViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<CocktailUiState>(CocktailUiState.Loading())
-    override val uiState = _uiState.asStateFlow()
+    val uiState = _uiState.asStateFlow()
 
     private val cocktailId = savedStateHandle.get<Int>("cocktailId")
     init {
@@ -62,11 +57,7 @@ class CocktailViewModelImpl @Inject constructor(
         }
     }
 
-    override fun changeIsFavorite(isFavorite: Boolean) {
-        viewModelScope.launch {
-            val state = uiState.value
-            if (state is CocktailUiState.Success)
-                setIsFavoriteUseCase(state.cocktail.name, isFavorite)
-        }
+    fun changeIsFavorite(name: String, value: Boolean) = viewModelScope.launch {
+        setIsFavoriteUseCase(name,value)
     }
 }
