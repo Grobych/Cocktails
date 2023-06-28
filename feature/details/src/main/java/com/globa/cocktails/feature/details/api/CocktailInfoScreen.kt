@@ -34,6 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.globa.cocktails.domain.recipedetails.RecipeDetailsTagType
 import com.globa.cocktails.feature.details.R
+import com.globa.cocktails.feature.details.internal.CocktailViewModel
 import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.DPs.largeImageRound
 import com.globa.cocktails.ui.theme.Paddings
@@ -45,7 +46,7 @@ import com.globa.cocktails.ui.util.TagButton
 
 @Composable
 fun CocktailInfoScreen(
-    viewModel: com.globa.cocktails.feature.details.internal.CocktailViewModel = hiltViewModel(),
+    viewModel: CocktailViewModel = hiltViewModel(),
     onBackButtonClick: () -> Unit,
     navigateToRedactor: (Int, String) -> Unit
 ) {
@@ -54,7 +55,7 @@ fun CocktailInfoScreen(
     val onFavoriteButtonClick: () -> Unit = {
         if (uiState is com.globa.cocktails.feature.details.internal.CocktailUiState.Success) {
             val cocktail = (uiState as com.globa.cocktails.feature.details.internal.CocktailUiState.Success).cocktail
-            viewModel.changeIsFavorite(cocktail.name, cocktail.isFavorite.not())
+            viewModel.changeIsFavorite(cocktail.isFavorite.not())
         }
     }
     val onEditButtonClick: () -> Unit = {
