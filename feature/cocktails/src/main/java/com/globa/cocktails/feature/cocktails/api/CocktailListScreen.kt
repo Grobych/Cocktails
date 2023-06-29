@@ -44,6 +44,8 @@ import coil.compose.AsyncImage
 import com.globa.cocktails.domain.getcocktails.RecipePreview
 import com.globa.cocktails.domain.random.GetRandomResult
 import com.globa.cocktails.feature.cocktails.R
+import com.globa.cocktails.feature.cocktails.internal.CocktailListUiState
+import com.globa.cocktails.feature.cocktails.internal.CocktailListViewModel
 import com.globa.cocktails.feature.cocktails.internal.FooterSelector
 import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.Paddings
@@ -59,7 +61,7 @@ import com.globa.cocktails.ui.util.TagButton
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CocktailListScreen(
-    viewModel: com.globa.cocktails.feature.cocktails.internal.CocktailListViewModel = hiltViewModel(),
+    viewModel: CocktailListViewModel = hiltViewModel(),
     onItemClickAction: (Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -97,13 +99,13 @@ fun CocktailListScreen(
     }
 
     when (val state = uiState) {
-        is com.globa.cocktails.feature.cocktails.internal.CocktailListUiState.Loading -> {
+        is CocktailListUiState.Loading -> {
             LoadingComposable()
         }
-        is com.globa.cocktails.feature.cocktails.internal.CocktailListUiState.Error -> {
+        is CocktailListUiState.Error -> {
             ErrorComposable(errorMessage = state.message)
         }
-        is com.globa.cocktails.feature.cocktails.internal.CocktailListUiState.Done -> {
+        is CocktailListUiState.Done -> {
 
             Scaffold(
                 topBar = {
@@ -292,12 +294,12 @@ fun Footer(
             iconColor = if (selectorUiState.isAllCocktailsSelected) selectedColor else unSelectedColor,
             text = "All receipes"
         )
-        FooterButton(
-            onClickAction = onMyReceipesClicked,
-            icon = R.drawable.ic_my_receipes,
-            iconColor = if (selectorUiState.isMyCocktailSelected) selectedColor else unSelectedColor,
-            text = "My receipes"
-        )
+//        FooterButton(
+//            onClickAction = onMyReceipesClicked,
+//            icon = R.drawable.ic_my_receipes,
+//            iconColor = if (selectorUiState.isMyCocktailSelected) selectedColor else unSelectedColor,
+//            text = "My receipes"
+//        )
         FooterButton(
             onClickAction = onFavoriteReceipesClicked,
             icon = R.drawable.ic_favorite_receipes,
