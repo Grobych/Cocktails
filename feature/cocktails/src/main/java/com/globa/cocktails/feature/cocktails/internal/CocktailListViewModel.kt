@@ -105,13 +105,13 @@ class CocktailListViewModel @Inject constructor(
                 }
             }
             FooterSelector.MY_COCKTAILS -> {
-//                _selectorUiState.update {
-//                    it.copy(
-//                        isAllCocktailsSelected = false,
-//                        isMyCocktailSelected = true,
-//                        isFavoriteSelected = false
-//                    )
-//                }
+                _selectorUiState.update {
+                    it.copy(
+                        isAllCocktailsSelected = false,
+                        isMyCocktailSelected = true,
+                        isFavoriteSelected = false
+                    )
+                }
             }
             FooterSelector.FAVORITE_COCKTAILS -> {
                 _selectorUiState.update {
