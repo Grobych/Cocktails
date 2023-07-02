@@ -3,6 +3,7 @@ androidxComposeBom = "2023.05.01"
 compose-material = "1.9.0"
 compose-material3 = "1.1.1"
 kotlin-coroutines = "1.7.1"
+lifecycle = "2.6.1"
 coil = "2.3.0"
 dagger = "2.46.1"
 navigation = "2.6.0"
@@ -18,6 +19,9 @@ androidx-compose-foundation = { group = "androidx.compose.foundation", name = "f
 compose-material = { module = "com.google.android.material:material", version.ref = "compose-material"}
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
 compose-material3-windowSizeClass = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "compose-material3" }
+
+# Lifecycle
+lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 
 # Coil
 coil = { module = "io.coil-kt:coil", version.ref = "coil"}

@@ -45,8 +45,7 @@ dependencies {
     implementation project(path: ':domain:favorite')
     implementation project(path: ':domain:random')
 
-
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation libs.lifecycle.viewmodel
 
     implementation libs.hilt.core
     kapt libs.hilt.compiler
