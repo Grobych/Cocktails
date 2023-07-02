@@ -70,7 +70,7 @@ dependencies {
     implementation project(path: ':feature:cocktails')
     implementation project(path: ':domain:update')
 
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation libs.splashscreen
 
     implementation libs.hilt.core
     kapt libs.hilt.compiler
