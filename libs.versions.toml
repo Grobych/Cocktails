@@ -49,6 +49,7 @@ mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk"}
 junit = { module = "junit:junit", version.ref = "junit"}
 
 # Coroutines
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines"}
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines"}
 
 # Splash screen
