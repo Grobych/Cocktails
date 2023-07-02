@@ -1,8 +1,11 @@
 [versions]
+kotlin-coroutines = "1.7.1"
 coil = "2.3.0"
 dagger = "2.46.1"
 navigation = "2.6.0"
 navigation-hilt = "1.0.0"
+mockk = "1.13.5"
+junit = "4.13.2"
 
 [libraries]
 # Coil
@@ -17,8 +20,20 @@ hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.re
 navigation-android = { module = "androidx.navigation:navigation-compose", version.ref = "navigation"}
 navigation-hilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "navigation-hilt"}
 
+# Mockk
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk"}
+mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk"}
+
+# Junit
+junit = { module = "junit:junit", version.ref = "junit"}
+
+# Coroutines
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines"}
+
+
 [bundles]
 coil = ["coil", "coil-compose"]
 navigation = ["navigation-android","navigation-hilt"]
+mockk = ["mockk-android","mockk-agent"]
 
 [plugins]
