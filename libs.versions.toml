@@ -1,4 +1,7 @@
 [versions]
+androidxComposeBom = "2023.05.01"
+compose-material = "1.9.0"
+compose-material3 = "1.1.1"
 kotlin-coroutines = "1.7.1"
 coil = "2.3.0"
 dagger = "2.46.1"
@@ -9,6 +12,13 @@ junit = "4.13.2"
 splashscreen = "1.0.1"
 
 [libraries]
+# Compose
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+compose-material = { module = "com.google.android.material:material", version.ref = "compose-material"}
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+compose-material3-windowSizeClass = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "compose-material3" }
+
 # Coil
 coil = { module = "io.coil-kt:coil", version.ref = "coil"}
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil"}
@@ -39,5 +49,5 @@ splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "spla
 coil = ["coil", "coil-compose"]
 navigation = ["navigation-android","navigation-hilt"]
 mockk = ["mockk-android","mockk-agent"]
-
+material3 = ["compose-material3","compose-material3-windowSizeClass"]
 [plugins]
