@@ -1,0 +1,24 @@
+[versions]
+coil = "2.3.0"
+dagger = "2.46.1"
+navigation = "2.6.0"
+navigation-hilt = "1.0.0"
+
+[libraries]
+# Coil
+coil = { module = "io.coil-kt:coil", version.ref = "coil"}
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil"}
+
+# Hilt
+hilt-core = { module = "com.google.dagger:hilt-android", version.ref = "dagger"}
+hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "dagger"}
+
+# Navigation
+navigation-android = { module = "androidx.navigation:navigation-compose", version.ref = "navigation"}
+navigation-hilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "navigation-hilt"}
+
+[bundles]
+coil = ["coil", "coil-compose"]
+navigation = ["navigation-android","navigation-hilt"]
+
+[plugins]
