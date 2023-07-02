@@ -46,5 +46,5 @@ dependencies {
     implementation libs.compose.ui.tooling.preview
     debugImplementation libs.compose.ui.tooling
 
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.0"
+    implementation libs.system.ui.controller
 }

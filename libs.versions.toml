@@ -12,6 +12,7 @@ navigation-hilt = "1.0.0"
 mockk = "1.13.5"
 junit = "4.13.2"
 splashscreen = "1.0.1"
+accompanist = "0.27.0"
 
 [libraries]
 # Compose
@@ -52,6 +53,9 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 
 # Splash screen
 splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen"}
+
+# System UI
+system-ui-controller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist"}
 
 
 [bundles]
