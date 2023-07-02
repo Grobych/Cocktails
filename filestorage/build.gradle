@@ -35,5 +35,5 @@ dependencies {
     implementation libs.hilt.core
     kapt libs.hilt.compiler
 
-    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation libs.gson
 }
