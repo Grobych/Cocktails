@@ -55,9 +55,8 @@ dependencies {
     androidTestImplementation(composeBom)
     implementation libs.compose.material3
 
-    // Android Studio Preview support
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation libs.compose.ui.tooling.preview
+    debugImplementation libs.compose.ui.tooling
 
     testImplementation libs.junit
     testImplementation libs.bundles.mockk

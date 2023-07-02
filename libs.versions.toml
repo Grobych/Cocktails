@@ -1,5 +1,6 @@
 [versions]
 androidxComposeBom = "2023.05.01"
+compose-ui = "1.4.3"
 compose-material = "1.9.0"
 compose-material3 = "1.1.1"
 kotlin-coroutines = "1.7.1"
@@ -19,6 +20,10 @@ androidx-compose-foundation = { group = "androidx.compose.foundation", name = "f
 compose-material = { module = "com.google.android.material:material", version.ref = "compose-material"}
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
 compose-material3-windowSizeClass = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "compose-material3" }
+
+# Compose UI Tooling
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-ui" }
 
 # Lifecycle
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
