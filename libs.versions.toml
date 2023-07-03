@@ -3,6 +3,9 @@ androidxComposeBom = "2023.05.01"
 compose-ui = "1.4.3"
 compose-material = "1.9.0"
 compose-material3 = "1.1.1"
+firebase-analytics = "21.2.2"
+firebase-bom = "32.0.0"
+firebase-crashlytics = "18.3.7"
 kotlin-coroutines = "1.7.1"
 lifecycle = "2.6.1"
 coil = "2.3.0"
@@ -67,6 +70,11 @@ system-ui-controller = { module = "com.google.accompanist:accompanist-systemuico
 
 # GSON
 gson = { module = "com.google.code.gson:gson", version.ref = "gson"}
+
+# Firebase
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx", version.ref = "firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx", version.ref = "firebase-crashlytics" }
 
 
 [bundles]
