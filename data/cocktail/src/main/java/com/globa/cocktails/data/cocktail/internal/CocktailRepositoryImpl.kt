@@ -44,7 +44,7 @@ internal class CocktailRepositoryImpl @Inject constructor (
             .getCocktails()
             .map { list ->
                 list.filter {
-                    excluded.contains(it.drinkName)
+                    !excluded.contains(it.drinkName)
                 }
             }
             .collect {
