@@ -118,7 +118,7 @@ fun CocktailRedactorScreen(
             ErrorComposable(errorMessage = state.message)
         }
         CocktailRedactorUiState.Saving -> {
-            //TODO: Add saving composable
+            LoadingComposable()
         }
     }
 }
@@ -136,7 +136,10 @@ fun RedactorScreenHeader(
             .background(
                 color = MaterialTheme.colorScheme.background
             )
-            .padding(start = com.globa.cocktails.ui.theme.Paddings.large, end = com.globa.cocktails.ui.theme.Paddings.large),
+            .padding(
+                start = com.globa.cocktails.ui.theme.Paddings.large,
+                end = com.globa.cocktails.ui.theme.Paddings.large
+            ),
     ) {
         BackButton(
             modifier = Modifier.align(Alignment.CenterStart),
@@ -447,7 +450,10 @@ fun SaveFloatingButton(
         onClick = {onClickButton()},
         containerColor = MaterialTheme.colorScheme.secondaryContainer,
         modifier = Modifier
-            .padding(bottom = com.globa.cocktails.ui.theme.Paddings.medium, end = com.globa.cocktails.ui.theme.Paddings.largeLarge)
+            .padding(
+                bottom = com.globa.cocktails.ui.theme.Paddings.medium,
+                end = com.globa.cocktails.ui.theme.Paddings.largeLarge
+            )
             .width(92.dp)
             .height(40.dp),
         shape = MaterialTheme.shapes.extraLarge,

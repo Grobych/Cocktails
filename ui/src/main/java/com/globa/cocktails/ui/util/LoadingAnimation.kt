@@ -41,7 +41,7 @@ fun LoadingAnimation(
         animationSpec = InfiniteRepeatableSpec(
             animation = tween(
                 durationMillis = 300,
-                delayMillis = 500,
+                delayMillis = 0,
                 easing = FastOutSlowInEasing
             ),
             repeatMode = RepeatMode.Reverse
