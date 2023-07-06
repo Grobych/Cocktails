@@ -1,6 +1,7 @@
 package com.globa.cocktails.ui.util
 
-import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.globa.cocktails.ui.R
+import com.globa.cocktails.ui.theme.AppTheme
 import com.globa.cocktails.ui.theme.DPs.iconButtonSize
 
 @Composable
@@ -127,37 +129,34 @@ fun FooterButton(
     text: String,
     textColor: Color = iconColor
 ) {
-    IconButton(
-        modifier = modifier,
-        onClick = { onClickAction() }
+    Column(
+        modifier = modifier
+            .requiredWidth(68.dp)
+            .clickable { onClickAction() },
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier.requiredWidth(68.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                modifier = Modifier.size(24.dp),
-                imageVector = ImageVector
-                    .vectorResource(id = icon),
-                contentDescription = "",
-                tint = iconColor
+        Icon(
+            modifier = Modifier.size(24.dp),
+            imageVector = ImageVector
+                .vectorResource(id = icon),
+            contentDescription = "",
+            tint = iconColor
+        )
+        Text(
+            modifier = Modifier,
+            text = text,
+            style = MaterialTheme.typography.labelSmall.plus(
+                TextStyle(color = textColor)
             )
-            Text(
-                modifier = Modifier,
-                text = text,
-                style = MaterialTheme.typography.labelSmall.plus(
-                    TextStyle(color = textColor)
-                )
-            )
-        }
+        )
     }
 }
 
 @Composable
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Preview
 fun AddButtonPreview() {
-    com.globa.cocktails.ui.theme.AppTheme {
+    AppTheme {
         Surface(Modifier.size(45.dp)) {
             AddButton(onClickAction = {})
         }
@@ -165,10 +164,10 @@ fun AddButtonPreview() {
 }
 
 @Composable
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Preview
 fun MenuButtonPreview() {
-    com.globa.cocktails.ui.theme.AppTheme {
+    AppTheme {
         Surface(Modifier.size(45.dp)) {
             MenuButton(onClickAction = {})
         }
@@ -176,10 +175,10 @@ fun MenuButtonPreview() {
 }
 
 @Composable
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Preview
 fun NotFavoriteButtonPreview() {
-    com.globa.cocktails.ui.theme.AppTheme {
+    AppTheme {
         Surface(Modifier.size(45.dp)) {
             FavoriteButton(isFavorited = false, onClickAction = {})
         }
@@ -187,12 +186,23 @@ fun NotFavoriteButtonPreview() {
 }
 
 @Composable
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Preview
 fun FavoriteButtonPreview() {
-    com.globa.cocktails.ui.theme.AppTheme {
+    AppTheme {
         Surface(Modifier.size(45.dp)) {
             FavoriteButton(isFavorited = true, onClickAction = {})
+        }
+    }
+}
+
+@Composable
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Preview
+fun FooterButtonPreview() {
+    AppTheme {
+        Surface {
+            FooterButton(onClickAction = { }, icon = R.drawable.ic_random_receipe, text = "Test text")
         }
     }
 }
