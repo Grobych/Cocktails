@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -238,6 +239,7 @@ private fun Ingredients(ingredients: List<String>, measures: List<String>, modif
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
+                        modifier = Modifier.fillMaxWidth(0.7f),
                         text = ingredients[i],
                         style = MaterialTheme.typography.bodyMedium.plus(
                             TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -247,7 +249,8 @@ private fun Ingredients(ingredients: List<String>, measures: List<String>, modif
                         text = if (i <= measures.lastIndex) measures[i] else "",
                         style = MaterialTheme.typography.bodyMedium.plus(
                             TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        )
+                        ),
+                        textAlign = TextAlign.End
                     )
                 }
                 Divider()
@@ -299,7 +302,7 @@ private val testCocktail = com.globa.cocktails.domain.recipedetails.RecipeDetail
         "Cocktail glass" to RecipeDetailsTagType.GLASS
     ),
     imageURL = "http://www.thecocktaildb.com/images/media/drink/wpxpvu1439905379.jpg",
-    ingredients = listOf("Tequila", "Triple sec", "Lime juice", "Salt"),
+    ingredients = listOf("Tequila", "Very long some Triple sec", "Lime juice", "Salt"),
     measures = listOf("1 1/2 oz", "1/2 oz", "1 oz"),
     instructions = "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten only the outer rim and sprinkle the salt on it. The salt should present to the lips of the imbiber and never mix into the cocktail. Shake the other ingredients with ice, then carefully pour into the glass."
 )
