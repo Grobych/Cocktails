@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.AppSplash" parent="Theme.SplashScreen.IconBackground">
-        <item name="windowSplashScreenBackground">#65429D</item>
+        <item name="windowSplashScreenBackground">#FF5A27A2</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
         <item name="postSplashScreenTheme">@style/Theme.Cocktails</item>
     </style>
