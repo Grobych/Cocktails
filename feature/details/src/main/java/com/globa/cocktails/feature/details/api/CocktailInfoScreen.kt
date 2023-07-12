@@ -40,7 +40,6 @@ import com.globa.cocktails.ui.theme.Paddings
 import com.globa.cocktails.ui.util.BackButton
 import com.globa.cocktails.ui.util.EditButton
 import com.globa.cocktails.ui.util.FavoriteButton
-import com.globa.cocktails.ui.util.MenuButton
 import com.globa.cocktails.ui.util.TagButton
 
 @Composable
@@ -184,7 +183,7 @@ private fun Header(
                 Text(
                     text = cocktailName,
                     modifier = Modifier
-                        .widthIn(max = 225.dp)
+                        .widthIn(max = 300.dp)
                         .padding(start = Paddings.medium, end = Paddings.medium)
                         .horizontalScroll(state = ScrollState(0))
                     ,
@@ -200,7 +199,7 @@ private fun Header(
                 ) {
                     EditButton(onClickAction = { onEditButtonClick() }, modifier = Modifier.padding(end = Paddings.large))
                     FavoriteButton(onClickAction = { onFavoriteButtonClick() }, isFavorited = isFavorited)
-                    MenuButton(onClickAction = { /*TODO*/ }, modifier = Modifier.padding(start = Paddings.large))
+//                    MenuButton(onClickAction = { /*TODO*/ }, modifier = Modifier.padding(start = Paddings.large))
                 }
             }
         }

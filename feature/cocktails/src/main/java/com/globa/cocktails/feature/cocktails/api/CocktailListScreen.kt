@@ -49,13 +49,11 @@ import com.globa.cocktails.feature.cocktails.internal.CocktailListViewModel
 import com.globa.cocktails.feature.cocktails.internal.FooterSelector
 import com.globa.cocktails.ui.theme.DPs.headerHeight
 import com.globa.cocktails.ui.theme.Paddings
-import com.globa.cocktails.ui.util.AddButton
 import com.globa.cocktails.ui.util.CustomSearchField
 import com.globa.cocktails.ui.util.ErrorComposable
 import com.globa.cocktails.ui.util.FavoriteButton
 import com.globa.cocktails.ui.util.FooterButton
 import com.globa.cocktails.ui.util.LoadingComposable
-import com.globa.cocktails.ui.util.MenuButton
 import com.globa.cocktails.ui.util.TagButton
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -159,17 +157,11 @@ fun Header(
     ) {
         CustomSearchField(
             modifier = Modifier
-                .width(280.dp),
+                .fillMaxWidth(),
             tags = filterUiState.tags,
             text = filterUiState.line,
             onTextChanged = onFilterChangeAction,
             onTagClicked = onTagClicked
-        )
-        AddButton(
-            onClickAction = {}
-        )
-        MenuButton(
-            onClickAction = {}
         )
     }
 }
