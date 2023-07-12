@@ -2,6 +2,7 @@ package com.globa.cocktails.ui.util
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
@@ -69,15 +70,15 @@ fun FavoriteButton(
     iconColor: Color = MaterialTheme.colorScheme.primary
 ) {
     val vectorResource = if (isFavorited) R.drawable.ic_favorite_en else R.drawable.ic_favorite_dis
-    IconButton(
-        onClick = {onClickAction()},
-        modifier = modifier.size(24.dp)
+    Box(
+        modifier = modifier.size(24.dp),
+        contentAlignment = Alignment.Center
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(id = vectorResource),
             contentDescription = "",
             tint = iconColor,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(24.dp).clickable { onClickAction() }
         )
     }
 }
@@ -101,21 +102,21 @@ fun BackButton(
     }
 }
 
+//TODO: rewrite buttons
 @Composable
 fun EditButton(
     modifier: Modifier = Modifier,
     onClickAction: () -> Unit,
     iconColor: Color = MaterialTheme.colorScheme.primary,
 ) {
-    IconButton(
-        onClick = {onClickAction()},
+    Box(
         modifier = modifier.size(24.dp)
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_edit),
             contentDescription = "",
             tint = iconColor,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(24.dp).clickable { onClickAction() }
         )
     }
 }
