@@ -148,8 +148,8 @@ fun RedactorScreenHeader(
         Text(
             modifier = Modifier.align(Alignment.Center),
             text = when (mode) {
-                RedactorMode.ADD -> "Add receipe"
-                RedactorMode.EDIT -> "Edit receipe"
+                RedactorMode.ADD -> "Add recipe"
+                RedactorMode.EDIT -> "Edit recipe"
             },
             style = MaterialTheme.typography.headlineSmall.plus(
                 TextStyle(color = MaterialTheme.colorScheme.onSurface)
