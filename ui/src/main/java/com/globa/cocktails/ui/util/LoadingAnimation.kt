@@ -34,7 +34,7 @@ fun LoadingAnimation(
     backgroundColor: Color = MaterialTheme.colorScheme.primaryContainer
 ) {
 
-    val infiniteTransition = rememberInfiniteTransition()
+    val infiniteTransition = rememberInfiniteTransition(label = "Shacker Animation")
     val degree = infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = 30f,
@@ -45,7 +45,8 @@ fun LoadingAnimation(
                 easing = FastOutSlowInEasing
             ),
             repeatMode = RepeatMode.Reverse
-        )
+        ),
+        label = "Shacker Animation"
     )
 
     Box(

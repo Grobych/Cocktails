@@ -2,6 +2,7 @@ package com.globa.cocktails.feature.cocktails.api
 
 import android.content.res.Configuration
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,7 +23,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -40,7 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.globa.cocktails.domain.getcocktails.RecipePreview
 import com.globa.cocktails.domain.random.GetRandomResult
 import com.globa.cocktails.feature.cocktails.R
@@ -54,9 +54,9 @@ import com.globa.cocktails.ui.util.ErrorComposable
 import com.globa.cocktails.ui.util.FavoriteButton
 import com.globa.cocktails.ui.util.FooterButton
 import com.globa.cocktails.ui.util.LoadingComposable
+import com.globa.cocktails.ui.util.RotateLoadingAnimation
 import com.globa.cocktails.ui.util.TagButton
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CocktailListScreen(
     viewModel: CocktailListViewModel = hiltViewModel(),
@@ -203,11 +203,15 @@ fun CocktailListItem(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AsyncImage(
+        SubcomposeAsyncImage(
             model = receipePreview.imageURL,
             contentDescription = receipePreview.name,
-            placeholder = painterResource(id = R.drawable.loading_img),
-            error = painterResource(id = R.drawable.broken_image),
+            loading = { RotateLoadingAnimation() },
+            error = {
+                Image(
+                    painter = painterResource(id = R.drawable.broken_image),
+                    contentDescription = "Error"
+                )},
             modifier = Modifier
                 .size(106.dp)
                 .align(Alignment.CenterVertically)
